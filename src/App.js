@@ -1,8 +1,9 @@
 import React from 'react'
+import Dashboard from './components/dashboard_folder/Dashboard'
 
 function App() {
   return (
-    <h1>Home</h1>
+    <Dashboard />
   );
 }
 
