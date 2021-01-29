@@ -9,7 +9,7 @@ function preventDefault(event) {
 }
 
 const useStyles = makeStyles({
-  depositContext: {
+  POApprovalContext: {
     flex: 1,
   },
 });
@@ -22,7 +22,7 @@ export default function POApprovals() {
       <Typography component="p" variant="h3">
         1
       </Typography>
-      <Typography color="textSecondary" className={classes.depositContext}>
+      <Typography color="textSecondary" className={classes.POApprovalContext}>
         <div>
           <Link color="primary" href="#" onClick={preventDefault}>
             Supplier Name - Date

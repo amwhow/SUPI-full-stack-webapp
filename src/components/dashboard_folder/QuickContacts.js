@@ -10,7 +10,7 @@ function preventDefault(event) {
 }
 
 const useStyles = makeStyles({
-  depositContext: {
+  quickContactContext: {
     flex: 1,
   },
 });
@@ -23,7 +23,8 @@ export default function QuickContacts() {
       {/* <Typography component="p" variant="h3">
         1
       </Typography> */}
-      <Typography color="textSecondary" className={classes.depositContext}>
+      <Typography color="textSecondary" className={classes.quickContactsContext}>
+        {/* make it an iteration later */}
         <Box display="flex" justifyContent="space-between">
             Contact Name 
             <button>Email</button>
@@ -39,12 +40,12 @@ export default function QuickContacts() {
             <button>Email</button>
         </Box>
         <hr/>
+      </Typography>
         <div>
           <Link color="primary" href="#" onClick={preventDefault}>
             Add new contact
           </Link>
-      </div>
-      </Typography>
+        </div>
     </React.Fragment>
   );
 }
