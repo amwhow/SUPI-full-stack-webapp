@@ -18,9 +18,9 @@ import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
+import { MainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
-import Deposits from './Deposits';
+import Calendar from './Calendar';
 import InvoicesDue from './InvoicesDue';
 import POApprovals from './POApprovals';
 import QuickContacts from './QuickContacts';
@@ -31,7 +31,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        SUPI
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -168,7 +168,7 @@ export default function Dashboard() {
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
+          <MainListItems />
         <Divider />
         <List>{secondaryListItems}</List>
       </Drawer>
@@ -185,7 +185,7 @@ export default function Dashboard() {
             {/* Recent Deposits */}
             <Grid item xs={12} md={5} lg={4}>
               <Paper className={fixedHeightPaper}>
-                <Deposits />
+                <Calendar />
               </Paper>
             </Grid>
             {/* Invoice due */}
@@ -205,12 +205,6 @@ export default function Dashboard() {
                 <QuickContacts />
               </Paper>
             </Grid>
-            {/* Recent Orders */}
-            {/* <Grid item xs={12}>
-              <Paper className={classes.paper}> */}
-                {/* <Orders /> */}
-              {/* </Paper>
-            </Grid> */}
           </Grid>
           <Box pt={4}>
             <Copyright />
