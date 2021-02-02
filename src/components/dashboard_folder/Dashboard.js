@@ -16,6 +16,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { MainListItems, secondaryListItems } from './listItems';
@@ -149,8 +150,13 @@ export default function Dashboard() {
             Dashboard
           </Typography>
           <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
+            <Badge badgeContent={1} color="secondary">
               <NotificationsIcon />
+            </Badge>
+          </IconButton>
+          <IconButton color="inherit">
+            <Badge color="primary">
+              <ExitToAppIcon onClick={()=> console.log("logged out")}/>
             </Badge>
           </IconButton>
         </Toolbar>
