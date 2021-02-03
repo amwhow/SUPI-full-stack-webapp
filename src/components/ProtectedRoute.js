@@ -13,7 +13,7 @@ export default function ProtectedRoute({ exact, path, component }) {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
-        console.log("response:" + response)
+        // console.log("response:" + response)
         if (response.status >= 400) {
           throw new Error("not authorized");
         } else {
@@ -32,8 +32,6 @@ export default function ProtectedRoute({ exact, path, component }) {
   }, []);
 
   if (!loading && !auth) {
-    console.log(loading)
-    console.log(auth)
     return <Redirect to="/login" />;
   } else {
     return (

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom'
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -122,6 +123,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Dashboard() {
+    
+  const history = useHistory();
+  const logout = () => {
+    localStorage.removeItem("token");
+    history.push("/");
+  }
+
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -147,7 +155,8 @@ export default function Dashboard() {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Dashboard
+            {/* company name here */}
+            Welcome back! Username
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={1} color="secondary">
@@ -156,7 +165,8 @@ export default function Dashboard() {
           </IconButton>
           <IconButton color="inherit">
             <Badge color="primary">
-              <ExitToAppIcon onClick={()=> console.log("logged out")}/>
+              {/* to be changed */}
+              <ExitToAppIcon onClick={()=> logout()}/>
             </Badge>
           </IconButton>
         </Toolbar>
