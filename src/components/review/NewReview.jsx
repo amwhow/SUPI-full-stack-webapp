@@ -1,34 +1,19 @@
 import React, {useReducer} from "react"
 import reducer from '../../utils/reducer'
 
-function NewReview({ history }) {
+function NewReview({ history, match }) {
   const initialReviewState = {
     qualityRating: "",
     reliabilityRating: "",
     costRating: "",
     comment: "",
-    purchaseOrderId: ""
+    purchaseOrderId: match.params.id
   }
 
-  // need to fetch purchase orders so they can be used as dropdown menu options in form. 
-  // below is just and example of how we can structure the data after fetching
-  const purchaseOrderOptions = [
-    {
-      label: `PO: #${purchase_order_id}`,
-      value: `${purchase_order_id}`,
-    },
-    {
-      label: `PO: #${purchase_order_id}`,
-      value: `${purchase_order_id}`,
-    },
-    {
-      label: `PO: #${purchase_order_id}`,
-      value: `${purchase_order_id}`,
-    },
-  ];
+  console.log(match.params)
 
   const [store, dispatch] = useReducer(reducer, initialReviewState)
-  const {qualityRating, reliabilityRating, costRating, comment, purchaseOrderId} = store
+  const {qualityRating, reliabilityRating, costRating, comment} = store
 
   const handleChange = (e) => {
     dispatch({
@@ -39,7 +24,7 @@ function NewReview({ history }) {
 
   async function onFormSubmit(event) {
     event.preventDefault();
-    const body = { review: {qualityRating, reliabilityRating, costRating, comment, purchase_order_id} }
+    const body = { review: {qualityRating: qualityRating, reliabilityRating: reliabilityRating, costRating: costRating, comment: comment, purchase_order_id: match.params.id} }
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/reviews`, {
         method: "POST",
@@ -60,24 +45,13 @@ function NewReview({ history }) {
       <h1 className="new-doc-header">New Review</h1>
       <form className="new-invoice-form" onSubmit={onFormSubmit}>
         <div className="form-group">
-          <label htmlFor="purchaseOrderId">Purchase Order</label>
-          <select
-            name="purchaseOrderId"
-            id="purchaseOrderId"
-            value={purchaseOrderId}
-            onChange={handleChange}>
-              {purchaseOrderOptions.map((option) => (
-                <option value={option.value}>{option.label}</option>
-              ))}
-          </select>
-        </div>
-        <div className="form-group">
           <label htmlFor="qualityRating">Quality rating</label>
           <select 
             name="qualityRating"
             id="qualityRating"
             value={qualityRating}
             onChange={handleChange}>
+              <option value=''>Select rating</option>
               <option value={0}>0 Stars</option>
               <option value={1}>1 Star</option>
               <option value={2}>2 Stars</option>
@@ -93,6 +67,7 @@ function NewReview({ history }) {
             id="reliabilityRating"
             value={reliabilityRating}
             onChange={handleChange}>
+              <option value=''>Select rating</option>
               <option value={0}>0 Stars</option>
               <option value={1}>1 Star</option>
               <option value={2}>2 Stars</option>
@@ -108,6 +83,7 @@ function NewReview({ history }) {
             id="costRating"
             value={costRating}
             onChange={handleChange}>
+              <option value=''>Select rating</option>
               <option value={0}>0 Stars</option>
               <option value={1}>1 Star</option>
               <option value={2}>2 Stars</option>

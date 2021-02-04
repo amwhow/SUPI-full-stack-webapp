@@ -8,6 +8,10 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./components/Home"
 import NewSupplier from './components/supplier/NewSupplier'
 import NewPO from './components/PO/NewPO'
+import NewDocument from './components/document/NewDocument'
+import NewReview from './components/review/NewReview'
+import NewInvoice from './components/review/NewInvoice'
+
 
 function App() {
 
@@ -20,6 +24,9 @@ function App() {
         <Route exact path="/" component={Home} />
         <ProtectedRoute exact path="/suppliers/new" component={NewSupplier} />
         <ProtectedRoute exact path="/purchase_orders/new" component={NewPO} />
+        <ProtectedRoute exact path="/documents/new" component={NewDocument} />
+        <ProtectedRoute exact path="/purchase_orders/:id/reviews/new" component={NewReview} />
+        <ProtectedRoute exact path="/purchase_orders/:id/invoices/new" component={NewInvoice} />
       </Switch>
     </div>
   );

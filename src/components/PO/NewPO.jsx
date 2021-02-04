@@ -51,8 +51,6 @@ function NewPO({ history }) {
     })
   }
 
-  const arr1 = [1, 2, 3, 4]
-
   async function onFormSubmit(event) {
     event.preventDefault();
     const body = { purchase_order: {orderDate: orderDate, approvalStatus: approvalStatus, totalPrice: totalPrice, delivered: delivered, supplier_id: supplierId.selected} }
@@ -136,7 +134,6 @@ function NewPO({ history }) {
                 return( <option key={option.id} value={option.id}>
                   {option.name}
                 </option> )
-                console.log(option)
               })}
           </select>
         </div>

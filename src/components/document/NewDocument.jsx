@@ -1,39 +1,59 @@
-import React, {useState} from "react"
+import React, {useReducer, useState, useEffect} from "react"
+import reducer from '../../utils/reducer'
+
 
 function NewDocument({ history }) {
   const initialDocumentState = {
     expiryDate: "",
     documentType: "",
-    supplierId: "",
     supplierDocument: ""
   }
 
-  const [expiryDate, setExpiryDate] = useState("");
-  const [documentType, setDocumentType] = useState("");
-  const [supplierId, setSupplierId] = useState("");
-  const [supplierDocument, setSupplierDocument] = useState("");
-
-  // need to fetch supplier so they can be used as dropdown menu options in form. 
-  // below is just and example of how we can structure the data after fetching
-  const supplierOptions = [
-    {
-      label: `Supplier: #${supplier_id}`,
-      value: `${supplier_id}`,
-    },
-    {
-      label: `Supplier: #${supplier_id}`,
-      value: `${supplier_id}`,
-    },
-    {
-      label: `Supplier: #${supplier_id}`,
-      value: `${supplier_id}`,
-    },
-  ];
-
   // recommend we add a function to set today's date as the min value for date inputs
+
+  const [store, dispatch] = useReducer(reducer, initialDocumentState)
+  const {expiryDate, documentType, supplierDocument} = store
+
+  const [supplierId, setSupplierId] = useState({
+    data: [],
+    selected: ''
+  });
+
+  function fetchSuppliers() {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+      .then((res) => res.json())
+      .then((body) => setSupplierId({
+        data: body,
+        selected: ''
+      }))
+  }
+
+  useEffect(() => {
+    fetchSuppliers();
+  },[])
+
+  const handleChange = (e) => {
+    dispatch({
+      type: `set${e.target.name}`,
+      data: e.target.value
+    })
+  }
+
+  const handleSelect = (e) => {
+    setSupplierId({
+      data: supplierId.data,
+      selected: e.target.value
+    })
+  }
 
   async function onFormSubmit(event) {
     event.preventDefault();
+    const body = { document: {expiryDate: expiryDate, documentType: documentType, supplier_id: supplierId.selected} }
+    // , supplierDocument
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/documents`, {
         method: "POST",
@@ -41,14 +61,7 @@ function NewDocument({ history }) {
           "Content-Type": "application/json",
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
-        body: JSON.stringify({
-          document: {
-            expiryDate: expiryDate,
-            documentType: documentType,
-            supplierId: supplierId,
-            supplierDocument: supplierDocument
-          },
-        }),
+        body: JSON.stringify(body),
       });
       history.push("/documents");
     } catch (err) {
@@ -67,7 +80,7 @@ function NewDocument({ history }) {
             name="expiryDate"
             id="expiryDate"
             value={expiryDate}
-            onChange={(e) => setExpiryDate(e.target.value)}
+            onChange={handleChange}
           />
         </div>
         <div className="form-group">
@@ -76,7 +89,8 @@ function NewDocument({ history }) {
             name="documentType" 
             id="documentType"
             value={documentType}
-            onChange={(e) => setDocumentType(e.target.value)}>
+            onChange={handleChange}>
+              <option value="">Select document type</option>
               <option value="Licence">Licence</option>
               <option value="Contract">Contract</option>
               <option value="Risk Assessment">Risk Assessment</option>
@@ -86,13 +100,18 @@ function NewDocument({ history }) {
         <div className="form-group">
           <label htmlFor="supplier_id">Supplier</label>
           <select
-            name="supplier_id"
-            id="supplier_id"
+            name="supplierId"
+            id="supplierId"
             value={supplierId}
-            onChange={(e) => setSupplierId(e.target.value)}>
-              {supplierOptions.map((option) => (
-                <option value={option.value}>{option.label}</option>
-              ))}
+            onChange={handleSelect}>
+              <option key={0} value={''}>
+                  Select supplier
+                </option>
+              {supplierId.data.map((option) => {
+                return( <option key={option.id} value={option.id}>
+                  {option.name}
+                </option> )
+              })}
           </select>
         </div>
         <div className="form-group">
