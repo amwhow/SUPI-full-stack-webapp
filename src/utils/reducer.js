@@ -102,7 +102,7 @@ export default function reducer(state, action) {
     case 'settotalPrice': {
       return {
         ...state,
-        approvalStatus: action.data
+        totalPrice: action.data
       }
     }
     case 'setdelivered': {

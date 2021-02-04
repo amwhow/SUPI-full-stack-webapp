@@ -1,4 +1,4 @@
-import React, {useReducer, useState} from "react"
+import React, {useReducer, useState, useEffect} from "react"
 import reducer from '../../utils/reducer'
 
 function NewPO({ history }) {
@@ -7,48 +7,30 @@ function NewPO({ history }) {
     approvalStatus: "",
     totalPrice: "",
     delivered: "",
-    supplierId: "",
     PODocument: ""
   }
-
-  const [supplierId, setSupplierId] = useState("");
-
-  // need to fetch supplier so they can be used as dropdown menu options in form. 
-  // below is just and example of how we can structure the data after fetching
-  const supplierOptions = []
   
-  fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers`, {
-    headers: {
-      'Authorization': `Bearer ${localStorage.getItem('token')}`
-    }
-  })
-    .then((res) => res.json())
-    .then((res) => {
-      res.map((supplier) => {
-        supplierOptions.push({
-          label: `${supplier.name}`,
-          value: `${supplier.id}`
-        })
-      })
+  const [supplierId, setSupplierId] = useState({
+    data: [],
+    selected: ''
+  });
+  
+  function fetchSuppliers() {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
     })
+      .then((res) => res.json())
+      .then((body) => setSupplierId({
+        data: body,
+        selected: ''
+      }))
+  }
 
-  console.log(supplierOptions)
-  console.log(supplierOptions)
-
-  // const supplierOptions = [
-  //   {
-  //     label: `Supplier: #${supplier_id}`,
-  //     value: `${supplier_id}`,
-  //   },
-  //   {
-  //     label: `Supplier: #${supplier_id}`,
-  //     value: `${supplier_id}`,
-  //   },
-  //   {
-  //     label: `Supplier: #${supplier_id}`,
-  //     value: `${supplier_id}`,
-  //   },
-  // ];
+  useEffect(() => {
+    fetchSuppliers();
+  },[])
 
   // recommend we add a function to set today's date as the min value for date inputs
 
@@ -63,13 +45,17 @@ function NewPO({ history }) {
   }
 
   const handleSelect = (e) => {
-    setSupplierId(e.target.value)
-    console.log(supplierId)
+    setSupplierId({
+      data: supplierId.data,
+      selected: e.target.value
+    })
   }
+
+  const arr1 = [1, 2, 3, 4]
 
   async function onFormSubmit(event) {
     event.preventDefault();
-    const body = { purchase_order: {orderDate: orderDate, approvalStatus: approvalStatus, totalPrice: totalPrice, delivered: delivered, supplier_id: supplierId} }
+    const body = { purchase_order: {orderDate: orderDate, approvalStatus: approvalStatus, totalPrice: totalPrice, delivered: delivered, supplier_id: supplierId.selected} }
     // , PO_document
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/purchase_orders`, {
@@ -107,6 +93,7 @@ function NewPO({ history }) {
             id="approvalStatus"
             value={approvalStatus}
             onChange={handleChange}>
+              <option value=''>Select approval status</option>
               <option value={false}>Awaiting approval</option>
               <option value={true}>Approved</option>
           </select>
@@ -130,11 +117,29 @@ function NewPO({ history }) {
             id="delivered"
             value={delivered}
             onChange={handleChange}>
+              <option value=''>Select delivery status</option>
               <option value={false}>Awaiting delivery</option>
               <option value={true}>Delivered</option>
           </select>
         </div>
-        
+        <div className="form-group">
+          <label htmlFor="supplierId">Supplier</label>
+          <select
+            name="supplierId"
+            id="supplierId"
+            value={supplierId}
+            onChange={handleSelect}>
+              <option key={0} value={''}>
+                  Select supplier
+                </option>
+              {supplierId.data.map((option) => {
+                return( <option key={option.id} value={option.id}>
+                  {option.name}
+                </option> )
+                console.log(option)
+              })}
+          </select>
+        </div>
         <div className="form-group">
           <label htmlFor="PO_document">File</label>
           <input
@@ -151,40 +156,9 @@ function NewPO({ history }) {
             id="submit" 
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="supplierId">Supplier</label>
-          <select
-            name="supplierId"
-            id="supplierId"
-            value={supplierId}
-            onChange={handleChange}>
-              {supplierOptions.map((option) => {
-                <option value={option.value}>{option.label}</option>
-              })}
-          </select>
-        </div>
       </form>
     </div>
   )
 }
-
-// {supplierOptions.map((option) => {
-//   console.log(option.label);
-//   console.log(option.value);
-//   return <option value={option.value}>{option.label}</option>
-// })}
-
-{/* <option value={1}>one</option>
-<option value={2}>two</option>
-<option value={3}>three</option> */}
-
-// options={
-//   supplierOptions.map((option) => {
-//     console.log(option)
-//     return {
-//       label: option.label,
-//       value: option.value
-//     }
-// })}
 
 export default NewPO
