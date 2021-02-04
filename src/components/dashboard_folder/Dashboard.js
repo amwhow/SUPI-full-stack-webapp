@@ -129,6 +129,7 @@ export default function Dashboard() {
     localStorage.removeItem("token");
     history.push("/");
   }
+  const user_name = localStorage.getItem("user_name");
 
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
@@ -156,7 +157,7 @@ export default function Dashboard() {
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             {/* company name here */}
-            Welcome back! Username
+            {`Welcome back, ${user_name}!`}
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={1} color="secondary">
