@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Route, Switch, Link} from "react-router-dom"
 import Dashboard from './components/dashboard_folder/Dashboard'
 import NewUser from './components/user/NewUser'
 import Login from './components/user/Login'
+import NewSupplier from './components/supplier/NewSupplier'
 import ProtectedRoute from './components/ProtectedRoute'
 
 function App() {
@@ -13,12 +14,14 @@ function App() {
         <li><Link to="/dashboard">Home</Link></li>
         <li><Link to="/signup">Sign Up</Link></li>
         <li><Link to="/login">Login</Link></li>
+        <li><Link to="/suppliers/new">New Supplier</Link></li>
       </ul>
 
       <Switch>  
         <ProtectedRoute exact path="/dashboard" component={Dashboard} />
         <Route exact path="/signup" component={NewUser} />
         <Route exact path="/login" component={Login} />
+        <ProtectedRoute exact path="/suppliers/new" component={NewSupplier} />
       </Switch>
     </Router >
   );

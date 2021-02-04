@@ -37,6 +37,55 @@ export default function reducer(state, action) {
         logo: action.data
       }
     }
+    // SUPPLIER CASES
+    case 'setname': {
+      return {
+        ...state,
+        name: action.data
+      }
+    }
+    case 'setservice': {
+      return {
+        ...state,
+        service: action.data
+      }
+    }
+    case 'setwebsite': {
+      return {
+        ...state,
+        website: action.data
+      }
+    }
+    case 'setcontactName': {
+      return {
+        ...state,
+        contactName: action.data
+      }
+    }
+    case 'setcontactEmail': {
+      return {
+        ...state,
+        contactEmail: action.data
+      }
+    }
+    case 'setcontactNumber': {
+      return {
+        ...state,
+        contactNumber: action.data
+      }
+    }
+    case 'setdescription': {
+      return {
+        ...state,
+        description: action.data
+      }
+    }
+    case 'setnote': {
+      return {
+        ...state,
+        note: action.data
+      }
+    }
     // PO CASES
     case 'setorderDate': {
       return {
