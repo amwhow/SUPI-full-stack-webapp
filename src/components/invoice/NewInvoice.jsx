@@ -1,37 +1,20 @@
 import React, {useReducer} from "react"
 import reducer from '../../utils/reducer'
 
-function NewInvoice({ history }) {
+function NewInvoice({ history, match }) {
   const initialInvoiceState = {
     receivedDate: "",
     dueDate: "",
     totalPrice: "",
     paid: "",
-    purchaseOrderId: "",
+    purchaseOrderId: match.params.id,
     invoiceDocument: ""
   }
-
-  // need to fetch purchase orders so they can be used as dropdown menu options in form. 
-  // below is just and example of how we can structure the data after fetching
-  const purchaseOrderOptions = [
-    {
-      label: `PO: #${purchase_order_id}`,
-      value: `${purchase_order_id}`,
-    },
-    {
-      label: `PO: #${purchase_order_id}`,
-      value: `${purchase_order_id}`,
-    },
-    {
-      label: `PO: #${purchase_order_id}`,
-      value: `${purchase_order_id}`,
-    },
-  ];
 
   // recommend we add a function to set today's date as the min value for date inputs
 
   const [store, dispatch] = useReducer(reducer, initialInvoiceState)
-  const {receivedDate, dueDate, totalPrice, paid, purchaseOrderId, invoiceDocument} = store
+  const {receivedDate, dueDate, totalPrice, paid, invoiceDocument} = store
 
   const handleChange = (e) => {
     dispatch({
@@ -42,13 +25,14 @@ function NewInvoice({ history }) {
 
   async function onFormSubmit(event) {
     event.preventDefault();
-    const body = { invoice: {receivedDate, dueDate, totalPrice, paid, purchase_order_id} }
+    const body = { invoice: {receivedDate: receivedDate, dueDate: dueDate, totalPrice: totalPrice, paid: paid, purchase_order_id: match.params.id} }
     // , invoice_document
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/invoices`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify(body),
       });
@@ -101,11 +85,12 @@ function NewInvoice({ history }) {
             id="paid"
             value={paid}
             onChange={handleChange}>
+              <option value=''>Select payment status</option>
               <option value={false}>Awaiting payment</option>
               <option value={true}>Payment made</option>
           </select>
         </div>
-        <div className="form-group">
+        {/* <div className="form-group">
           <label htmlFor="purchaseOrderId">Purchase Order</label>
           <select
             name="purchaseOrderId"
@@ -116,7 +101,7 @@ function NewInvoice({ history }) {
                 <option value={option.value}>{option.label}</option>
               ))}
           </select>
-        </div>
+        </div> */}
         <div className="form-group">
           <label htmlFor="invoiceDocument">File</label>
           <input

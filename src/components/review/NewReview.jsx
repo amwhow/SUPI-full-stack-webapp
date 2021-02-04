@@ -10,8 +10,6 @@ function NewReview({ history, match }) {
     purchaseOrderId: match.params.id
   }
 
-  console.log(match.params)
-
   const [store, dispatch] = useReducer(reducer, initialReviewState)
   const {qualityRating, reliabilityRating, costRating, comment} = store
 
