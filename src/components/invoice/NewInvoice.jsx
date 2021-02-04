@@ -90,18 +90,6 @@ function NewInvoice({ history, match }) {
               <option value={true}>Payment made</option>
           </select>
         </div>
-        {/* <div className="form-group">
-          <label htmlFor="purchaseOrderId">Purchase Order</label>
-          <select
-            name="purchaseOrderId"
-            id="purchaseOrderId"
-            value={purchaseOrderId}
-            onChange={handleChange}>
-              {purchaseOrderOptions.map((option) => (
-                <option value={option.value}>{option.label}</option>
-              ))}
-          </select>
-        </div> */}
         <div className="form-group">
           <label htmlFor="invoiceDocument">File</label>
           <input
