@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import { Form, Container } from "../styles/Form";
 import Button from "@material-ui/core/Button";
 import LoggedOutNav from "./LoggedOutNav";
-import SignUpContainer from "../styles/SignUpContainer"
+import FormContainer from "../styles/FormContainer";
 
 function NewUser({ history }) {
   // each time a column of the sign-up form is filled, we set the state to that value instead of pushing it to an state array
@@ -77,7 +77,7 @@ function NewUser({ history }) {
   return (
     <div>
       <LoggedOutNav />
-      <SignUpContainer>
+      <FormContainer>
         <Grid item xs={12} sm={8}>
           <div className="form-container">
             <h1>Sign Up</h1>
@@ -146,7 +146,7 @@ function NewUser({ history }) {
             </Form>
           </div>
         </Grid>
-      </SignUpContainer>
+      </FormContainer>
     </div>
   );
 }
