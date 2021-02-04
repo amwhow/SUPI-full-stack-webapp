@@ -13,11 +13,9 @@ export default function ProtectedRoute({ exact, path, component }) {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
-        console.log("response:" + response)
         if (response.status >= 400) {
           throw new Error("not authorized");
         } else {
-          // const { jwt } = await response.json() returns an empty response???
           const jwt = localStorage.getItem("token");
           localStorage.setItem("token", jwt);
           setAuth(true);
@@ -32,9 +30,7 @@ export default function ProtectedRoute({ exact, path, component }) {
   }, []);
 
   if (!loading && !auth) {
-    console.log(loading)
-    console.log(auth)
-    return <Redirect to="/login" />;
+    return <Redirect to="/" />;
   } else {
     return (
       !loading && (
