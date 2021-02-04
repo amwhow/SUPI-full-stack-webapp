@@ -185,7 +185,7 @@ export default function Dashboard() {
           </IconButton>
         </div>
         <Divider />
-          <MainListItems />
+          <MainListItems history={history}/>
         <Divider />
         <List>{secondaryListItems}</List>
       </Drawer>

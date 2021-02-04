@@ -13,6 +13,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
+import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function MainListItems() {
+export function MainListItems({ history }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
 
@@ -82,11 +83,11 @@ export function MainListItems() {
       </Collapse>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
+          <ListItem button className={classes.nested} onClick={()=> history.push("/suppliers/new")}>
             <ListItemIcon>
-              <PeopleIcon />
+              <AddIcon color="primary" />
             </ListItemIcon>
-            <ListItemText primary="Random Catering" />
+            <ListItemText primary="New supplier" />
           </ListItem>
         </List>
       </Collapse>
