@@ -65,9 +65,9 @@ function NewUser({ history }) {
           }
         );
         const { user_name, jwt } = await response.json();
-        // how to retrieve user data??
+        // user_name
         localStorage.setItem("token", jwt);
-        history.push("/login");
+        history.push("/");
         alert("You have signed up!");
       }
     } catch (e) {

@@ -31,10 +31,12 @@ function Login({ history }) {
         }
       );
       if (response.status >= 400) {
-        throw new Error("invalid authentication");
+        const { error } = await response.json()
+        throw new Error(error);
       } else {
-        const { jwt } = await response.json();
+        const { user_name, jwt } = await response.json();
         localStorage.setItem("token", jwt);
+        localStorage.setItem("user_name", user_name);
         history.push("/dashboard");
         alert("Logged in Successfully!");
       }
