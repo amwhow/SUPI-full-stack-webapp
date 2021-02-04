@@ -1,4 +1,4 @@
-import React, {useReducer} from "react"
+import React, {useReducer, useState} from "react"
 import reducer from '../../utils/reducer'
 
 function NewPO({ history }) {
@@ -11,27 +11,49 @@ function NewPO({ history }) {
     PODocument: ""
   }
 
+  const [supplierId, setSupplierId] = useState("");
+
   // need to fetch supplier so they can be used as dropdown menu options in form. 
   // below is just and example of how we can structure the data after fetching
-  const supplierOptions = [
-    {
-      label: `Supplier: #${supplier_id}`,
-      value: `${supplier_id}`,
-    },
-    {
-      label: `Supplier: #${supplier_id}`,
-      value: `${supplier_id}`,
-    },
-    {
-      label: `Supplier: #${supplier_id}`,
-      value: `${supplier_id}`,
-    },
-  ];
+  const supplierOptions = []
+  
+  fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers`, {
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    }
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      res.map((supplier) => {
+        supplierOptions.push({
+          label: `${supplier.name}`,
+          value: `${supplier.id}`
+        })
+      })
+    })
+
+  console.log(supplierOptions)
+  console.log(supplierOptions)
+
+  // const supplierOptions = [
+  //   {
+  //     label: `Supplier: #${supplier_id}`,
+  //     value: `${supplier_id}`,
+  //   },
+  //   {
+  //     label: `Supplier: #${supplier_id}`,
+  //     value: `${supplier_id}`,
+  //   },
+  //   {
+  //     label: `Supplier: #${supplier_id}`,
+  //     value: `${supplier_id}`,
+  //   },
+  // ];
 
   // recommend we add a function to set today's date as the min value for date inputs
 
   const [store, dispatch] = useReducer(reducer, initialPOState)
-  const {orderDate, approvalStatus, totalPrice, delivered, supplierId, PODocument} = store
+  const {orderDate, approvalStatus, totalPrice, delivered, PODocument} = store
 
   const handleChange = (e) => {
     dispatch({
@@ -40,9 +62,14 @@ function NewPO({ history }) {
     })
   }
 
+  const handleSelect = (e) => {
+    setSupplierId(e.target.value)
+    console.log(supplierId)
+  }
+
   async function onFormSubmit(event) {
     event.preventDefault();
-    const body = { purchaseOrder: {orderDate, approvalStatus, totalPrice, delivered, supplier_id} }
+    const body = { purchase_order: {orderDate: orderDate, approvalStatus: approvalStatus, totalPrice: totalPrice, delivered: delivered, supplier_id: supplierId} }
     // , PO_document
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/purchase_orders`, {
@@ -107,18 +134,7 @@ function NewPO({ history }) {
               <option value={true}>Delivered</option>
           </select>
         </div>
-        <div className="form-group">
-          <label htmlFor="supplierId">Supplier</label>
-          <select
-            name="supplierId"
-            id="supplierId"
-            value={supplierId}
-            onChange={handleChange}>
-              {supplierOptions.map((option) => (
-                <option value={option.value}>{option.label}</option>
-              ))}
-          </select>
-        </div>
+        
         <div className="form-group">
           <label htmlFor="PO_document">File</label>
           <input
@@ -135,9 +151,40 @@ function NewPO({ history }) {
             id="submit" 
           />
         </div>
+        <div className="form-group">
+          <label htmlFor="supplierId">Supplier</label>
+          <select
+            name="supplierId"
+            id="supplierId"
+            value={supplierId}
+            onChange={handleChange}>
+              {supplierOptions.map((option) => {
+                <option value={option.value}>{option.label}</option>
+              })}
+          </select>
+        </div>
       </form>
     </div>
   )
 }
+
+// {supplierOptions.map((option) => {
+//   console.log(option.label);
+//   console.log(option.value);
+//   return <option value={option.value}>{option.label}</option>
+// })}
+
+{/* <option value={1}>one</option>
+<option value={2}>two</option>
+<option value={3}>three</option> */}
+
+// options={
+//   supplierOptions.map((option) => {
+//     console.log(option)
+//     return {
+//       label: option.label,
+//       value: option.value
+//     }
+// })}
 
 export default NewPO
