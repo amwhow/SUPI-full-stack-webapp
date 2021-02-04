@@ -42,7 +42,7 @@ export function MainListItems({ history }) {
         className={classes.root}
       >
       
-      <ListItem button>
+      <ListItem button onClick={() => history.push("/dashboard")}>
         <ListItemIcon>
           {/* company logo here */}
           <BusinessIcon />
@@ -62,7 +62,7 @@ export function MainListItems({ history }) {
       {/* sub-menu for my suppliers here, create an iteration for user.suppliers and generate each Collapse element */}
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
+          <ListItem button className={classes.nested} onClick={()=> history.push("/dashboard/supplier")}>
             {/* supplier logo here */}
             <ListItemIcon>
               <PeopleIcon />

@@ -1,5 +1,6 @@
 import React, { useReducer } from "react";
 import reducer from "../../utils/reducer";
+import Grid from "@material-ui/core/Grid";
 import { Form } from "../styles/Form";
 import FormContainer from "../styles/FormContainer";
 import Button from "@material-ui/core/Button";
@@ -16,20 +17,20 @@ function NewPO({ history }) {
 
   // need to fetch supplier so they can be used as dropdown menu options in form.
   // below is just and example of how we can structure the data after fetching
-  const supplierOptions = [
-    {
-      label: `Supplier: #${supplier_id}`,
-      value: `${supplier_id}`,
-    },
-    {
-      label: `Supplier: #${supplier_id}`,
-      value: `${supplier_id}`,
-    },
-    {
-      label: `Supplier: #${supplier_id}`,
-      value: `${supplier_id}`,
-    },
-  ];
+  // const supplierOptions = [
+  //   {
+  //     label: `Supplier: #${supplier_id}`,
+  //     value: `${supplier_id}`,
+  //   },
+  //   {
+  //     label: `Supplier: #${supplier_id}`,
+  //     value: `${supplier_id}`,
+  //   },
+  //   {
+  //     label: `Supplier: #${supplier_id}`,
+  //     value: `${supplier_id}`,
+  //   },
+  // ];
 
   // recommend we add a function to set today's date as the min value for date inputs
 
