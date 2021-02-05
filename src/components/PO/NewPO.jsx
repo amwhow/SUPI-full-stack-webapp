@@ -1,5 +1,4 @@
 import React, {useReducer, useState, useEffect} from "react"
-import reducer from '../../utils/reducer'
 import reducer from "../../utils/reducer";
 import Grid from "@material-ui/core/Grid";
 import { Form } from "../styles/Form";
