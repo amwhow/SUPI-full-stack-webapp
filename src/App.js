@@ -11,6 +11,7 @@ import NewPO from './components/PO/NewPO'
 import NewDocument from './components/document/NewDocument'
 import NewReview from './components/review/NewReview'
 import NewInvoice from './components/invoice/NewInvoice'
+import DashboardSupplier from "./components/dashboard_folder/DashboardSupplier";
 
 
 function App() {

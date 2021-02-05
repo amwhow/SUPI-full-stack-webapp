@@ -64,7 +64,7 @@ function NewSupplier({ history }) {
           body: JSON.stringify(body),
         }
       );
-      history.push("/suppliers");
+      history.push("/dashboard/suppliers");
       alert("Supplier created");
     } catch (err) {
       console.log(err.message);
