@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, {useReducer, useState, useEffect} from "react"
+import reducer from '../../utils/reducer'
 import Grid from "@material-ui/core/Grid";
 import { Form } from "../styles/Form";
 import FormContainer from "../styles/FormContainer";
@@ -8,55 +9,63 @@ function NewDocument({ history }) {
   const initialDocumentState = {
     expiryDate: "",
     documentType: "",
-    supplierId: "",
-    supplierDocument: "",
-  };
-
-  const [expiryDate, setExpiryDate] = useState("");
-  const [documentType, setDocumentType] = useState("");
-  const [supplierId, setSupplierId] = useState(1);
-  const [supplierDocument, setSupplierDocument] = useState("");
-
-  // need to fetch supplier so they can be used as dropdown menu options in form.
-  // below is just and example of how we can structure the data after fetching
-  const supplierOptions = [
-    {
-      label: `Supplier: #${supplierId}`,
-      value: `${supplierId}`,
-    },
-    {
-      label: `Supplier: #${supplierId}`,
-      value: `${supplierId}`,
-    },
-    {
-      label: `Supplier: #${supplierId}`,
-      value: `${supplierId}`,
-    },
-  ];
+    supplierDocument: ""
+  }
 
   // recommend we add a function to set today's date as the min value for date inputs
 
+  const [store, dispatch] = useReducer(reducer, initialDocumentState)
+  const {expiryDate, documentType, supplierDocument} = store
+
+  const [supplierId, setSupplierId] = useState({
+    data: [],
+    selected: ''
+  });
+
+  function fetchSuppliers() {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+      .then((res) => res.json())
+      .then((body) => setSupplierId({
+        data: body,
+        selected: ''
+      }))
+  }
+
+  useEffect(() => {
+    fetchSuppliers();
+  },[])
+
+  const handleChange = (e) => {
+    dispatch({
+      type: `set${e.target.name}`,
+      data: e.target.value
+    })
+  }
+
+  const handleSelect = (e) => {
+    setSupplierId({
+      data: supplierId.data,
+      selected: e.target.value
+    })
+  }
+
   async function onFormSubmit(event) {
     event.preventDefault();
+    const body = { document: {expiryDate: expiryDate, documentType: documentType, supplier_id: supplierId.selected} }
+    // , supplierDocument
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/documents`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: JSON.stringify({
-            document: {
-              expiryDate: expiryDate,
-              documentType: documentType,
-              supplierId: supplierId,
-              supplierDocument: supplierDocument,
-            },
-          }),
-        }
-      );
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/documents`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(body),
+      });
       history.push("/documents");
     } catch (err) {
       console.log(err.message);
@@ -75,34 +84,38 @@ function NewDocument({ history }) {
               name="expiryDate"
               id="expiryDate"
               value={expiryDate}
-              onChange={(e) => setExpiryDate(e.target.value)}
+              onChange={handleChange}
             />
           </div>
           <div className="form-content">
             <label htmlFor="documentType">Document type</label>
-            <select
-              name="documentType"
+            <select 
+              name="documentType" 
               id="documentType"
               value={documentType}
-              onChange={(e) => setDocumentType(e.target.value)}
-            >
-              <option value="Licence">Licence</option>
-              <option value="Contract">Contract</option>
-              <option value="Risk Assessment">Risk Assessment</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
+              onChange={handleChange}>
+                <option value="">Select document type</option>
+                <option value="Licence">Licence</option>
+                <option value="Contract">Contract</option>
+                <option value="Risk Assessment">Risk Assessment</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
           <div className="form-content">
             <label htmlFor="supplier_id">Supplier</label>
             <select
-              name="supplier_id"
-              id="supplier_id"
+              name="supplierId"
+              id="supplierId"
               value={supplierId}
-              onChange={(e) => setSupplierId(e.target.value)}
-            >
-              {supplierOptions.map((option) => (
-                <option value={option.value}>{option.label}</option>
-              ))}
+              onChange={handleSelect}>
+                <option key={0} value={''}>
+                    Select supplier
+                  </option>
+                {supplierId.data.map((option) => {
+                  return( <option key={option.id} value={option.id}>
+                    {option.name}
+                  </option> )
+                })}
             </select>
           </div>
           <div className="form-content">
@@ -111,7 +124,7 @@ function NewDocument({ history }) {
               type="file"
               name="PO_document"
               id="PO_document"
-              accept=".pdf,.doc,.md"
+              accept=".pdf,.doc,.md" 
             />
           </div>
           <div className="form-content">
@@ -128,7 +141,7 @@ function NewDocument({ history }) {
         </Form>
       </Grid>
     </FormContainer>
-  );
+  )
 }
 
 export default NewDocument;

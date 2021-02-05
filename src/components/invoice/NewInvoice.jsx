@@ -5,44 +5,20 @@ import { Form } from "../styles/Form";
 import FormContainer from "../styles/FormContainer";
 import Button from "@material-ui/core/Button";
 
-function NewInvoice({ history }) {
+function NewInvoice({ history, match }) {
   const initialInvoiceState = {
     receivedDate: "",
     dueDate: "",
     totalPrice: "",
     paid: "",
-    purchaseOrderId: "",
-    invoiceDocument: "",
-  };
-
-  // need to fetch purchase orders so they can be used as dropdown menu options in form.
-  // below is just and example of how we can structure the data after fetching
-    const purchaseOrderOptions = [
-      {
-        label: `PO: #${purchaseOrderId}`,
-        value: `${purchaseOrderId}`,
-      },
-      {
-        label: `PO: #${purchaseOrderId}`,
-        value: `${purchaseOrderId}`,
-      },
-      {
-        label: `PO: #${purchaseOrderId}`,
-        value: `${purchaseOrderId}`,
-      },
-    ];
+    purchaseOrderId: match.params.id,
+    invoiceDocument: ""
+  }
 
   // recommend we add a function to set today's date as the min value for date inputs
 
-  const [store, dispatch] = useReducer(reducer, initialInvoiceState);
-  const {
-    receivedDate,
-    dueDate,
-    totalPrice,
-    paid,
-    purchaseOrderId,
-    invoiceDocument,
-  } = store;
+  const [store, dispatch] = useReducer(reducer, initialInvoiceState)
+  const {receivedDate, dueDate, totalPrice, paid, invoiceDocument} = store
 
   const handleChange = (e) => {
     dispatch({
@@ -53,22 +29,18 @@ function NewInvoice({ history }) {
 
   async function onFormSubmit(event) {
     event.preventDefault();
-    const body = {
-      invoice: { receivedDate, dueDate, totalPrice, paid, purchaseOrderId },
-    };
+    const body = { invoice: {receivedDate: receivedDate, dueDate: dueDate, totalPrice: totalPrice, paid: paid, purchase_order_id: match.params.id} }
     // , invoice_document
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/invoices`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(body),
-        }
-      );
-      history.push("/invoices");
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/invoices`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(body),
+      });
+      history.push("/invoices")
     } catch (err) {
       console.log(err.message);
     }
@@ -113,22 +85,14 @@ function NewInvoice({ history }) {
           </div>
           <div className="form-content">
             <label htmlFor="paid">Payment made</label>
-            <select name="paid" id="paid" value={paid} onChange={handleChange}>
-              <option value={false}>Awaiting payment</option>
-              <option value={true}>Payment made</option>
-            </select>
-          </div>
-          <div className="form-content">
-            <label htmlFor="purchaseOrderId">Purchase Order</label>
-            <select
-              name="purchaseOrderId"
-              id="purchaseOrderId"
-              value={purchaseOrderId}
-              onChange={handleChange}
-            >
-              {purchaseOrderOptions.map((option) => (
-                <option value={option.value}>{option.label}</option>
-              ))}
+            <select 
+              name="paid" 
+              id="paid"
+              value={paid}
+              onChange={handleChange}>
+                <option value=''>Select payment status</option>
+                <option value={false}>Awaiting payment</option>
+                <option value={true}>Payment made</option>
             </select>
           </div>
           <div className="form-content">
@@ -137,7 +101,7 @@ function NewInvoice({ history }) {
               type="file"
               name="invoiceDocument"
               id="invoiceDocument"
-              accept=".pdf,.doc,.md"
+              accept=".pdf,.doc,.md" 
             />
           </div>
           <div className="form-content">
@@ -154,7 +118,7 @@ function NewInvoice({ history }) {
         </Form>
       </Grid>
     </FormContainer>
-  );
+  )
 }
 
 export default NewInvoice;

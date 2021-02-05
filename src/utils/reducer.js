@@ -102,7 +102,7 @@ export default function reducer(state, action) {
     case 'settotalPrice': {
       return {
         ...state,
-        approvalStatus: action.data
+        totalPrice: action.data
       }
     }
     case 'setdelivered': {
@@ -179,6 +179,19 @@ export default function reducer(state, action) {
       return {
         ...state,
         comment: action.data
+      }
+    }
+    // DOCUMENT CASES
+    case 'setexpiryDate': {
+      return {
+      ...state,
+      expiryDate: action.data
+      }
+    }
+    case 'setdocumentType': {
+      return {
+        ...state,
+        documentType: action.data
       }
     }
     default: return state
