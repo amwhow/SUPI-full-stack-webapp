@@ -32,7 +32,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function CustomizedTables() {
+export default function POTable() {
   const classes = useStyles();
 
   const [purchaseOrders, setPurchaseOrders] = useState([]);
