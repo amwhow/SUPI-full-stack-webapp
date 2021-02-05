@@ -1,5 +1,4 @@
-import React, {useReducer, useState, useEffect} from "react"
-import reducer from '../../utils/reducer'
+import React, { useReducer, useState, useEffect } from "react";
 import reducer from "../../utils/reducer";
 import Grid from "@material-ui/core/Grid";
 import { Form } from "../styles/Form";
@@ -12,35 +11,43 @@ function NewPO({ history }) {
     approvalStatus: "",
     totalPrice: "",
     delivered: "",
-    PODocument: ""
-  }
-  
+    PODocument: "",
+  };
+
   const [supplierId, setSupplierId] = useState({
     data: [],
-    selected: ''
+    selected: "",
   });
-  
+
   function fetchSuppliers() {
     fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers`, {
       headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
     })
       .then((res) => res.json())
-      .then((body) => setSupplierId({
-        data: body,
-        selected: ''
-      }))
+      .then((body) =>
+        setSupplierId({
+          data: body,
+          selected: "",
+        })
+      );
   }
 
   useEffect(() => {
     fetchSuppliers();
-  },[])
+  }, []);
 
   // recommend we add a function to set today's date as the min value for date inputs
 
-  const [store, dispatch] = useReducer(reducer, initialPOState)
-  const {orderDate, approvalStatus, totalPrice, delivered, PODocument} = store
+  const [store, dispatch] = useReducer(reducer, initialPOState);
+  const {
+    orderDate,
+    approvalStatus,
+    totalPrice,
+    delivered,
+    PODocument,
+  } = store;
 
   const handleChange = (e) => {
     dispatch({
@@ -52,13 +59,21 @@ function NewPO({ history }) {
   const handleSelect = (e) => {
     setSupplierId({
       data: supplierId.data,
-      selected: e.target.value
-    })
-  }
+      selected: e.target.value,
+    });
+  };
 
   async function onFormSubmit(event) {
     event.preventDefault();
-    const body = { purchase_order: {orderDate: orderDate, approvalStatus: approvalStatus, totalPrice: totalPrice, delivered: delivered, supplier_id: supplierId.selected} }
+    const body = {
+      purchase_order: {
+        orderDate: orderDate,
+        approvalStatus: approvalStatus,
+        totalPrice: totalPrice,
+        delivered: delivered,
+        supplier_id: supplierId.selected,
+      },
+    };
     // , PO_document
     try {
       const response = await fetch(
@@ -80,7 +95,7 @@ function NewPO({ history }) {
 
   return (
     <FormContainer>
-      <Grid item xs={12} sm={8}>    
+      <Grid item xs={12} sm={8}>
         <h1 className="new-doc-header">New PO</h1>
         <Form className="new-invoice-form" onSubmit={onFormSubmit}>
           <div className="form-content">
@@ -99,10 +114,11 @@ function NewPO({ history }) {
               name="approvalStatus"
               id="approvalStatus"
               value={approvalStatus}
-              onChange={handleChange}>
-                <option value=''>Select approval status</option>
-                <option value={false}>Awaiting approval</option>
-                <option value={true}>Approved</option>
+              onChange={handleChange}
+            >
+              <option value="">Select approval status</option>
+              <option value={false}>Awaiting approval</option>
+              <option value={true}>Approved</option>
             </select>
           </div>
           <div className="form-content">
@@ -123,10 +139,11 @@ function NewPO({ history }) {
               name="delivered"
               id="delivered"
               value={delivered}
-              onChange={handleChange}>
-                <option value=''>Select delivery status</option>
-                <option value={false}>Awaiting delivery</option>
-                <option value={true}>Delivered</option>
+              onChange={handleChange}
+            >
+              <option value="">Select delivery status</option>
+              <option value={false}>Awaiting delivery</option>
+              <option value={true}>Delivered</option>
             </select>
           </div>
           <div className="form-content">
@@ -135,15 +152,18 @@ function NewPO({ history }) {
               name="supplierId"
               id="supplierId"
               value={supplierId}
-              onChange={handleSelect}>
-                <option key={0} value={''}>
-                    Select supplier
-                  </option>
-                {supplierId.data.map((option) => {
-                  return( <option key={option.id} value={option.id}>
+              onChange={handleSelect}
+            >
+              <option key={0} value={""}>
+                Select supplier
+              </option>
+              {supplierId.data.map((option) => {
+                return (
+                  <option key={option.id} value={option.id}>
                     {option.name}
-                  </option> )
-                })}
+                  </option>
+                );
+              })}
             </select>
           </div>
           <div className="form-content">
@@ -152,7 +172,7 @@ function NewPO({ history }) {
               type="file"
               name="PO_document"
               id="PO_document"
-              accept=".pdf,.doc,.md" 
+              accept=".pdf,.doc,.md"
             />
           </div>
           <div className="form-content">
@@ -169,7 +189,7 @@ function NewPO({ history }) {
         </Form>
       </Grid>
     </FormContainer>
-  )
+  );
 }
 
 export default NewPO;

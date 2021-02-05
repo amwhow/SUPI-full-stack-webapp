@@ -1,53 +1,88 @@
 import clsx from "clsx";
-import React from 'react';
-import Calendar from './Calendar';
-import InvoicesDue from './InvoicesDue';
-import POApprovals from './POApprovals';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import DashboardStyles from './DashboardStyles';
+import React, {useState, useEffect} from "react";
+import Calendar from "./Calendar";
+import InvoicesDue from "./InvoicesDue";
+import POApprovals from "./POApprovals";
+import SupplierNotes from "./SupplierNotes";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import DashboardStyles from "./DashboardStyles";
+import Button from "@material-ui/core/Button";
+import DashboardTabs from "./DashboardTabs";
+import Overview from "./supplier_info/Overview"
+// import { useLocation } from "react-router-dom";
 
 const useStyles = DashboardStyles;
 
-const DashboardSupplier = () => {
+const DashboardSupplier = (props) => {
+  // const location = useLocation();
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
+  const [supplier, setSupplier] = useState("failed supplier")
+  
+  useEffect(()=> {
+    setSupplier(props.location.state.supplier)
+  }, [props.location])
+  
+  console.log(supplier)
   return (
     <Grid container spacing={3}>
-      {/* Info section */}
+      <Grid
+        container
+        spacing={3}
+        direction="row"
+        justify="flex-start"
+        alignItems="center"
+      >
+        <Grid item xs={6} md={6} lg={6}>
+          <h1>{supplier.name}</h1>
+        </Grid>
+        <Grid item >
+          <Button
+            variant="contained"
+            value="Edit Supplier"
+            id="submit"
+            color="primary"
+            // onClick={() => history.push("/supplier/edit")}
+          >
+            Manage Supplier
+          </Button>
+        </Grid>
+      </Grid>
+
       <Grid item xs={12} md={7} lg={8}>
-        <Paper className={fixedHeightPaper}>
-          <h1>Meggies's Farm</h1>
-          <button>Manage Supplier</button>
+        <Paper className="notFixedHeight" variant="outlined">
+          <DashboardTabs />
+          
+          <Overview supplier={supplier}/>
         </Paper>
       </Grid>
       {/* Calendar */}
       <Grid item xs={12} md={5} lg={4}>
-        <Paper className={fixedHeightPaper}>
+        <Paper className="notFixedHeight" elevation={0}>
           <Calendar />
         </Paper>
       </Grid>
       {/* Invoice due */}
       <Grid item xs={12} md={4} lg={4}>
-        <Paper className={fixedHeightPaper}>
+        <Paper className={fixedHeightPaper} variant="outlined">
           <InvoicesDue />
         </Paper>
       </Grid>
       {/* PO Approval */}
       <Grid item xs={12} md={4} lg={4}>
-        <Paper className={fixedHeightPaper}>
+        <Paper className={fixedHeightPaper} variant="outlined">
           <POApprovals />
         </Paper>
       </Grid>
       {/* Supplier Notes */}
       <Grid item xs={12} md={4} lg={4}>
-        <Paper className={fixedHeightPaper}>
-          <p>Supplier Notes</p>
+        <Paper className={fixedHeightPaper} variant="outlined">
+          <SupplierNotes />
         </Paper>
       </Grid>
     </Grid>
   );
 };
 
-export default DashboardSupplier
+export default DashboardSupplier;
