@@ -12,6 +12,10 @@ const useStyles = makeStyles((theme) => ({
 
 const Home = ({ history }) => {
   const classes = useStyles();
+  const loggedInStatus = localStorage.getItem("token");
+  if (loggedInStatus) {
+    history.push('/dashboard')
+  }
 
   return (
     <>
