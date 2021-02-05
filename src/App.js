@@ -7,10 +7,11 @@ import NewUser from "./components/user/NewUser";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./components/Home"
 import NewSupplier from './components/supplier/NewSupplier'
-import NewInvoice from './components/invoice/NewInvoice'
 import NewPO from './components/PO/NewPO'
-import NewReview from './components/review/NewReview'
 import NewDocument from './components/document/NewDocument'
+import NewReview from './components/review/NewReview'
+import NewInvoice from './components/invoice/NewInvoice'
+
 
 function App() {
 
@@ -22,10 +23,10 @@ function App() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/" component={Home} />
         <ProtectedRoute exact path="/suppliers/new" component={NewSupplier} />
-        <ProtectedRoute exact path="/invoices/new" component={NewInvoice} />
-        <ProtectedRoute exact path="/po/new" component={NewPO} />
-        <ProtectedRoute exact path="/review/new" component={NewReview} />
-        <ProtectedRoute exact path="/document/new" component={NewDocument} />
+        <ProtectedRoute exact path="/purchase_orders/new" component={NewPO} />
+        <ProtectedRoute exact path="/documents/new" component={NewDocument} />
+        <ProtectedRoute exact path="/purchase_orders/:id/reviews/new" component={NewReview} />
+        <ProtectedRoute exact path="/purchase_orders/:id/invoices/new" component={NewInvoice} />
       </Switch>
     </div>
   );
