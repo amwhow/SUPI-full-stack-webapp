@@ -161,6 +161,12 @@ export default function reducer(state, action) {
         purchaseOrderId: action.data
       }
     }
+    case 'setinvoiceDocument': {
+      return {
+        ...state,
+        invoiceDocument: action.data
+      }
+    }
     // Need to add file state here
     // REVIEW CASES
     case 'setpurchaseOrderId': {
