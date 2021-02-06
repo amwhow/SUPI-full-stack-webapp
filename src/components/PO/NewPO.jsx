@@ -48,6 +48,13 @@ function NewPO({ history }) {
     });
   };
 
+  const handleFile = (e) => {
+    dispatch({
+      type: `set${e.target.name}`,
+      data: e.target.files[0]
+    })
+  }
+
   const handleSelect = (e) => {
     setSupplierId({
       data: supplierId.data,
@@ -57,18 +64,24 @@ function NewPO({ history }) {
 
   async function onFormSubmit(event) {
     event.preventDefault();
-    const body = { purchase_order: {orderDate: orderDate, approvalStatus: approvalStatus, totalPrice: totalPrice, delivered: delivered, supplier_id: supplierId.selected} }
-    // , PO_document
+    const body = { purchase_order: {orderDate: orderDate, approvalStatus: approvalStatus, totalPrice: totalPrice, delivered: delivered, supplier_id: supplierId.selected, PO_document: PODocument} }
+    const formData = new FormData();
+    formData.append("orderDate", orderDate)
+    formData.append("approvalStatus", approvalStatus)
+    formData.append("totalPrice", totalPrice)
+    formData.append("delivered", delivered)
+    formData.append("supplier_id", supplierId.selected)
+    formData.append("PO_document", PODocument)
+
     try {
       const response = await fetch(
         `${process.env.REACT_APP_BACKEND_URL}/purchase_orders`,
         {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-          body: JSON.stringify(body),
+          body: formData,
         }
       );
       history.push("/purchase_orders");
@@ -81,7 +94,7 @@ function NewPO({ history }) {
     <FormContainer>
       <Grid item xs={12} sm={8}>    
         <h1 className="new-doc-header">New PO</h1>
-        <Form className="new-invoice-form" onSubmit={onFormSubmit}>
+        <Form className="new-invoice-form" onSubmit={onFormSubmit} encType="multipart/form-data">
           <div className="form-content">
             <label htmlFor="orderDate">Order date</label>
             <input
@@ -146,12 +159,13 @@ function NewPO({ history }) {
             </select>
           </div>
           <div className="form-content">
-            <label htmlFor="PO_document">File</label>
+            <label htmlFor="PODocument">File</label>
             <input
               type="file"
-              name="PO_document"
-              id="PO_document"
-              accept=".pdf,.doc,.md" 
+              name="PODocument"
+              id="PODocument"
+              accept=".pdf,.doc,.md"
+              onChange={handleFile} 
             />
           </div>
           <div className="form-content">

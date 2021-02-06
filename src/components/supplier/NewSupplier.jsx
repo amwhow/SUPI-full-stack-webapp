@@ -15,6 +15,7 @@ function NewSupplier({ history }) {
     contactNumber: "",
     description: "",
     note: "",
+    logo: ""
   };
 
   // recommend we add a function to set today's date as the min value for date inputs
@@ -29,6 +30,7 @@ function NewSupplier({ history }) {
     contactNumber,
     description,
     note,
+    logo
   } = store;
 
   const handleChange = (e) => {
@@ -37,6 +39,13 @@ function NewSupplier({ history }) {
       data: e.target.value,
     });
   };
+
+  const handleFile = (e) => {
+    dispatch({
+      type: `set${e.target.name}`,
+      data: e.target.files[0]
+    })
+  }
 
   async function onFormSubmit(event) {
     event.preventDefault();
@@ -52,16 +61,26 @@ function NewSupplier({ history }) {
         note: note,
       },
     };
+    const formData = new FormData();
+    formData.append("name", name)
+    formData.append("service", service)
+    formData.append("website", website)
+    formData.append("contact_name", contactName)
+    formData.append("contact_email", contactEmail)
+    formData.append("contact_number", contactNumber)
+    formData.append("description", description)
+    formData.append("note", note)
+    formData.append("logo", logo)
+
     try {
       const response = await fetch(
         `${process.env.REACT_APP_BACKEND_URL}/suppliers`,
         {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-          body: JSON.stringify(body),
+          body: formData,
         }
       );
       history.push("/suppliers");
@@ -75,7 +94,7 @@ function NewSupplier({ history }) {
     <FormContainer>
       <Grid item xs={12} sm={8}>
         <h1 className="new-doc-header">New Supplier</h1>
-        <Form className="new-invoice-form" onSubmit={onFormSubmit}>
+        <Form className="new-invoice-form" onSubmit={onFormSubmit} encType="multipart/form-data">
           <div className="form-content">
             <label htmlFor="name">Supplier name</label>
             <input
@@ -154,6 +173,16 @@ function NewSupplier({ history }) {
               id="note"
               value={note}
               onChange={handleChange}
+            />
+          </div>
+          <div className="form-content">
+            <label htmlFor="logo">Logo</label>
+            <input
+              type="file"
+              name="logo"
+              id="logo"
+              accept=".jpg,.jpeg,.png"
+              onChange={handleFile} 
             />
           </div>
           <div className="form-content">
