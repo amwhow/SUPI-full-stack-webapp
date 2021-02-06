@@ -1,11 +1,12 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useEffect } from "react";
 import reducer from "../../utils/reducer";
 import Grid from "@material-ui/core/Grid";
 import { Form } from "../styles/Form";
 import FormContainer from "../styles/FormContainer";
 import Button from "@material-ui/core/Button";
+import { useParams, useHistory } from "react-router-dom";
 
-function NewSupplier({ history }) {
+function EditSupplier() {
   const initialSupplierState = {
     name: "",
     service: "",
@@ -17,6 +18,8 @@ function NewSupplier({ history }) {
     note: "",
   };
 
+  const { id } = useParams();
+  const history = useHistory();
   // recommend we add a function to set today's date as the min value for date inputs
 
   const [store, dispatch] = useReducer(reducer, initialSupplierState);
@@ -38,6 +41,34 @@ function NewSupplier({ history }) {
     });
   };
 
+  const supplierKeys = [
+    "name",
+    "service",
+    "website",
+    "contact_name",
+    "contact_email",
+    "contact_number",
+    "description",
+    "note"
+  ]
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((supplier) => {
+        supplierKeys.map((element) => {
+          dispatch({
+            type: `set${element}`,
+            data: supplier[element],
+          });
+        });
+      });
+  }, [id]);
+
   async function onFormSubmit(event) {
     event.preventDefault();
     const body = {
@@ -54,9 +85,9 @@ function NewSupplier({ history }) {
     };
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/suppliers`,
+        `${process.env.REACT_APP_BACKEND_URL}/suppliers/${id}`,
         {
-          method: "POST",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -64,8 +95,8 @@ function NewSupplier({ history }) {
           body: JSON.stringify(body),
         }
       );
-      history.push("/dashboard/suppliers");
-      alert("Supplier created");
+      alert("Supplier updated");
+      history.push("/");
     } catch (err) {
       console.log(err.message);
     }
@@ -74,7 +105,7 @@ function NewSupplier({ history }) {
   return (
     <FormContainer>
       <Grid item xs={12} sm={8}>
-        <h1 className="new-doc-header">New Supplier</h1>
+        <h1 className="new-doc-header">Edit Supplier</h1>
         <Form className="new-invoice-form" onSubmit={onFormSubmit}>
           <div className="form-content">
             <label htmlFor="name">Supplier name</label>
@@ -160,17 +191,25 @@ function NewSupplier({ history }) {
             <Button
               type="submit"
               variant="contained"
-              value="Add Supplier"
+              value="Edit Supplier"
               id="submit"
               color="primary"
             >
-              Create
+              Save
             </Button>
           </div>
         </Form>
+        <Button
+          variant="contained"
+          color="secondary"
+          // not working, will trigger once the edit page renders
+          // onClick={history.goBack()}
+        >
+          Back
+        </Button>
       </Grid>
     </FormContainer>
   );
 }
 
-export default NewSupplier;
+export default EditSupplier;

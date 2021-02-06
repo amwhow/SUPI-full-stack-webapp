@@ -40,7 +40,7 @@ export function MainListItems({history, suppliers}) {
     const res = await data.json()
     setSupplier(res);
     await history.push({
-      pathname: `/dashboard/supplier/${id}`,
+      pathname: `/dashboard/suppliers/${id}`,
       state: { supplier:supplier }
     })
   };
@@ -48,7 +48,6 @@ export function MainListItems({history, suppliers}) {
   const handleClick = () => {
     setOpen(!open);
   };
-  console.log("supplier: " + supplier)
   return (
     <div>
       <List

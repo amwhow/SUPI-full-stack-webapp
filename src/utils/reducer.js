@@ -56,19 +56,19 @@ export default function reducer(state, action) {
         website: action.data
       }
     }
-    case 'setcontactName': {
+    case 'setcontact_name': {
       return {
         ...state,
         contactName: action.data
       }
     }
-    case 'setcontactEmail': {
+    case 'setcontact_email': {
       return {
         ...state,
         contactEmail: action.data
       }
     }
-    case 'setcontactNumber': {
+    case 'setcontact_number': {
       return {
         ...state,
         contactNumber: action.data

@@ -144,7 +144,7 @@ export default function Dashboard(props) {
             <ProtectedRoute exact path="/dashboard" component={DashboardHome} />
             <ProtectedRoute
               exact
-              path={`/dashboard/supplier/:id`}
+              path={`/dashboard/suppliers/:id`}
               component={DashboardSupplier}
             />
           </Switch>

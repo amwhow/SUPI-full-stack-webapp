@@ -10,12 +10,12 @@ import DashboardStyles from "./DashboardStyles";
 import Button from "@material-ui/core/Button";
 import DashboardTabs from "./DashboardTabs";
 import Overview from "./supplier_info/Overview"
-// import { useLocation } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 
 const useStyles = DashboardStyles;
 
 const DashboardSupplier = (props) => {
-  // const location = useLocation();
+  // const history = useHistory();
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const [supplier, setSupplier] = useState("failed supplier")
@@ -43,9 +43,9 @@ const DashboardSupplier = (props) => {
             value="Edit Supplier"
             id="submit"
             color="primary"
-            // onClick={() => history.push("/supplier/edit")}
+            onClick={() => props.history.push(`/suppliers/edit/${supplier.id}`)}
           >
-            Manage Supplier
+            Edit Supplier
           </Button>
         </Grid>
       </Grid>
