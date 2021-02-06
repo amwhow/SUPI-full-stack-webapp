@@ -32,50 +32,46 @@ const useStyles = makeStyles({
   },
 });
 
-export default function InvoiceTable() {
+export default function DocumentTable() {
   const classes = useStyles();
 
-  const [invoices, setInvoices] = useState([]);
+  const [documents, setDocuments] = useState([]);
 
-  function fetchInvoices() {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/invoices`, {
+  function fetchDocuments() {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/documents`, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
     })
       .then((res) => res.json())
-      .then((body) => setInvoices(body))
+      .then((body) => setDocuments(body))
   }
 
   useEffect(() => {
-    fetchInvoices();
+    fetchDocuments();
   },[])
+
+  console.log(documents)
 
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Invoice Number</StyledTableCell>
-            <StyledTableCell align="right">Received On</StyledTableCell>
-            <StyledTableCell align="right">Due Date</StyledTableCell>
-            <StyledTableCell align="right">Total Price</StyledTableCell>
-            <StyledTableCell align="right">Payment Status</StyledTableCell>
-            <StyledTableCell align="right">PO Number</StyledTableCell>
-            <StyledTableCell align="right">Invoice Document</StyledTableCell>
+            <StyledTableCell>Document Number</StyledTableCell>
+            <StyledTableCell align="right">Document Type</StyledTableCell>
+            <StyledTableCell align="right">Expiry Date</StyledTableCell>
+            <StyledTableCell align="right">Document File</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {invoices.map((invoice) => (
-            <StyledTableRow key={invoice.id}>
+          {documents.map((document) => (
+            <StyledTableRow key={document.id}>
               <StyledTableCell component="th" scope="row">
-                # {invoice.id}
+                # {document.id}
               </StyledTableCell>
-              <StyledTableCell align="right">{invoice.receivedDate}</StyledTableCell>
-              <StyledTableCell align="right">{invoice.dueDate}</StyledTableCell>
-              <StyledTableCell align="right">${invoice.totalPrice}</StyledTableCell>
-              <StyledTableCell align="right">{invoice.paid ? "Payment made" : "Awaiting payment"}</StyledTableCell>
-              <StyledTableCell align="right">#{invoice.purchase_order_id}</StyledTableCell>
+              <StyledTableCell align="right">{document.documentType}</StyledTableCell>
+              <StyledTableCell align="right">{document.expiryDate}</StyledTableCell>
               <StyledTableCell align="right">Waiting for file</StyledTableCell>
             </StyledTableRow>
           ))}

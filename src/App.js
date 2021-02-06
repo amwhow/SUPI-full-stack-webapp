@@ -13,6 +13,7 @@ import NewReview from './components/review/NewReview'
 import NewInvoice from './components/invoice/NewInvoice'
 import POTable from './components/table/POTable'
 import InvoiceTable from './components/table/InvoiceTable'
+import DocumentTable from './components/table/DocumentTable'
 
 
 
@@ -30,6 +31,7 @@ function App() {
         <ProtectedRoute exact path="/documents/new" component={NewDocument} />
         <ProtectedRoute exact path="/purchase_orders" component={POTable} />
         <ProtectedRoute exact path="/invoices" component={InvoiceTable} />
+        <ProtectedRoute exact path="/documents" component={DocumentTable} />
         <ProtectedRoute exact path="/purchase_orders/:id/reviews/new" component={NewReview} />
         <ProtectedRoute exact path="/purchase_orders/:id/invoices/new" component={NewInvoice} />
       </Switch>
