@@ -37,7 +37,6 @@ function NewInvoice({ history, match }) {
   async function onFormSubmit(event) {
     event.preventDefault();
     const body = { invoice: {receivedDate: receivedDate, dueDate: dueDate, totalPrice: totalPrice, paid: paid, purchase_order_id: match.params.id} }
-    // , invoice_document
 
     const formData = new FormData();
     formData.append("receivedDate", receivedDate)

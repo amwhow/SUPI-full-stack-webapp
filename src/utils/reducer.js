@@ -212,6 +212,12 @@ export default function reducer(state, action) {
         documentType: action.data
       }
     }
+    case 'setsupplierDocument': {
+      return {
+        ...state,
+        supplierDocument: action.data
+      }
+    }
     default: return state
   }
 }
