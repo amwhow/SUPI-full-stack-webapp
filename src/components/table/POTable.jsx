@@ -51,6 +51,8 @@ export default function POTable() {
     fetchPurchaseOrders();
   },[])
 
+  console.log(purchaseOrders)
+
   const invoiceLinks = purchaseOrders.map((PO, index) => {
     return `/purchase_orders/${index + 1}/invoices/new`
   })
@@ -58,6 +60,8 @@ export default function POTable() {
   const reviewLinks = purchaseOrders.map((PO, index) => {
     return `/purchase_orders/${index + 1}/reviews/new`
   })
+
+  console.log(reviewLinks)
 
   return (
     <TableContainer component={Paper}>
