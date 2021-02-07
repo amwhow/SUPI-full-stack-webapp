@@ -1,12 +1,12 @@
 import { React, useState, useEffect, useContext } from "react";
 import { Route, Switch, Link, useHistory } from "react-router-dom";
 import Login from "./components/user/Login";
-import LoggedOutNav from "./components/user/LoggedOutNav";
 import Dashboard from "./components/dashboard_folder/Dashboard";
 import NewUser from "./components/user/NewUser";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./components/Home"
 import NewSupplier from './components/supplier/NewSupplier'
+import EditSupplier from './components/supplier/EditSupplier'
 import NewPO from './components/PO/NewPO'
 import NewDocument from './components/document/NewDocument'
 import NewReview from './components/review/NewReview'

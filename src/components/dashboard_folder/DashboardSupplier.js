@@ -51,7 +51,7 @@ const DashboardSupplier = (props) => {
 
       <Grid item xs={12} md={7} lg={8}>
         <Paper className="notFixedHeight" variant="outlined">
-          <DashboardTabs supplier={props.supplier} />
+          <DashboardTabs supplier={supplier} />
         </Paper>
       </Grid>
       {/* Calendar */}
