@@ -22,7 +22,8 @@ export default function ProtectedRoute({ exact, path, component }) {
           setLoading(false);
         }
       } catch (err) {
-        console.log(err);
+        console.error(err.message);
+        alert("Can't connect to backend server")
         setLoading(false);
       }
     }

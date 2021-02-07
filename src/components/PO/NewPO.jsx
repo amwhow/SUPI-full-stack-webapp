@@ -16,30 +16,38 @@ function NewPO({ history }) {
   
   const [supplierId, setSupplierId] = useState({
     data: [],
-    selected: ''
+    selected: "",
   });
-  
+
   function fetchSuppliers() {
     fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers`, {
       headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
     })
       .then((res) => res.json())
-      .then((body) => setSupplierId({
-        data: body,
-        selected: ''
-      }))
+      .then((body) =>
+        setSupplierId({
+          data: body,
+          selected: "",
+        })
+      );
   }
 
   useEffect(() => {
     fetchSuppliers();
-  },[])
+  }, []);
 
   // recommend we add a function to set today's date as the min value for date inputs
 
-  const [store, dispatch] = useReducer(reducer, initialPOState)
-  const {orderDate, approvalStatus, totalPrice, delivered, PODocument} = store
+  const [store, dispatch] = useReducer(reducer, initialPOState);
+  const {
+    orderDate,
+    approvalStatus,
+    totalPrice,
+    delivered,
+    PODocument,
+  } = store;
 
   const handleChange = (e) => {
     dispatch({
@@ -58,9 +66,9 @@ function NewPO({ history }) {
   const handleSelect = (e) => {
     setSupplierId({
       data: supplierId.data,
-      selected: e.target.value
-    })
-  }
+      selected: e.target.value,
+    });
+  };
 
   async function onFormSubmit(event) {
     event.preventDefault();
@@ -91,7 +99,7 @@ function NewPO({ history }) {
 
   return (
     <FormContainer>
-      <Grid item xs={12} sm={8}>    
+      <Grid item xs={12} sm={8}>
         <h1 className="new-doc-header">New PO</h1>
         <Form className="new-invoice-form" onSubmit={onFormSubmit} encType="multipart/form-data">
           <div className="form-content">
@@ -110,10 +118,11 @@ function NewPO({ history }) {
               name="approvalStatus"
               id="approvalStatus"
               value={approvalStatus}
-              onChange={handleChange}>
-                <option value=''>Select approval status</option>
-                <option value={false}>Awaiting approval</option>
-                <option value={true}>Approved</option>
+              onChange={handleChange}
+            >
+              <option value="">Select approval status</option>
+              <option value={false}>Awaiting approval</option>
+              <option value={true}>Approved</option>
             </select>
           </div>
           <div className="form-content">
@@ -134,10 +143,11 @@ function NewPO({ history }) {
               name="delivered"
               id="delivered"
               value={delivered}
-              onChange={handleChange}>
-                <option value=''>Select delivery status</option>
-                <option value={false}>Awaiting delivery</option>
-                <option value={true}>Delivered</option>
+              onChange={handleChange}
+            >
+              <option value="">Select delivery status</option>
+              <option value={false}>Awaiting delivery</option>
+              <option value={true}>Delivered</option>
             </select>
           </div>
           <div className="form-content">
@@ -146,15 +156,18 @@ function NewPO({ history }) {
               name="supplierId"
               id="supplierId"
               value={supplierId}
-              onChange={handleSelect}>
-                <option key={0} value={''}>
-                    Select supplier
-                  </option>
-                {supplierId.data.map((option) => {
-                  return( <option key={option.id} value={option.id}>
+              onChange={handleSelect}
+            >
+              <option key={0} value={""}>
+                Select supplier
+              </option>
+              {supplierId.data.map((option) => {
+                return (
+                  <option key={option.id} value={option.id}>
                     {option.name}
-                  </option> )
-                })}
+                  </option>
+                );
+              })}
             </select>
           </div>
           <div className="form-content">
@@ -181,7 +194,7 @@ function NewPO({ history }) {
         </Form>
       </Grid>
     </FormContainer>
-  )
+  );
 }
 
 export default NewPO;
