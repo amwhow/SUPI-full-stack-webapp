@@ -19,7 +19,7 @@ const DashboardHome = () => {
     <Grid container spacing={3}>
       {/* Chart */}
       <Grid item xs={12} md={7} lg={8}>
-        <Paper className={fixedHeightPaper}>
+        <Paper className={fixedHeightPaper} variant="outlined">
           <Chart />
         </Paper>
       </Grid>
@@ -31,19 +31,19 @@ const DashboardHome = () => {
       </Grid>
       {/* Invoice due */}
       <Grid item xs={12} md={4} lg={4}>
-        <Paper className={fixedHeightPaper}>
+        <Paper className={fixedHeightPaper} variant="outlined">
           <InvoicesDue />
         </Paper>
       </Grid>
       {/* PO Approval */}
       <Grid item xs={12} md={4} lg={4}>
-        <Paper className={fixedHeightPaper}>
+        <Paper className={fixedHeightPaper} variant="outlined">
           <POApprovals />
         </Paper>
       </Grid>
       {/* Quick Contacts */}
       <Grid item xs={12} md={4} lg={4}>
-        <Paper className={fixedHeightPaper}>
+        <Paper className={fixedHeightPaper} variant="outlined">
           <QuickContacts />
         </Paper>
       </Grid>

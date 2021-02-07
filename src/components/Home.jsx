@@ -12,13 +12,18 @@ const useStyles = makeStyles((theme) => ({
 
 const Home = ({ history }) => {
   const classes = useStyles();
+  const loggedInStatus = localStorage.getItem("token");
+  console.log(loggedInStatus)
+  if (loggedInStatus) {
+    history.push('/dashboard')
+  } 
 
   return (
     <>
       <div className="login-container">
         <LoggedOutNav/>
         <div className={classes.root}>
-          <Grid container spacing={3}  alignItems="center" justifyContent="space-between" style={{ minHeight: '80vh' }}>
+          <Grid container spacing={3}  alignItems="center" justify="space-between" style={{ minHeight: '80vh' }}>
             <Grid item xs={12} sm={7} align="center">
               <h1>Welcome to SUPI</h1>
               <p style={{width:"85%"}}>Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum Lorim ipsum</p>

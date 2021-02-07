@@ -79,6 +79,9 @@ const DashboardStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 240,
   },
+  chartHeight: {
+    height: 300,
+  },
 }));
 
 export default DashboardStyles;

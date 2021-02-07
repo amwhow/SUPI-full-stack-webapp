@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import clsx from "clsx";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -21,8 +21,9 @@ import { MainListItems, secondaryListItems } from "./listItems";
 import DashboardHome from "./DashboardHome";
 import DashboardSupplier from "./DashboardSupplier";
 import DashboardStyles from "./DashboardStyles";
-import { Switch } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import ProtectedRoute from "../ProtectedRoute";
+import SupplierNotes from "./SupplierNotes";
 
 function Copyright() {
   return (
@@ -41,8 +42,9 @@ function Copyright() {
 
 const useStyles = DashboardStyles;
 
-export default function Dashboard() {
+export default function Dashboard(props) {
   const history = useHistory();
+
   const logout = () => {
     localStorage.removeItem("token");
     history.push("/");
@@ -57,7 +59,21 @@ export default function Dashboard() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  // const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
+  const [suppliers, setSuppliers] = useState([]);
+  // const id = props.location.pathname.slice(-1)
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((response) => {
+        setSuppliers(response);
+      });
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -115,7 +131,7 @@ export default function Dashboard() {
           </IconButton>
         </div>
         <Divider />
-        <MainListItems history={history} />
+        <MainListItems history={history} suppliers={suppliers} />
         <Divider />
         <List>{secondaryListItems}</List>
       </Drawer>
@@ -124,11 +140,13 @@ export default function Dashboard() {
         <Container maxWidth="lg" className={classes.container}>
           {/* modularise the main section */}
           <Switch>
-            {/* dynamically change component params based on backend data */}
             {/* component should change to: render={(props) => <DashboardHome {...props} suppliers={suppliers}/> }/> */}
             <ProtectedRoute exact path="/dashboard" component={DashboardHome} />
-            <ProtectedRoute exact path="/dashboard/supplier" component={DashboardSupplier} />
-
+            <ProtectedRoute
+              exact
+              path={`/dashboard/suppliers/:id`}
+              component={DashboardSupplier}
+            />
           </Switch>
 
           {/* <DashboardHome /> */}
