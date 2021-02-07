@@ -14,14 +14,14 @@ const data = [
   createData('FEB', 300),
   createData('MAR', 600),
   createData('APR', 800),
-  createData('MAY', 1500),
-  createData('JUN', 2000),
-  createData('JUL', 2400),
-  createData('AUG', 2400),
-  createData('SEP', 1500),
-  createData('OCT', 1300),
-  createData('NOV', 800),
-  createData('DEC', 500),
+  // createData('MAY', 1500),
+  // createData('JUN', 2000),
+  // createData('JUL', 2400),
+  // createData('AUG', 2400),
+  // createData('SEP', 1500),
+  // createData('OCT', 1300),
+  // createData('NOV', 800),
+  // createData('DEC', 500),
 ];
 
 export default function Chart() {
