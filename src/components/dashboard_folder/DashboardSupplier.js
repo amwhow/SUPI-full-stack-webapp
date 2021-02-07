@@ -24,7 +24,6 @@ const DashboardSupplier = (props) => {
     setSupplier(props.location.state.supplier)
   }, [props.location])
   
-  console.log(supplier)
   return (
     <Grid container spacing={3}>
       <Grid
@@ -52,9 +51,7 @@ const DashboardSupplier = (props) => {
 
       <Grid item xs={12} md={7} lg={8}>
         <Paper className="notFixedHeight" variant="outlined">
-          <DashboardTabs />
-          
-          <Overview supplier={supplier}/>
+          <DashboardTabs supplier={props.supplier} />
         </Paper>
       </Grid>
       {/* Calendar */}
