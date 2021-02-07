@@ -68,7 +68,7 @@ function NewDocument({ history }) {
     formData.append("expiryDate", expiryDate)
     formData.append("documentType", documentType)
     formData.append("supplier_id", supplierId.selected)
-    formData.append("supplierDocument", supplierDocument)
+    formData.append("supplier_document", supplierDocument)
 
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/documents`, {
