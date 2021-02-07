@@ -27,18 +27,32 @@ function NewInvoice({ history, match }) {
     });
   };
 
+  const handleFile = (e) => {
+    dispatch({
+      type: `set${e.target.name}`,
+      data: e.target.files[0]
+    })
+  }
+
   async function onFormSubmit(event) {
     event.preventDefault();
     const body = { invoice: {receivedDate: receivedDate, dueDate: dueDate, totalPrice: totalPrice, paid: paid, purchase_order_id: match.params.id} }
-    // , invoice_document
+
+    const formData = new FormData();
+    formData.append("receivedDate", receivedDate)
+    formData.append("dueDate", dueDate)
+    formData.append("totalPrice", totalPrice)
+    formData.append("paid", paid)
+    formData.append("purchase_order_id", match.params.id)
+    formData.append("invoiceDocument", invoiceDocument)
+
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/invoices`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
-        body: JSON.stringify(body),
+        body: formData,
       });
       history.push("/invoices")
     } catch (err) {
@@ -50,7 +64,7 @@ function NewInvoice({ history, match }) {
     <FormContainer>
       <Grid item xs={12} sm={8}>
         <h1 className="new-doc-header">New Invoice</h1>
-        <Form className="new-invoice-form" onSubmit={onFormSubmit}>
+        <Form className="new-invoice-form" onSubmit={onFormSubmit} encType="multipart/form-data">
           <div className="form-content">
             <label htmlFor="receivedDate">Date received</label>
             <input
@@ -102,6 +116,7 @@ function NewInvoice({ history, match }) {
               name="invoiceDocument"
               id="invoiceDocument"
               accept=".pdf,.doc,.md" 
+              onChange={handleFile}
             />
           </div>
           <div className="form-content">

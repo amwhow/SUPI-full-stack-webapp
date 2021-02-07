@@ -7,7 +7,7 @@ import LoggedOutNav from "./LoggedOutNav";
 import FormContainer from "../styles/FormContainer";
 
 function NewUser({ history }) {
-  // each time a column of the sign-up form is filled, we set the state to that value instead of pushing it to an state array
+
   const initialState = {
     email: "",
     password: "",
@@ -34,21 +34,35 @@ function NewUser({ history }) {
     });
   };
 
+  const handleFile = (e) => {
+    dispatch({
+      type: `set${e.target.name}`,
+      data: e.target.files[0]
+    })
+  }
+
   async function onFormSubmit(event) {
     event.preventDefault();
     const body = {
       user: { email, password, user_name, company_name, password_confirmation },
     };
-    // , logo
+
+    const formData = new FormData();
+    formData.append("email", email)
+    formData.append("password", password)
+    formData.append("user_name", user_name)
+    formData.append("company_name", company_name)
+    formData.append("password_confirmation", password_confirmation)
+    formData.append("logo", logo)
+
     try {
       const response = await fetch(
         `${process.env.REACT_APP_BACKEND_URL}/sign_up`,
         {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
           },
-          body: JSON.stringify(body),
+          body: formData,
         }
       );
       if (response.status >= 400) {
@@ -81,7 +95,7 @@ function NewUser({ history }) {
         <Grid item xs={12} sm={8}>
           <div className="form-container">
             <h1>Sign Up</h1>
-            <Form className="signup-form" onSubmit={onFormSubmit}>
+            <Form className="signup-form" encType="multipart/form-data" onSubmit={onFormSubmit}>
               <div className="form-content">
                 <label htmlFor="user_name">Username</label>
                 <input
@@ -123,8 +137,14 @@ function NewUser({ history }) {
                   value={company_name}
                   onChange={handleChange}
                 />
-                {/* <label htmlFor="logo">Company Logo</label> */}
-                {/* <input type="file" name="logo" id="logo" value={logo} onChange={handleChange}/> */}
+                <label htmlFor="logo">Logo</label>
+                <input
+                  type="file"
+                  name="logo"
+                  id="logo"
+                  accept=".jpg,.jpeg,.png"
+                  onChange={handleFile} 
+                />
                 <Button
                   variant="contained"
                   color="primary"
