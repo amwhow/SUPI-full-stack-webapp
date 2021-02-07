@@ -86,6 +86,12 @@ export default function reducer(state, action) {
         note: action.data
       }
     }
+    case 'setlogo': {
+      return {
+        ...state,
+        logo: action.data
+      }
+    }
     // PO CASES
     case 'setorderDate': {
       return {
@@ -115,6 +121,12 @@ export default function reducer(state, action) {
       return {
         ...state,
         supplierId: action.data
+      }
+    }
+    case 'setPODocument': {
+      return {
+        ...state,
+        PODocument: action.data
       }
     }
     // Need to add file state here
@@ -147,6 +159,12 @@ export default function reducer(state, action) {
       return {
         ...state,
         purchaseOrderId: action.data
+      }
+    }
+    case 'setinvoiceDocument': {
+      return {
+        ...state,
+        invoiceDocument: action.data
       }
     }
     // Need to add file state here
@@ -192,6 +210,12 @@ export default function reducer(state, action) {
       return {
         ...state,
         documentType: action.data
+      }
+    }
+    case 'setsupplierDocument': {
+      return {
+        ...state,
+        supplierDocument: action.data
       }
     }
     default: return state
