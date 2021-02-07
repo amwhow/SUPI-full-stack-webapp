@@ -1,9 +1,5 @@
 import clsx from "clsx";
 import React, {useState, useEffect} from "react";
-import Calendar from "./Calendar";
-import InvoicesDue from "./InvoicesDue";
-import POApprovals from "./POApprovals";
-import SupplierNotes from "./SupplierNotes";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import DashboardStyles from "./DashboardStyles";
@@ -37,7 +33,7 @@ const DashboardSupplier = (props) => {
         <Grid item xs={6} md={6} lg={6}>
           <h1>{supplier.name}</h1>
         </Grid>
-        <Grid item >
+        <Grid item xs={6} md={6} lg={6} align="end">
           <Button
             variant="contained"
             value="Edit Supplier"
@@ -50,34 +46,8 @@ const DashboardSupplier = (props) => {
         </Grid>
       </Grid>
 
-      <Grid item xs={12} md={7} lg={8}>
-        <Paper className={fixedHeightChartPaper} variant="outlined">
-          <DashboardTabs supplier={supplier} />
-        </Paper>
-      </Grid>
-      {/* Calendar */}
-      <Grid item xs={12} md={5} lg={4}>
-        <Paper className="notFixedHeight" elevation={0}>
-          <Calendar />
-        </Paper>
-      </Grid>
-      {/* Invoice due */}
-      <Grid item xs={12} md={4} lg={4}>
-        <Paper className={fixedHeightPaper} variant="outlined">
-          <InvoicesDue />
-        </Paper>
-      </Grid>
-      {/* PO Approval */}
-      <Grid item xs={12} md={4} lg={4}>
-        <Paper className={fixedHeightPaper} variant="outlined">
-          <POApprovals />
-        </Paper>
-      </Grid>
-      {/* Supplier Notes */}
-      <Grid item xs={12} md={4} lg={4}>
-        <Paper className={fixedHeightPaper} variant="outlined">
-          <SupplierNotes />
-        </Paper>
+      <Grid item xs={12} md={12} lg={12}>
+        <DashboardTabs supplier={supplier} fixedHeightPaper={fixedHeightPaper}/>
       </Grid>
     </Grid>
   );
