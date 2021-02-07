@@ -18,6 +18,7 @@ const DashboardSupplier = (props) => {
   // const history = useHistory();
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  const fixedHeightChartPaper = clsx(classes.paper);
   const [supplier, setSupplier] = useState("failed supplier")
   
   useEffect(()=> {
@@ -50,7 +51,7 @@ const DashboardSupplier = (props) => {
       </Grid>
 
       <Grid item xs={12} md={7} lg={8}>
-        <Paper className="notFixedHeight" variant="outlined">
+        <Paper className={fixedHeightChartPaper} variant="outlined">
           <DashboardTabs supplier={supplier} />
         </Paper>
       </Grid>

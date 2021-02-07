@@ -14,8 +14,6 @@ import NewInvoice from './components/invoice/NewInvoice'
 import POTable from './components/table/POTable'
 import InvoiceTable from './components/table/InvoiceTable'
 import DocumentTable from './components/table/DocumentTable'
-import { Line } from "@reactchartjs/react-chart.js";
-
 
 function App() {
   return (

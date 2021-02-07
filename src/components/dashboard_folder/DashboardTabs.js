@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -8,6 +8,27 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Overview from './supplier_info/Overview'
 import Evaluation from './supplier_info/Evaluation'
+
+const AntTab = withStyles((theme) => ({
+  root: {
+    textTransform: 'none',
+    minWidth: 40,
+    fontWeight: theme.typography.fontWeightRegular,
+    marginRight: theme.spacing(1),
+    '&:hover': {
+      color: theme.palette.primary.main,
+      opacity: 1,
+    },
+    '&$selected': {
+      color: theme.palette.primary.main,
+      fontWeight: theme.typography.fontWeightMedium,
+    },
+    '&:focus': {
+      color: theme.palette.primary.main,
+    },
+  },
+  selected: {},
+}))((props) => <Tab disableRipple {...props} />);
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -58,7 +79,6 @@ export default function DashboardTabs({supplier}) {
     setValue(newValue);
   };
 
-  console.log(supplier.name)
 
   return (
     <div className={classes.root}>
@@ -72,11 +92,11 @@ export default function DashboardTabs({supplier}) {
           scrollButtons="auto"
           aria-label="scrollable auto tabs example"
         >
-          <Tab label="Overview" {...a11yProps(0)} />
-          <Tab label="Evaluation" {...a11yProps(1)} />
-          <Tab label="Purchase Orders" {...a11yProps(2)} />
-          <Tab label="Invoices" {...a11yProps(3)} />
-          <Tab label="Documents" {...a11yProps(4)} />
+          <AntTab label="Overview" {...a11yProps(0)} />
+          <AntTab label="Evaluation" {...a11yProps(1)} />
+          <AntTab label="Purchase Orders" {...a11yProps(2)} />
+          <AntTab label="Invoices" {...a11yProps(3)} />
+          <AntTab label="Documents" {...a11yProps(4)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
