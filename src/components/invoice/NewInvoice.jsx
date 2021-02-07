@@ -44,7 +44,7 @@ function NewInvoice({ history, match }) {
     formData.append("totalPrice", totalPrice)
     formData.append("paid", paid)
     formData.append("purchase_order_id", match.params.id)
-    formData.append("invoiceDocument", invoiceDocument)
+    formData.append("invoice_document", invoiceDocument)
 
     try {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/invoices`, {

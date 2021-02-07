@@ -14,6 +14,7 @@ import NewInvoice from './components/invoice/NewInvoice'
 import POTable from './components/table/POTable'
 import InvoiceTable from './components/table/InvoiceTable'
 import DocumentTable from './components/table/DocumentTable'
+import PurchaseOrder from './components/PO/PurchaseOrder'
 
 
 
@@ -34,6 +35,7 @@ function App() {
         <ProtectedRoute exact path="/documents" component={DocumentTable} />
         <ProtectedRoute exact path="/purchase_orders/:id/reviews/new" component={NewReview} />
         <ProtectedRoute exact path="/purchase_orders/:id/invoices/new" component={NewInvoice} />
+        <ProtectedRoute exact path="/purchase_orders/:id" component={PurchaseOrder} />
       </Switch>
     </div>
   );

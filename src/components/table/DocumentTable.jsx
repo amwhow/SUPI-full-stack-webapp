@@ -72,7 +72,9 @@ export default function DocumentTable() {
               </StyledTableCell>
               <StyledTableCell align="right">{document.documentType}</StyledTableCell>
               <StyledTableCell align="right">{document.expiryDate}</StyledTableCell>
-              <StyledTableCell align="right">Waiting for file</StyledTableCell>
+              <StyledTableCell align="right">
+                <a href={document.supplier_document.url}>Document file</a>
+              </StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

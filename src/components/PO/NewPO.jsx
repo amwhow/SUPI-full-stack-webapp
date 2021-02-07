@@ -11,7 +11,7 @@ function NewPO({ history }) {
     approvalStatus: "",
     totalPrice: "",
     delivered: "",
-    PODocument: ""
+    PODocument: null
   }
   
   const [supplierId, setSupplierId] = useState({
@@ -71,8 +71,7 @@ function NewPO({ history }) {
     formData.append("totalPrice", totalPrice)
     formData.append("delivered", delivered)
     formData.append("supplier_id", supplierId.selected)
-    formData.append("PO_document", PODocument)
-
+    formData.append("po_document", PODocument)
     try {
       const response = await fetch(
         `${process.env.REACT_APP_BACKEND_URL}/purchase_orders`,
