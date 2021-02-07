@@ -54,14 +54,12 @@ export default function POTable() {
   console.log(purchaseOrders)
 
   const invoiceLinks = purchaseOrders.map((PO, index) => {
-    return `/purchase_orders/${index + 1}/invoices/new`
+    return `/purchase_orders/${PO.id}/invoices/new`
   })
 
   const reviewLinks = purchaseOrders.map((PO, index) => {
-    return `/purchase_orders/${index + 1}/reviews/new`
+    return `/purchase_orders/${PO.id}/reviews/new`
   })
-
-  console.log(reviewLinks)
 
   return (
     <TableContainer component={Paper}>
@@ -79,7 +77,7 @@ export default function POTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {purchaseOrders.map((PO) => (
+          {purchaseOrders.map((PO, index) => (
             <StyledTableRow key={PO.id}>
               <StyledTableCell component="th" scope="row">
                 # {PO.id}
@@ -88,12 +86,14 @@ export default function POTable() {
               <StyledTableCell align="right">{PO.approvalStatus ? "Approved" : "Awaiting approval"}</StyledTableCell>
               <StyledTableCell align="right">${PO.totalPrice}</StyledTableCell>
               <StyledTableCell align="right">{PO.deliveryStatus ? "Delivered" : "Awaiting delivery"}</StyledTableCell>
-              <StyledTableCell align="right">Waiting for file</StyledTableCell>
               <StyledTableCell align="right">
-                <a href={invoiceLinks[PO.id - 1]}>Add invoice</a>
+                <a href={PO.po_document.url}>PO Document file</a>
               </StyledTableCell>
               <StyledTableCell align="right">
-                <a href={reviewLinks[PO.id - 1]}>Add review</a>
+                <a href={invoiceLinks[index]}>Add invoice</a>
+              </StyledTableCell>
+              <StyledTableCell align="right">
+                <a href={reviewLinks[index]}>Add review</a>
               </StyledTableCell>
             </StyledTableRow>
           ))}

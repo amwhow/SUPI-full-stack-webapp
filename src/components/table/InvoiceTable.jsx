@@ -76,7 +76,9 @@ export default function InvoiceTable() {
               <StyledTableCell align="right">${invoice.totalPrice}</StyledTableCell>
               <StyledTableCell align="right">{invoice.paid ? "Payment made" : "Awaiting payment"}</StyledTableCell>
               <StyledTableCell align="right">#{invoice.purchase_order_id}</StyledTableCell>
-              <StyledTableCell align="right">Waiting for file</StyledTableCell>
+              <StyledTableCell align="right">
+                <a href={invoice.invoice_document.url}>Invoice file</a>
+              </StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
