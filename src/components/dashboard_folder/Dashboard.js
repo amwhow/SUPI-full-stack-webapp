@@ -24,14 +24,16 @@ import DashboardStyles from "./DashboardStyles";
 import { Switch, Route } from "react-router-dom";
 import ProtectedRoute from "../ProtectedRoute";
 import SupplierNotes from "./SupplierNotes";
-import POTable from '../table/POTable'; 
-import NewPO from '../PO/NewPO';
-import NewInvoice from '../invoice/NewInvoice';
-import InvoiceTable from '../table/InvoiceTable'; 
-import DocumentTable from '../table/DocumentTable';
-import NewDocument from '../document/NewDocument'
-import ContactForm from "../info/Contact"
-import About from '../info/About'
+import POTable from "../table/POTable";
+import NewPO from "../PO/NewPO";
+import NewInvoice from "../invoice/NewInvoice";
+import InvoiceTable from "../table/InvoiceTable";
+import DocumentTable from "../table/DocumentTable";
+import NewDocument from "../document/NewDocument";
+import ContactForm from "../info/Contact";
+import About from "../info/About";
+import NewSupplier from "../../components/supplier/NewSupplier";
+import EditSupplier from "../../components/supplier/EditSupplier";
 
 function Copyright() {
   return (
@@ -73,14 +75,21 @@ export default function Dashboard(props) {
   const [invoices, setInvoices] = useState([]);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/dashboard/suppliers`, {
+    // clashing with Michael's backend path, change for now
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     })
       .then((res) => res.json())
       .then((response) => {
-        const {suppliers, contacts, purchase_orders, reviews, invoices } = response
+        const {
+          suppliers,
+          contacts,
+          purchase_orders,
+          reviews,
+          invoices,
+        } = response;
         setSuppliers(suppliers);
         setContacts(contacts);
         setPurchaseOrders(purchase_orders);
@@ -89,7 +98,6 @@ export default function Dashboard(props) {
         // console.log("in Dashboard, invoices: " + invoices[0].receivedDate)
       });
   }, []);
-
 
   return (
     <div className={classes.root}>
@@ -128,7 +136,7 @@ export default function Dashboard(props) {
           </IconButton>
         </Toolbar>
       </AppBar>
-      
+
       {/* sidebar */}
       <Drawer
         variant="permanent"
@@ -152,25 +160,62 @@ export default function Dashboard(props) {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-
           {/* modularise the main section */}
           <Switch>
             <ProtectedRoute exact path="/dashboard" component={DashboardHome} />
             <ProtectedRoute
               exact
-              path={`/dashboard/suppliers/:id`}
+              path={`/dashboard/supplier/:id`}
               component={DashboardSupplier}
             />
-            <ProtectedRoute exact path="/dashboard/purchase_orders" component={POTable} />
-            <ProtectedRoute exact path="/dashboard/purchase_orders/new" component={NewPO} />
-            <ProtectedRoute exact path="/dashboard/purchase_orders/:id/invoices/new" component={NewInvoice} />
-            <ProtectedRoute exact path="/dashboard/invoices" component={InvoiceTable} />
-            <ProtectedRoute exact path="/dashboard/documents" component={DocumentTable} />
-            <ProtectedRoute exact path="/dashboard/documents/new" component={NewDocument} />
-            <ProtectedRoute exact path="/dashboard/contact" component={ContactForm} />
+            <ProtectedRoute
+              exact
+              path="/dashboard/suppliers/new"
+              component={NewSupplier}
+            />
+            <ProtectedRoute
+              exact
+              path="/dashboard/suppliers/edit/:id"
+              component={EditSupplier}
+            />
+            <ProtectedRoute
+              exact
+              path="/dashboard/purchase_orders"
+              component={POTable}
+            />
+            <ProtectedRoute
+              exact
+              path="/dashboard/purchase_orders/new"
+              component={NewPO}
+            />
+            <ProtectedRoute
+              exact
+              path="/dashboard/purchase_orders/:id/invoices/new"
+              component={NewInvoice}
+            />
+            <ProtectedRoute
+              exact
+              path="/dashboard/invoices"
+              component={InvoiceTable}
+            />
+            <ProtectedRoute
+              exact
+              path="/dashboard/documents"
+              component={DocumentTable}
+            />
+            <ProtectedRoute
+              exact
+              path="/dashboard/documents/new"
+              component={NewDocument}
+            />
+            <ProtectedRoute
+              exact
+              path="/dashboard/contact"
+              component={ContactForm}
+            />
             <ProtectedRoute exact path="/dashboard/about" component={About} />
           </Switch>
-          
+
           {/* end of main section */}
           <Box pt={4}>
             <Copyright />

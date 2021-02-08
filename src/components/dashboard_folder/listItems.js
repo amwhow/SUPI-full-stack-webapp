@@ -32,7 +32,7 @@ export function MainListItems({history, suppliers}) {
   const [supplier, setSupplier] = useState(null);
   
   async function getSupplierShow(history, id, supplier) {
-    const data = await fetch(`${process.env.REACT_APP_BACKEND_URL}/dashboard/suppliers/${id}`, {
+    const data = await fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers/${id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -40,7 +40,7 @@ export function MainListItems({history, suppliers}) {
     const res = await data.json()
     setSupplier(res);
     await history.push({
-      pathname: `/dashboard/suppliers/${id}`,
+      pathname: `/dashboard/supplier/${id}`,
       state: { supplier: supplier }
     })
   };
@@ -103,7 +103,7 @@ export function MainListItems({history, suppliers}) {
             <ListItem
               button
               className={classes.nested}
-              onClick={() => history.push("/suppliers/new")}
+              onClick={() => history.push("/dashboard/suppliers/new")}
             >
               <ListItemIcon>
                 <AddIcon color="primary" />

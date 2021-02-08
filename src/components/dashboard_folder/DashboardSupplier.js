@@ -42,7 +42,7 @@ const DashboardSupplier = (props) => {
         setPoData(pos);
         setReviewData(reviews)
         setInvoiceData(invoices)
-        console.log("invoices document: " + invoices[0].invoice_document)
+        console.log("reviews: " + reviews)
         // handleReview("costRating")
       });
   }, [id]);
@@ -65,7 +65,7 @@ const DashboardSupplier = (props) => {
             value="Edit Supplier"
             id="submit"
             color="primary"
-            onClick={() => props.history.push(`/suppliers/edit/${supplier.id}`)}
+            onClick={() => props.history.push(`/dashboard/suppliers/edit/${supplier.id}`)}
           >
             Edit Supplier
           </Button>

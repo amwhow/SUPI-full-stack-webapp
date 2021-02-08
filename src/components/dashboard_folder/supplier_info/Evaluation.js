@@ -8,35 +8,59 @@ import Button from "@material-ui/core/Button";
 import EvaluationChart from "./EvaluationChart";
 import clsx from "clsx";
 import DashboardStyles from "../DashboardStyles";
-import Rating from "./Rating"
+import Rating from "./Rating";
 
-export default function Evaluation({supplier, reviewData, costRating, qualityRating ,reliabilityRating}) {
+export default function Evaluation({
+  supplier,
+  reviewData,
+  costRating,
+  qualityRating,
+  reliabilityRating,
+}) {
   const useStyles = DashboardStyles;
   const classes = useStyles();
   const fixedHeightChartPaper = clsx(classes.paper, classes.chartHeight);
   const [reviewType, setReviewType] = useState("");
   const [reviewRating, setReviewRating] = useState([]);
+  const [reviewComment, setReviewComment] = useState([]);
 
   // // get all PO data and their reviews for the selected supplier, can go to DashboardTabs
   useEffect(() => {
     setReviewType("Cost Rating");
-    setReviewRating(handleReview("costRating"))
+    setReviewRating(handleReview("costRating"));
+    setReviewComment(handleComment());
+    // console.log("reviewRating: " + reviewRating)
   }, []);
- 
-  const handleReview = (type) => { 
-    let reviewArray = []
+
+  const handleReview = (type) => {
+    let reviewArray = [];
     reviewData.map((review) => {
-      console.log("review.type: " + review)
-      reviewArray.push({name: review.created_at, rating : review[type]} )
-  })
-  return reviewArray
-}
+      reviewArray.push({
+        name: review.created_at.substring(0, 10),
+        rating: review[type],
+      });
+    });
+    return reviewArray;
+  };
+  const handleComment = () => {
+    let commentArray = [];
+    reviewData.map((review) => {
+      commentArray.push({
+        date: review.created_at.substring(0, 10),
+        comment: review["comment"],
+      });
+    });
+    return commentArray;
+  };
 
   return (
     <Grid container spacing={3} direction="row" justify="flex-start">
       <Grid item xs={12} md={9} lg={9}>
         <Paper className={fixedHeightChartPaper} variant="outlined">
-          <EvaluationChart reviewType={reviewType} reviewRating={reviewRating} />
+          <EvaluationChart
+            reviewType={reviewType}
+            reviewRating={reviewRating}
+          />
         </Paper>
         <Button
           variant="contained"
@@ -44,9 +68,8 @@ export default function Evaluation({supplier, reviewData, costRating, qualityRat
           color="primary"
           onClick={() => {
             setReviewType("Cost Rating");
-            setReviewRating(handleReview("costRating"))
-            }
-          }
+            setReviewRating(handleReview("costRating"));
+          }}
         >
           Cost
         </Button>
@@ -56,9 +79,8 @@ export default function Evaluation({supplier, reviewData, costRating, qualityRat
           color="primary"
           onClick={() => {
             setReviewType("Quality Rating");
-            setReviewRating(handleReview("qualityRating"))
-            }
-          }
+            setReviewRating(handleReview("qualityRating"));
+          }}
         >
           Quality
         </Button>
@@ -68,9 +90,8 @@ export default function Evaluation({supplier, reviewData, costRating, qualityRat
           color="primary"
           onClick={() => {
             setReviewType("Reliability Rating");
-            setReviewRating(handleReview("reliabilityRating"))
-            }
-          }
+            setReviewRating(handleReview("reliabilityRating"));
+          }}
         >
           Reliability
         </Button>
@@ -78,19 +99,18 @@ export default function Evaluation({supplier, reviewData, costRating, qualityRat
 
       <Grid item xs={12} md={3} lg={3}>
         <h4>Cost Rating</h4>
-          <Rating rating={costRating} />
+        <Rating rating={costRating} />
         <h4>Quality Rating</h4>
-         <Rating rating={qualityRating} />
+        <Rating rating={qualityRating} />
         <h4>Reliability Rating</h4>
-          <Rating rating={reliabilityRating} />
+        <Rating rating={reliabilityRating} />
       </Grid>
 
-      <Grid item xs={12} md={8} lg={8}>
-        <h1>Job Reviews</h1>
-        <h5>Date</h5>
-        {/* supplier.PO.slice(-1).review? */}
-        <p>lorim ipsum lorim ipsum lorim ipsum lorim ipsum lorim ipsum</p>
-      </Grid>
+      {/* <Grid item xs={12} md={8} lg={8}>
+        <h1>Latest Review</h1>
+        <h5>Date: {reviewComment[0]}</h5>
+        <p> {Object.keys(reviewComment)}</p>
+      </Grid> */}
     </Grid>
   );
 }

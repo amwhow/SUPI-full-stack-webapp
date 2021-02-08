@@ -197,8 +197,19 @@ function EditSupplier(props) {
               Save
             </Button>
           </div>
+          <div className="form-content">
+            <Button
+              variant="contained"
+              value="go back"
+              id="submit"
+              onClick={() => {
+                props.history.goBack();
+              }}
+            >
+              Back
+            </Button>
+          </div>
         </Form>
-        <a href={`/dashboard/suppliers/${id}`}>Back</a>
       </Grid>
     </FormContainer>
   );

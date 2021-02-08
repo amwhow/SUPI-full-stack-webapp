@@ -20,7 +20,7 @@ function NewPO({ history }) {
   });
 
   function fetchSuppliers() {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/dashboard/suppliers`, {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -82,7 +82,7 @@ function NewPO({ history }) {
     formData.append("po_document", PODocument)
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/dashboard/purchase_orders`,
+        `${process.env.REACT_APP_BACKEND_URL}/purchase_orders`,
         {
           method: "POST",
           headers: {

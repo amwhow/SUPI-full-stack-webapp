@@ -38,7 +38,7 @@ export default function InvoiceTable() {
   const [invoices, setInvoices] = useState([]);
 
   function fetchInvoices() {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/dashboard/invoices`, {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/invoices`, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
