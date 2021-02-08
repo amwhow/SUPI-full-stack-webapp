@@ -32,13 +32,13 @@ const useStyles = makeStyles({
   },
 });
 
-export default function POTable() {
+export default function POTable({poData}) {
   const classes = useStyles();
 
   const [purchaseOrders, setPurchaseOrders] = useState([]);
 
   function fetchPurchaseOrders() {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/dashboard/purchase_orders`, {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/purchase_orders`, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }

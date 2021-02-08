@@ -38,7 +38,7 @@ export default function DocumentTable() {
   const [documents, setDocuments] = useState([]);
 
   function fetchDocuments() {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/dashboard/documents`, {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/documents`, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }

@@ -39,11 +39,11 @@ export default function InvoicesDue({invoiceData}) {
             }
           )}
         </Typography>
-        <div>
+        {/* <div>
           <Link color="primary" href="#" onClick={preventDefault}>
             All invoices
           </Link>
-        </div>
+        </div> */}
       </React.Fragment>
     );
   } else {
@@ -56,11 +56,11 @@ export default function InvoicesDue({invoiceData}) {
         <Typography color="textSecondary" className={classes.depositContext}>
           
         </Typography>
-        <div>
+        {/* <div>
           <Link color="primary" href="#" onClick={preventDefault}>
             All invoices
           </Link>
-        </div>
+        </div> */}
       </React.Fragment>
     );
   }

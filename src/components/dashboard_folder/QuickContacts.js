@@ -33,11 +33,9 @@ export default function QuickContacts(contacts) {
               return (
                 <>
                   <Box display="flex" justifyContent="space-between">
-                    <p>
-                      {" "}
-                      {contact.contactName} from {contact.supplierName}
-                    </p>
-                    <p>Email: {contact.contactEmail}</p>
+                    <span>
+                      {contact.supplierName}({contact.contactName}) - {contact.contactEmail}
+                    </span>
                   </Box>
                   <hr/>
                 </>

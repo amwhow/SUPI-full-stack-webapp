@@ -40,11 +40,11 @@ const POApprovals = ({poData}) => {
           })
           }
         </Typography>
-        <div>
+        {/* <div>
           <Link color="primary" href="#" onClick={preventDefault}>
             All Purchase Orders
           </Link>
-        </div>
+        </div> */}
       </React.Fragment>
       )
   } else {
@@ -56,11 +56,11 @@ const POApprovals = ({poData}) => {
         </Typography>
         <Typography color="textSecondary" className={classes.POApprovalContext}>
         </Typography>
-        <div>
+        {/* <div>
           <Link color="primary" href="#" onClick={preventDefault}>
             All Purchase Orders
           </Link>
-        </div>
+        </div> */}
       </React.Fragment>
     )
   }
