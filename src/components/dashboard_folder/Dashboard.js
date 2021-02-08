@@ -17,7 +17,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import { MainListItems, secondaryListItems } from "./listItems";
+import { MainListItems, SecondaryListItems } from "./listItems";
 import DashboardHome from "./DashboardHome";
 import DashboardSupplier from "./DashboardSupplier";
 import DashboardStyles from "./DashboardStyles";
@@ -30,6 +30,8 @@ import NewInvoice from '../invoice/NewInvoice';
 import InvoiceTable from '../table/InvoiceTable'; 
 import DocumentTable from '../table/DocumentTable';
 import NewDocument from '../document/NewDocument'
+import ContactForm from "../info/Contact"
+import About from '../info/About'
 
 function Copyright() {
   return (
@@ -139,7 +141,9 @@ export default function Dashboard(props) {
         <Divider />
         <MainListItems history={history} suppliers={suppliers} />
         <Divider />
-        <List>{secondaryListItems}</List>
+        <List>
+          <SecondaryListItems history={history} />
+        </List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
@@ -159,6 +163,8 @@ export default function Dashboard(props) {
             <ProtectedRoute exact path="/dashboard/invoices" component={InvoiceTable} />
             <ProtectedRoute exact path="/dashboard/documents" component={DocumentTable} />
             <ProtectedRoute exact path="/dashboard/documents/new" component={NewDocument} />
+            <ProtectedRoute exact path="/dashboard/contact" component={ContactForm} />
+            <ProtectedRoute exact path="/dashboard/about" component={About} />
           </Switch>
 
           {/* <DashboardHome /> */}

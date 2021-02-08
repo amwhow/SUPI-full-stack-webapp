@@ -136,26 +136,22 @@ export function MainListItems({history, suppliers}) {
   );
 }
 
-export const secondaryListItems = (
-  <div>
-    <ListSubheader inset>Secondary List Items</ListSubheader>
-    <ListItem button>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="About Us" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Contact" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="TBD" />
-    </ListItem>
-  </div>
-);
+export function SecondaryListItems({history}) {
+  return (  
+    <div>
+      <ListSubheader inset>Secondary List Items</ListSubheader>
+      <ListItem button onClick={() => history.push("/dashboard/about")}>
+        <ListItemIcon>
+          <PeopleIcon />
+        </ListItemIcon>
+        <ListItemText primary="About Us" />
+      </ListItem>
+      <ListItem button onClick={() => history.push("/dashboard/contact")}>
+        <ListItemIcon>
+          <PeopleIcon />
+        </ListItemIcon>
+        <ListItemText primary="Contact" />
+      </ListItem>
+    </div>
+  )
+};
