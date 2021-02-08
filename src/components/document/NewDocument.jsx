@@ -4,6 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import { Form } from "../styles/Form";
 import FormContainer from "../styles/FormContainer";
 import Button from "@material-ui/core/Button";
+import { ContactsTwoTone } from "@material-ui/icons";
 
 function NewDocument({ history }) {
   const initialDocumentState = {
@@ -11,8 +12,6 @@ function NewDocument({ history }) {
     documentType: "",
     supplierDocument: ""
   }
-
-  // recommend we add a function to set today's date as the min value for date inputs
 
   const [store, dispatch] = useReducer(reducer, initialDocumentState)
   const {expiryDate, documentType, supplierDocument} = store
@@ -29,10 +28,13 @@ function NewDocument({ history }) {
       }
     })
       .then((res) => res.json())
-      .then((body) => setSupplierId({
-        data: body,
+      .then((body) => {
+        const {suppliers} = body
+        setSupplierId({
+        data: suppliers,
         selected: ''
-      }))
+      })
+    })
   }
 
   useEffect(() => {
@@ -78,7 +80,7 @@ function NewDocument({ history }) {
         },
         body: formData,
       });
-      history.push("/documents");
+      history.push("/dashboard/documents");
     } catch (err) {
       console.log(err.message);
     }
@@ -149,6 +151,15 @@ function NewDocument({ history }) {
               color="primary"
             >
               Create
+            </Button>
+          </div>
+          <div className="form-content">
+            <Button
+              variant="contained"
+              id="submit"
+              onClick={()=>{history.goBack()}}
+            >
+              Back
             </Button>
           </div>
         </Form>

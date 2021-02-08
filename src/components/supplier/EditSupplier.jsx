@@ -4,9 +4,9 @@ import Grid from "@material-ui/core/Grid";
 import { Form } from "../styles/Form";
 import FormContainer from "../styles/FormContainer";
 import Button from "@material-ui/core/Button";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
-function EditSupplier() {
+function EditSupplier(props) {
   const initialSupplierState = {
     name: "",
     service: "",
@@ -19,7 +19,6 @@ function EditSupplier() {
   };
 
   const { id } = useParams();
-  const history = useHistory();
   // recommend we add a function to set today's date as the min value for date inputs
 
   const [store, dispatch] = useReducer(reducer, initialSupplierState);
@@ -49,8 +48,8 @@ function EditSupplier() {
     "contact_email",
     "contact_number",
     "description",
-    "note"
-  ]
+    "note",
+  ];
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers/${id}`, {
@@ -96,7 +95,7 @@ function EditSupplier() {
         }
       );
       alert("Supplier updated");
-      history.push("/");
+      props.history.push(`/dashboard/suppliers/${id}`);
     } catch (err) {
       console.log(err.message);
     }
@@ -198,15 +197,19 @@ function EditSupplier() {
               Save
             </Button>
           </div>
+          <div className="form-content">
+            <Button
+              variant="contained"
+              value="go back"
+              id="submit"
+              onClick={() => {
+                props.history.goBack();
+              }}
+            >
+              Back
+            </Button>
+          </div>
         </Form>
-        <Button
-          variant="contained"
-          color="secondary"
-          // not working, will trigger once the edit page renders
-          // onClick={history.goBack()}
-        >
-          Back
-        </Button>
       </Grid>
     </FormContainer>
   );

@@ -7,8 +7,9 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import ReceiptIcon from "@material-ui/icons/Receipt";
 import PeopleIcon from "@material-ui/icons/People";
-import BusinessIcon from "@material-ui/icons/Business";
-import BarChartIcon from "@material-ui/icons/BarChart";
+import PersonIcon from '@material-ui/icons/Person';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import AssignmentIcon from '@material-ui/icons/Assignment';
 import SearchIcon from "@material-ui/icons/Search";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
@@ -32,7 +33,7 @@ export function MainListItems({history, suppliers}) {
   const [supplier, setSupplier] = useState(null);
   
   async function getSupplierShow(history, id, supplier) {
-    const data = await fetch(`${process.env.REACT_APP_BACKEND_URL}/dashboard/suppliers/${id}`, {
+    const data = await fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers/${id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -40,7 +41,7 @@ export function MainListItems({history, suppliers}) {
     const res = await data.json()
     setSupplier(res);
     await history.push({
-      pathname: `/dashboard/suppliers/${id}`,
+      pathname: `/dashboard/supplier/${id}`,
       state: { supplier: supplier }
     })
   };
@@ -58,9 +59,9 @@ export function MainListItems({history, suppliers}) {
         <ListItem button onClick={() => history.push("/dashboard")}>
           <ListItemIcon>
             {/* company logo here */}
-            <BusinessIcon />
+            <DashboardIcon />
           </ListItemIcon>
-          <ListItemText primary="Company Name" />
+          <ListItemText primary="Overview" />
         </ListItem>
         <hr class="MuiDivider-root" style={{ marginBottom: "10px" }} />
 
@@ -85,10 +86,8 @@ export function MainListItems({history, suppliers}) {
                       getSupplierShow(history, element.id, element)
                     }
                   >
-                    {/* supplier logo here */}
                     <ListItemIcon>
-                      {/* should be element.logo */}
-                      <PeopleIcon />
+                      <PersonIcon />
                     </ListItemIcon>
                     <ListItemText primary={element.name}/>
                   </ListItem>
@@ -103,7 +102,7 @@ export function MainListItems({history, suppliers}) {
             <ListItem
               button
               className={classes.nested}
-              onClick={() => history.push("/suppliers/new")}
+              onClick={() => history.push("/dashboard/suppliers/new")}
             >
               <ListItemIcon>
                 <AddIcon color="primary" />
@@ -113,49 +112,45 @@ export function MainListItems({history, suppliers}) {
           </List>
         </Collapse>
 
-        <ListItem button>
+        <ListItem button onClick={() => history.push("/dashboard/purchase_orders")} >
           <ListItemIcon>
             <ReceiptIcon />
           </ListItemIcon>
-          <ListItemText primary="Payments" />
+          <ListItemText primary="Purchase Orders" />
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={() => history.push("/dashboard/invoices")}>
           <ListItemIcon>
-            <BarChartIcon />
+            <ReceiptIcon />
           </ListItemIcon>
-          <ListItemText primary="Reports" />
+          <ListItemText primary="Invoices" />
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={() => history.push("/dashboard/documents")}>
           <ListItemIcon>
-            <SearchIcon />
+            <AssignmentIcon />
           </ListItemIcon>
-          <ListItemText primary="Find suppliers" />
+          <ListItemText primary="Documents" />
         </ListItem>
       </List>
     </div>
   );
 }
 
-export const secondaryListItems = (
-  <div>
-    <ListSubheader inset>Secondary List Items</ListSubheader>
-    <ListItem button>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="About Us" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Contact" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="TBD" />
-    </ListItem>
-  </div>
-);
+export function SecondaryListItems({history}) {
+  return (  
+    <div>
+      <ListSubheader inset>SUPI</ListSubheader>
+      <ListItem button onClick={() => history.push("/dashboard/about")}>
+        <ListItemIcon>
+          <PeopleIcon />
+        </ListItemIcon>
+        <ListItemText primary="About Us" />
+      </ListItem>
+      <ListItem button onClick={() => history.push("/dashboard/contact")}>
+        <ListItemIcon>
+          <PeopleIcon />
+        </ListItemIcon>
+        <ListItemText primary="Contact" />
+      </ListItem>
+    </div>
+  )
+};

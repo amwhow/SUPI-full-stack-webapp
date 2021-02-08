@@ -6,7 +6,7 @@ import StarHalfIcon from "@material-ui/icons/StarHalf";
 const Rating = ({rating}) => {
   let star;
   switch (rating) {
-    case 0:
+    case 0.0:
     star = 
       (<div>
         <StarBorderIcon />
@@ -26,7 +26,7 @@ const Rating = ({rating}) => {
         <StarHalfIcon />
       </div>);
     break;
-    case 1:
+    case 1.0:
     star = 
       (<div>
         <StarBorderIcon />
@@ -46,7 +46,7 @@ const Rating = ({rating}) => {
         <StarHalfIcon />
       </div>);
     break;
-    case 2:
+    case 2.0:
     star = 
       (<div>
         <StarBorderIcon />
@@ -66,7 +66,7 @@ const Rating = ({rating}) => {
         <StarHalfIcon />
       </div>);
     break;
-    case 3:
+    case 3.0:
     star = 
       (<div>
         <StarIcon />
@@ -86,7 +86,7 @@ const Rating = ({rating}) => {
         <StarBorderIcon />
       </div>);
     break;
-    case 4:
+    case 4.0:
     star = 
       (<div>
         <StarIcon />
@@ -106,7 +106,7 @@ const Rating = ({rating}) => {
         <StarHalfIcon />
       </div>);
     break;
-    case 5:
+    case 5.0:
     star = 
       (<div>
         <StarIcon />
@@ -116,6 +116,15 @@ const Rating = ({rating}) => {
         <StarIcon />
       </div>);
     break;
+    default:
+      star = 
+      (<div>
+        <StarBorderIcon />
+        <StarBorderIcon />
+        <StarBorderIcon />
+        <StarBorderIcon />
+        <StarBorderIcon />
+      </div>);
   } 
   return (
     <>

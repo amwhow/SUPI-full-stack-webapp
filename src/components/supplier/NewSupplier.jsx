@@ -5,6 +5,7 @@ import { Form } from "../styles/Form";
 import FormContainer from "../styles/FormContainer";
 import Button from "@material-ui/core/Button";
 
+
 function NewSupplier({ history }) {
   const initialSupplierState = {
     name: "",
@@ -195,6 +196,14 @@ function NewSupplier({ history }) {
             >
               Create
             </Button>
+            <Button 
+              variant="contained"
+              value="go back"
+              id="submit"
+              onClick={()=>{history.goBack()}}>
+              Back
+            </Button>
+
           </div>
         </Form>
       </Grid>

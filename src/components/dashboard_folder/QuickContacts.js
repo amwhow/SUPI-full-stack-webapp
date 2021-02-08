@@ -1,9 +1,9 @@
-import React from 'react';
-import Link from '@material-ui/core/Link';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Title from './Title';
-import Box from '@material-ui/core/Box';
+import React from "react";
+import Link from "@material-ui/core/Link";
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Title from "./Title";
+import Box from "@material-ui/core/Box";
 
 function preventDefault(event) {
   event.preventDefault();
@@ -15,37 +15,52 @@ const useStyles = makeStyles({
   },
 });
 
-export default function QuickContacts() {
+export default function QuickContacts(contacts) {
   const classes = useStyles();
-  return (
-    <React.Fragment>
-      <Title>Quick Contacts</Title>
-      {/* <Typography component="p" variant="h3">
-        1
-      </Typography> */}
-      <Typography color="textSecondary" className={classes.quickContactsContext}>
-        {/* make it an iteration later */}
-        <Box display="flex" justifyContent="space-between">
-            Contact Name 
-            <button>Email</button>
-        </Box>
-        <hr/>
-        <Box display="flex" justifyContent="space-between">
-            Contact Name 
-            <button>Email</button>
-        </Box>
-        <hr/>
-        <Box display="flex" justifyContent="space-between">
-            Contact Name 
-            <button>Email</button>
-        </Box>
-        <hr/>
-      </Typography>
+  console.log(contacts.contacts);
+  if (contacts.contacts.length > 0) {
+    let counter = 0;
+    return (
+      <React.Fragment>
+        <Title>Quick Contacts</Title>
+        <Typography
+          color="textSecondary"
+          className={classes.quickContactsContext}
+        >
+          {contacts.contacts.reverse().map((contact) => {
+            if (contact.contactName && counter <= 3) {
+              counter += 1;
+              return (
+                <>
+                  <Box display="flex" justifyContent="space-between">
+                    <span>
+                      {contact.supplierName}({contact.contactName}) - {contact.contactEmail}
+                    </span>
+                  </Box>
+                  <hr/>
+                </>
+              );
+            }
+          })}
+        </Typography>
+      </React.Fragment>
+    );
+  } else {
+    return (
+      <React.Fragment>
+        <Title>Quick Contacts</Title>
+        <Typography
+          color="textSecondary"
+          className={classes.quickContactsContext}
+        >
+          <p>No Contact</p>
+        </Typography>
         <div>
           <Link color="primary" href="#" onClick={preventDefault}>
             Add new contact
           </Link>
         </div>
-    </React.Fragment>
-  );
+      </React.Fragment>
+    );
+  }
 }

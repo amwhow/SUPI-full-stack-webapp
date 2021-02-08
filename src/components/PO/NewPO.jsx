@@ -91,7 +91,7 @@ function NewPO({ history }) {
           body: formData,
         }
       );
-      history.push("/purchase_orders");
+      history.push("/dashboard/purchase_orders");
     } catch (err) {
       console.log(err.message);
     }
