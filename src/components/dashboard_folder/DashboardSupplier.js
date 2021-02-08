@@ -12,6 +12,7 @@ const useStyles = DashboardStyles;
 const DashboardSupplier = (props) => {
   // const history = useHistory();
   const classes = useStyles();
+  const { id } = useParams();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const [supplier, setSupplier] = useState("failed supplier")
   const [poData, setPoData] = useState([])
@@ -19,9 +20,15 @@ const DashboardSupplier = (props) => {
   const [invoiceData, setInvoiceData] = useState([]);
   
   useEffect(()=> {
-    setSupplier(props.location.state.supplier)
-  }, [])
-  const id = props.location.state.supplier.id;
+    const data = fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+    .then((res) => res.json()) 
+    .then((supplier) => {setSupplier(supplier)})
+  }, [id])
+  
   // get all PO data and their reviews for the selected supplier
   useEffect(() => {
     fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers/${id}/purchase_orders`, {

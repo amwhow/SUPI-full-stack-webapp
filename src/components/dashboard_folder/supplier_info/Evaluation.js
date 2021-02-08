@@ -8,15 +8,14 @@ import Button from "@material-ui/core/Button";
 import EvaluationChart from "./EvaluationChart";
 import clsx from "clsx";
 import DashboardStyles from "../DashboardStyles";
+import Rating from "./Rating"
 
-export default function Evaluation({supplier, reviewData}) {
+export default function Evaluation({supplier, reviewData, costRating, qualityRating ,reliabilityRating}) {
   const useStyles = DashboardStyles;
   const classes = useStyles();
   const fixedHeightChartPaper = clsx(classes.paper, classes.chartHeight);
   const [reviewType, setReviewType] = useState("");
   const [reviewRating, setReviewRating] = useState([]);
-  // const [poData, setPoData] = useState([])
-  // const id = supplier.id;
 
   // // get all PO data and their reviews for the selected supplier, can go to DashboardTabs
   useEffect(() => {
@@ -35,7 +34,7 @@ export default function Evaluation({supplier, reviewData}) {
 
   return (
     <Grid container spacing={3} direction="row" justify="flex-start">
-      <Grid item xs={12} md={8} lg={8}>
+      <Grid item xs={12} md={9} lg={9}>
         <Paper className={fixedHeightChartPaper} variant="outlined">
           <EvaluationChart reviewType={reviewType} reviewRating={reviewRating} />
         </Paper>
@@ -77,28 +76,13 @@ export default function Evaluation({supplier, reviewData}) {
         </Button>
       </Grid>
 
-      <Grid item xs={12} md={4} lg={4}>
+      <Grid item xs={12} md={3} lg={3}>
         <h4>Cost Rating</h4>
-        <StarIcon />
-        <StarIcon />
-        <StarIcon />
-        <StarIcon />
-        <StarBorderIcon />
-        
-
+          <Rating rating={costRating} />
         <h4>Quality Rating</h4>
-        <StarIcon />
-        <StarIcon />
-        <StarIcon />
-        <StarBorderIcon />
-        <StarBorderIcon />
-
+         <Rating rating={qualityRating} />
         <h4>Reliability Rating</h4>
-        <StarIcon />
-        <StarIcon />
-        <StarIcon />
-        <StarIcon />
-        <StarHalfIcon />
+          <Rating rating={reliabilityRating} />
       </Grid>
 
       <Grid item xs={12} md={8} lg={8}>

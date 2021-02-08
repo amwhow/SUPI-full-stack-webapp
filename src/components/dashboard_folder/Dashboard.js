@@ -67,6 +67,10 @@ export default function Dashboard(props) {
   };
 
   const [suppliers, setSuppliers] = useState([]);
+  const [contacts, setContacts] = useState([]);
+  const [purchaseOrders, setPurchaseOrders] = useState([]);
+  const [reviews, setReviews] = useState([]);
+  const [invoices, setInvoices] = useState([]);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_BACKEND_URL}/dashboard/suppliers`, {
@@ -76,7 +80,13 @@ export default function Dashboard(props) {
     })
       .then((res) => res.json())
       .then((response) => {
-        setSuppliers(response);
+        const {suppliers, contacts, purchase_orders, reviews, invoices } = response
+        setSuppliers(suppliers);
+        setContacts(contacts);
+        setPurchaseOrders(purchase_orders);
+        setReviews(reviews);
+        setInvoices(invoices);
+        // console.log("in Dashboard, invoices: " + invoices[0].receivedDate)
       });
   }, []);
 
@@ -112,13 +122,7 @@ export default function Dashboard(props) {
             {`Welcome back, ${user_name}!`}
           </Typography>
           <IconButton color="inherit">
-            <Badge badgeContent={1} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <IconButton color="inherit">
             <Badge color="primary">
-              {/* to be changed */}
               <ExitToAppIcon onClick={() => logout()} />
             </Badge>
           </IconButton>
@@ -148,9 +152,9 @@ export default function Dashboard(props) {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
+
           {/* modularise the main section */}
           <Switch>
-            {/* component should change to: render={(props) => <DashboardHome {...props} suppliers={suppliers}/> }/> */}
             <ProtectedRoute exact path="/dashboard" component={DashboardHome} />
             <ProtectedRoute
               exact
@@ -166,8 +170,8 @@ export default function Dashboard(props) {
             <ProtectedRoute exact path="/dashboard/contact" component={ContactForm} />
             <ProtectedRoute exact path="/dashboard/about" component={About} />
           </Switch>
-
-          {/* <DashboardHome /> */}
+          
+          {/* end of main section */}
           <Box pt={4}>
             <Copyright />
           </Box>
