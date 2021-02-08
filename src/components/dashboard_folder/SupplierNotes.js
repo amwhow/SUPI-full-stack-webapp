@@ -14,21 +14,23 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SupplierNotes() {
+export default function SupplierNotes({supplier}) {
   const classes = useStyles();
+  const id = supplier.id
   return (
     <React.Fragment>
       <Title>Supplier Notes</Title>
       <Typography color="textSecondary" className={classes.POApprovalContext}>
         <div>
-          <Link color="primary" href="#" onClick={preventDefault}>
-            Note 1 - date
-          </Link>
+          <p>
+            Note: {supplier.note}
+          </p>
         </div>
       </Typography>
       <div>
-        <Link color="primary" href="#" onClick={preventDefault}>
-          Add new note
+        <Link color="primary" href="#" >
+          {/* onClick={history.push(`/suppliers/edit/${id}`)} */}
+          Edit Note
         </Link>
       </div>
     </React.Fragment>
