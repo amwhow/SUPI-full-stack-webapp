@@ -32,7 +32,7 @@ export function MainListItems({history, suppliers}) {
   const [supplier, setSupplier] = useState(null);
   
   async function getSupplierShow(history, id, supplier) {
-    const data = await fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers/${id}`, {
+    const data = await fetch(`${process.env.REACT_APP_BACKEND_URL}/dashboard/suppliers/${id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -41,7 +41,7 @@ export function MainListItems({history, suppliers}) {
     setSupplier(res);
     await history.push({
       pathname: `/dashboard/suppliers/${id}`,
-      state: { supplier:supplier }
+      state: { supplier: supplier }
     })
   };
 
@@ -73,7 +73,7 @@ export function MainListItems({history, suppliers}) {
         </ListItem>
 
         {/* sub-menu for my suppliers here, create an iteration for user.suppliers and generate each Collapse element */}
-        {suppliers.map((element) => {
+        {suppliers && suppliers.map((element) => {
           return (
             <>
               <Collapse in={open} timeout="auto" unmountOnExit>
