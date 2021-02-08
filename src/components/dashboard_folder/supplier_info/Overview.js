@@ -6,23 +6,24 @@ import POApprovals from "../POApprovals";
 import SupplierNotes from "../SupplierNotes";
 import Rating from "./Rating"
 
-export default function Overview({ supplier, fixedHeightPaper, poData, invoiceData, reviewData}) {
+export default function Overview({ supplier, fixedHeightPaper, poData, invoiceData, costRating, qualityRating, reliabilityRating}) {
 
-  let costRating = 0
-  let qualityRating = 0
-  let reliabilityRating = 0
-  reviewData.map((review) => {
-    costRating += review.costRating
-    reliabilityRating += review.reliabilityRating
-    qualityRating += review.qualityRating
-  })
-  costRating =  parseFloat((Math.round(costRating/(reviewData.length) * 2) / 2))
-  reliabilityRating =  parseFloat((Math.round(reliabilityRating/(reviewData.length) * 2) / 2))
-  qualityRating =  parseFloat((Math.round(qualityRating/(reviewData.length) * 2) / 2).toFixed(1))
-  console.log("reliabilityRating: "+ reliabilityRating)
-  console.log("qualityRating: "+ qualityRating)
-  console.log("qualityRating type: "+ typeof(qualityRating))
+  // let costRating = 0
+  // let qualityRating = 0
+  // let reliabilityRating = 0
+  
+  // reviewData.map((review) => {
+  //   costRating += review.costRating
+  //   reliabilityRating += review.reliabilityRating
+  //   qualityRating += review.qualityRating
+  // })
+  // costRating =  parseFloat((Math.round(costRating/(reviewData.length) * 2) / 2).toFixed(1))
 
+  // reliabilityRating =  parseFloat((Math.round(reliabilityRating/(reviewData.length) * 2) / 2).toFixed(1))
+
+  // qualityRating =  parseFloat((Math.round(qualityRating/(reviewData.length) * 2) / 2).toFixed(1))
+
+  // console.log("CR: " +costRating)
   return (
     <Grid container spacing={3} direction="row" justify="flex-start">
       <Grid item xs={12} md={6} lg={6}>

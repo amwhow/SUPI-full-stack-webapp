@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Chart from './Chart';
 import Calendar from './Calendar';
 import InvoicesDue from './InvoicesDue';
@@ -12,6 +12,30 @@ import DashboardStyles from './DashboardStyles';
 const useStyles = DashboardStyles;
 
 const DashboardHome = () => {
+  const [suppliers, setSuppliers] = useState([]);
+  const [contacts, setContacts] = useState([]);
+  const [purchaseOrders, setPurchaseOrders] = useState([]);
+  const [reviews, setReviews] = useState([]);
+  const [invoices, setInvoices] = useState([]);
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((response) => {
+        const {suppliers, contacts, purchase_orders, reviews, invoices } = response
+        setSuppliers(suppliers);
+        setContacts(contacts);
+        setPurchaseOrders(purchase_orders);
+        setReviews(reviews);
+        setInvoices(invoices);
+        // console.log("in Dashboard, invoices: " + invoices[0].receivedDate)
+      });
+  }, []);
+
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
@@ -23,29 +47,23 @@ const DashboardHome = () => {
           <Chart />
         </Paper>
       </Grid>
-      {/* Calendar
-      <Grid item xs={12} md={5} lg={4}>
-        <Paper className={fixedHeightPaper}>
-          <Calendar />
-        </Paper>
-      </Grid> */}
+     
       {/* Invoice due */}
       <Grid item xs={12} md={4} lg={4}>
         <Paper className={fixedHeightPaper} variant="outlined">
-          {/* pass in current_user.pos.invoices data */}
-          {/* <InvoicesDue /> */}
+          <InvoicesDue invoiceData={invoices}/>
         </Paper>
       </Grid>
       {/* PO Approval */}
       <Grid item xs={12} md={4} lg={4}>
         <Paper className={fixedHeightPaper} variant="outlined">
-          {/* <POApprovals /> */}
+          <POApprovals poData={purchaseOrders}/>
         </Paper>
       </Grid>
       {/* Quick Contacts */}
       <Grid item xs={12} md={4} lg={4}>
         <Paper className={fixedHeightPaper} variant="outlined">
-          <QuickContacts />
+          <QuickContacts contacts={contacts}/>
         </Paper>
       </Grid>
     </Grid>
