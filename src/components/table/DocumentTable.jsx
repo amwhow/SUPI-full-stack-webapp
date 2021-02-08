@@ -38,7 +38,7 @@ export default function DocumentTable() {
   const [documents, setDocuments] = useState([]);
 
   function fetchDocuments() {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/documents`, {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/dashboard/documents`, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
@@ -54,31 +54,39 @@ export default function DocumentTable() {
   console.log(documents)
 
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>Document Number</StyledTableCell>
-            <StyledTableCell align="right">Document Type</StyledTableCell>
-            <StyledTableCell align="right">Expiry Date</StyledTableCell>
-            <StyledTableCell align="right">Document File</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {documents.map((document) => (
-            <StyledTableRow key={document.id}>
-              <StyledTableCell component="th" scope="row">
-                # {document.id}
-              </StyledTableCell>
-              <StyledTableCell align="right">{document.documentType}</StyledTableCell>
-              <StyledTableCell align="right">{document.expiryDate}</StyledTableCell>
-              <StyledTableCell align="right">
-                <a href={document.supplier_document.url}>Document file</a>
-              </StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <div>
+      <h1 className="table-heading">Documents</h1>
+      <div className="table-button">
+        <button>
+          <a href="/dashboard/documents/new">+ New Document</a>
+        </button>
+      </div>
+      <TableContainer component={Paper}>
+        <Table className={classes.table} aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>Document Number</StyledTableCell>
+              <StyledTableCell align="right">Document Type</StyledTableCell>
+              <StyledTableCell align="right">Expiry Date</StyledTableCell>
+              <StyledTableCell align="right">Document File</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {documents.map((document) => (
+              <StyledTableRow key={document.id}>
+                <StyledTableCell component="th" scope="row">
+                  # {document.id}
+                </StyledTableCell>
+                <StyledTableCell align="right">{document.documentType}</StyledTableCell>
+                <StyledTableCell align="right">{document.expiryDate}</StyledTableCell>
+                <StyledTableCell align="right">
+                  <a href={document.supplier_document.url}>Document file</a>
+                </StyledTableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
 }

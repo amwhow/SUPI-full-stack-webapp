@@ -24,6 +24,12 @@ import DashboardStyles from "./DashboardStyles";
 import { Switch, Route } from "react-router-dom";
 import ProtectedRoute from "../ProtectedRoute";
 import SupplierNotes from "./SupplierNotes";
+import POTable from '../table/POTable'; 
+import NewPO from '../PO/NewPO';
+import NewInvoice from '../invoice/NewInvoice';
+import InvoiceTable from '../table/InvoiceTable'; 
+import DocumentTable from '../table/DocumentTable';
+import NewDocument from '../document/NewDocument'
 
 function Copyright() {
   return (
@@ -61,7 +67,7 @@ export default function Dashboard(props) {
   const [suppliers, setSuppliers] = useState([]);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers`, {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/dashboard/suppliers`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -147,6 +153,12 @@ export default function Dashboard(props) {
               path={`/dashboard/suppliers/:id`}
               component={DashboardSupplier}
             />
+            <ProtectedRoute exact path="/dashboard/purchase_orders" component={POTable} />
+            <ProtectedRoute exact path="/dashboard/purchase_orders/new" component={NewPO} />
+            <ProtectedRoute exact path="/dashboard/purchase_orders/:id/invoices/new" component={NewInvoice} />
+            <ProtectedRoute exact path="/dashboard/invoices" component={InvoiceTable} />
+            <ProtectedRoute exact path="/dashboard/documents" component={DocumentTable} />
+            <ProtectedRoute exact path="/dashboard/documents/new" component={NewDocument} />
           </Switch>
 
           {/* <DashboardHome /> */}

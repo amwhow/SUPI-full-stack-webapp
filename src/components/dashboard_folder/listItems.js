@@ -8,7 +8,7 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import ReceiptIcon from "@material-ui/icons/Receipt";
 import PeopleIcon from "@material-ui/icons/People";
 import BusinessIcon from "@material-ui/icons/Business";
-import BarChartIcon from "@material-ui/icons/BarChart";
+import AssignmentIcon from '@material-ui/icons/Assignment';
 import SearchIcon from "@material-ui/icons/Search";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
@@ -113,23 +113,23 @@ export function MainListItems({history, suppliers}) {
           </List>
         </Collapse>
 
-        <ListItem button>
+        <ListItem button onClick={() => history.push("/dashboard/purchase_orders")} >
           <ListItemIcon>
             <ReceiptIcon />
           </ListItemIcon>
-          <ListItemText primary="Payments" />
+          <ListItemText primary="Purchase Orders" />
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={() => history.push("/dashboard/invoices")}>
           <ListItemIcon>
-            <BarChartIcon />
+            <ReceiptIcon />
           </ListItemIcon>
-          <ListItemText primary="Reports" />
+          <ListItemText primary="Invoices" />
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={() => history.push("/dashboard/documents")}>
           <ListItemIcon>
-            <SearchIcon />
+            <AssignmentIcon />
           </ListItemIcon>
-          <ListItemText primary="Find suppliers" />
+          <ListItemText primary="Documents" />
         </ListItem>
       </List>
     </div>
