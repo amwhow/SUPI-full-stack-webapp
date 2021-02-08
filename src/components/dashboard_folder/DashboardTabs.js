@@ -115,7 +115,7 @@ export default function DashboardTabs({ supplier, poData, reviewData, invoiceDat
         </Grid>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <PurchaseOrders poData={poData}/>
+        {poData} && <PurchaseOrders poData={poData}/>
       </TabPanel>
       <TabPanel value={value} index={3}>
         Invoices

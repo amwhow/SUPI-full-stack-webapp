@@ -8,6 +8,7 @@ import Button from "@material-ui/core/Button";
 import EvaluationChart from "./EvaluationChart";
 import clsx from "clsx";
 import DashboardStyles from "../DashboardStyles";
+import Rating from "./Rating"
 
 export default function Evaluation({supplier, reviewData}) {
   const useStyles = DashboardStyles;
@@ -79,26 +80,11 @@ export default function Evaluation({supplier, reviewData}) {
 
       <Grid item xs={12} md={4} lg={4}>
         <h4>Cost Rating</h4>
-        <StarIcon />
-        <StarIcon />
-        <StarIcon />
-        <StarIcon />
-        <StarBorderIcon />
-        
-
+          <Rating rating={costRating} />
         <h4>Quality Rating</h4>
-        <StarIcon />
-        <StarIcon />
-        <StarIcon />
-        <StarBorderIcon />
-        <StarBorderIcon />
-
+         <Rating rating={qualityRating} />
         <h4>Reliability Rating</h4>
-        <StarIcon />
-        <StarIcon />
-        <StarIcon />
-        <StarIcon />
-        <StarHalfIcon />
+          <Rating rating={reliabilityRating} />
       </Grid>
 
       <Grid item xs={12} md={8} lg={8}>

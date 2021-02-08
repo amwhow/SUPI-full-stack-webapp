@@ -18,17 +18,17 @@ const DashboardHome = () => {
   return (
     <Grid container spacing={3}>
       {/* Chart */}
-      <Grid item xs={12} md={7} lg={8}>
+      <Grid item xs={12} md={12} lg={12}>
         <Paper className={fixedHeightPaper} variant="outlined">
           <Chart />
         </Paper>
       </Grid>
-      {/* Calendar */}
+      {/* Calendar
       <Grid item xs={12} md={5} lg={4}>
         <Paper className={fixedHeightPaper}>
           <Calendar />
         </Paper>
-      </Grid>
+      </Grid> */}
       {/* Invoice due */}
       <Grid item xs={12} md={4} lg={4}>
         <Paper className={fixedHeightPaper} variant="outlined">
