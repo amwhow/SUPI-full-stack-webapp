@@ -23,7 +23,7 @@ function NewDocument({ history }) {
   });
 
   function fetchSuppliers() {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers`, {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/dashboard/suppliers`, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
@@ -71,14 +71,14 @@ function NewDocument({ history }) {
     formData.append("supplier_document", supplierDocument)
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/documents`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/dashboard/documents`, {
         method: "POST",
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
         body: formData,
       });
-      history.push("/documents");
+      history.push("/dashboard/documents");
     } catch (err) {
       console.log(err.message);
     }
