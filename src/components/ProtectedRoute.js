@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Route, Redirect } from "react-router-dom";
 
-export default function ProtectedRoute({ exact, path, component }) {
+export default function ProtectedRoute(props) {
+  // exact, path, component, ...
+  const { exact, path, component } = props 
   const [auth, setAuth] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -22,7 +24,8 @@ export default function ProtectedRoute({ exact, path, component }) {
           setLoading(false);
         }
       } catch (err) {
-        console.log(err);
+        console.error(err.message);
+        alert("Can't connect to backend server")
         setLoading(false);
       }
     }

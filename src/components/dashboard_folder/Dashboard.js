@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import clsx from "clsx";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -17,12 +17,21 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import { MainListItems, secondaryListItems } from "./listItems";
+import { MainListItems, SecondaryListItems } from "./listItems";
 import DashboardHome from "./DashboardHome";
 import DashboardSupplier from "./DashboardSupplier";
 import DashboardStyles from "./DashboardStyles";
-import { Switch } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import ProtectedRoute from "../ProtectedRoute";
+import SupplierNotes from "./SupplierNotes";
+import POTable from '../table/POTable'; 
+import NewPO from '../PO/NewPO';
+import NewInvoice from '../invoice/NewInvoice';
+import InvoiceTable from '../table/InvoiceTable'; 
+import DocumentTable from '../table/DocumentTable';
+import NewDocument from '../document/NewDocument'
+import ContactForm from "../info/Contact"
+import About from '../info/About'
 
 function Copyright() {
   return (
@@ -37,12 +46,11 @@ function Copyright() {
   );
 }
 
-// where dashboardstyles originally lives
-
 const useStyles = DashboardStyles;
 
-export default function Dashboard() {
+export default function Dashboard(props) {
   const history = useHistory();
+
   const logout = () => {
     localStorage.removeItem("token");
     history.push("/");
@@ -57,7 +65,31 @@ export default function Dashboard() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  // const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
+  const [suppliers, setSuppliers] = useState([]);
+  const [contacts, setContacts] = useState([]);
+  const [purchaseOrders, setPurchaseOrders] = useState([]);
+  const [reviews, setReviews] = useState([]);
+  const [invoices, setInvoices] = useState([]);
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/dashboard/suppliers`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((response) => {
+        const {suppliers, contacts, purchase_orders, reviews, invoices } = response
+        setSuppliers(suppliers);
+        setContacts(contacts);
+        setPurchaseOrders(purchase_orders);
+        setReviews(reviews);
+        setInvoices(invoices);
+        // console.log("in Dashboard, invoices: " + invoices[0].receivedDate)
+      });
+  }, []);
+
 
   return (
     <div className={classes.root}>
@@ -66,6 +98,7 @@ export default function Dashboard() {
         position="absolute"
         className={clsx(classes.appBar, open && classes.appBarShift)}
       >
+        {/* top navbar */}
         <Toolbar className={classes.toolbar}>
           <IconButton
             edge="start"
@@ -86,22 +119,17 @@ export default function Dashboard() {
             noWrap
             className={classes.title}
           >
-            {/* company name here */}
             {`Welcome back, ${user_name}!`}
           </Typography>
           <IconButton color="inherit">
-            <Badge badgeContent={1} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <IconButton color="inherit">
             <Badge color="primary">
-              {/* to be changed */}
               <ExitToAppIcon onClick={() => logout()} />
             </Badge>
           </IconButton>
         </Toolbar>
       </AppBar>
+      
+      {/* sidebar */}
       <Drawer
         variant="permanent"
         classes={{
@@ -115,23 +143,35 @@ export default function Dashboard() {
           </IconButton>
         </div>
         <Divider />
-        <MainListItems history={history} />
+        <MainListItems history={history} suppliers={suppliers} />
         <Divider />
-        <List>{secondaryListItems}</List>
+        <List>
+          <SecondaryListItems history={history} />
+        </List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
+
           {/* modularise the main section */}
           <Switch>
-            {/* dynamically change component params based on backend data */}
-            {/* component should change to: render={(props) => <DashboardHome {...props} suppliers={suppliers}/> }/> */}
             <ProtectedRoute exact path="/dashboard" component={DashboardHome} />
-            <ProtectedRoute exact path="/dashboard/supplier" component={DashboardSupplier} />
-
+            <ProtectedRoute
+              exact
+              path={`/dashboard/suppliers/:id`}
+              component={DashboardSupplier}
+            />
+            <ProtectedRoute exact path="/dashboard/purchase_orders" component={POTable} />
+            <ProtectedRoute exact path="/dashboard/purchase_orders/new" component={NewPO} />
+            <ProtectedRoute exact path="/dashboard/purchase_orders/:id/invoices/new" component={NewInvoice} />
+            <ProtectedRoute exact path="/dashboard/invoices" component={InvoiceTable} />
+            <ProtectedRoute exact path="/dashboard/documents" component={DocumentTable} />
+            <ProtectedRoute exact path="/dashboard/documents/new" component={NewDocument} />
+            <ProtectedRoute exact path="/dashboard/contact" component={ContactForm} />
+            <ProtectedRoute exact path="/dashboard/about" component={About} />
           </Switch>
-
-          {/* <DashboardHome /> */}
+          
+          {/* end of main section */}
           <Box pt={4}>
             <Copyright />
           </Box>

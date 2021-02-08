@@ -1,11 +1,12 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useEffect } from "react";
 import reducer from "../../utils/reducer";
 import Grid from "@material-ui/core/Grid";
 import { Form } from "../styles/Form";
 import FormContainer from "../styles/FormContainer";
 import Button from "@material-ui/core/Button";
+import { useParams, Link } from "react-router-dom";
 
-function NewSupplier({ history }) {
+function EditSupplier(props) {
   const initialSupplierState = {
     name: "",
     service: "",
@@ -15,9 +16,9 @@ function NewSupplier({ history }) {
     contactNumber: "",
     description: "",
     note: "",
-    logo: ""
   };
 
+  const { id } = useParams();
   // recommend we add a function to set today's date as the min value for date inputs
 
   const [store, dispatch] = useReducer(reducer, initialSupplierState);
@@ -30,7 +31,6 @@ function NewSupplier({ history }) {
     contactNumber,
     description,
     note,
-    logo
   } = store;
 
   const handleChange = (e) => {
@@ -40,12 +40,33 @@ function NewSupplier({ history }) {
     });
   };
 
-  const handleFile = (e) => {
-    dispatch({
-      type: `set${e.target.name}`,
-      data: e.target.files[0]
+  const supplierKeys = [
+    "name",
+    "service",
+    "website",
+    "contact_name",
+    "contact_email",
+    "contact_number",
+    "description",
+    "note",
+  ];
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
     })
-  }
+      .then((res) => res.json())
+      .then((supplier) => {
+        supplierKeys.map((element) => {
+          dispatch({
+            type: `set${element}`,
+            data: supplier[element],
+          });
+        });
+      });
+  }, [id]);
 
   async function onFormSubmit(event) {
     event.preventDefault();
@@ -61,30 +82,20 @@ function NewSupplier({ history }) {
         note: note,
       },
     };
-    const formData = new FormData();
-    formData.append("name", name)
-    formData.append("service", service)
-    formData.append("website", website)
-    formData.append("contact_name", contactName)
-    formData.append("contact_email", contactEmail)
-    formData.append("contact_number", contactNumber)
-    formData.append("description", description)
-    formData.append("note", note)
-    formData.append("logo", logo)
-
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/suppliers`,
+        `${process.env.REACT_APP_BACKEND_URL}/suppliers/${id}`,
         {
-          method: "POST",
+          method: "PUT",
           headers: {
+            "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-          body: formData,
+          body: JSON.stringify(body),
         }
       );
-      history.push("/dashboard/suppliers");
-      alert("Supplier created");
+      alert("Supplier updated");
+      props.history.push(`/dashboard/suppliers/${id}`);
     } catch (err) {
       console.log(err.message);
     }
@@ -93,8 +104,8 @@ function NewSupplier({ history }) {
   return (
     <FormContainer>
       <Grid item xs={12} sm={8}>
-        <h1 className="new-doc-header">New Supplier</h1>
-        <Form className="new-invoice-form" onSubmit={onFormSubmit} encType="multipart/form-data">
+        <h1 className="new-doc-header">Edit Supplier</h1>
+        <Form className="new-invoice-form" onSubmit={onFormSubmit}>
           <div className="form-content">
             <label htmlFor="name">Supplier name</label>
             <input
@@ -176,30 +187,21 @@ function NewSupplier({ history }) {
             />
           </div>
           <div className="form-content">
-            <label htmlFor="logo">Logo</label>
-            <input
-              type="file"
-              name="logo"
-              id="logo"
-              accept=".jpg,.jpeg,.png"
-              onChange={handleFile} 
-            />
-          </div>
-          <div className="form-content">
             <Button
               type="submit"
               variant="contained"
-              value="Add Supplier"
+              value="Edit Supplier"
               id="submit"
               color="primary"
             >
-              Create
+              Save
             </Button>
           </div>
         </Form>
+        <a href={`/dashboard/suppliers/${id}`}>Back</a>
       </Grid>
     </FormContainer>
   );
 }
 
-export default NewSupplier;
+export default EditSupplier;

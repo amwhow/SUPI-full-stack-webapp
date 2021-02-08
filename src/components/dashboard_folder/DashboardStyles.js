@@ -77,7 +77,10 @@ const DashboardStyles = makeStyles((theme) => ({
     flexDirection: "column",
   },
   fixedHeight: {
-    height: 240,
+    height: 300,
+  },
+  chartHeight: {
+    height: 400,
   },
 }));
 

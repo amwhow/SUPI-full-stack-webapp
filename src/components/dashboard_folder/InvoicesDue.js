@@ -14,36 +14,54 @@ const useStyles = makeStyles({
   },
 });
 
-export default function InvoicesDue() {
+export default function InvoicesDue({invoiceData}) {
   const classes = useStyles();
-  return (
-    <React.Fragment>
-      <Title>Invoices Due</Title>
-      <Typography component="p" variant="h3">
-        3
-      </Typography>
-      <Typography color="textSecondary" className={classes.depositContext}>
+  if (invoiceData) {
+    let counter = 0
+    return (
+      <React.Fragment>
+        <Title>Invoices Due</Title>
+        <Typography component="p" variant="h3">
+          {invoiceData.length}
+        </Typography>
+        <Typography color="textSecondary" className={classes.depositContext}>
+          {invoiceData.reverse().map((invoice) => {
+            if (invoice.paid === false && counter <= 3) {
+              counter += 1
+                return (
+                <div>
+                  <Link color="primary" href={invoice.invoice_document} onClick={preventDefault}>
+                    ${invoice.totalPrice} - Due on: {invoice.dueDate}
+                  </Link>
+                </div>
+                )
+              }
+            }
+          )}
+        </Typography>
         <div>
           <Link color="primary" href="#" onClick={preventDefault}>
-            Supplier Name - Date
+            All invoices
           </Link>
         </div>
+      </React.Fragment>
+    );
+  } else {
+    return (
+      <React.Fragment>
+        <Title>Invoices Due</Title>
+        <Typography component="p" variant="h3">
+          0
+        </Typography>
+        <Typography color="textSecondary" className={classes.depositContext}>
+          
+        </Typography>
         <div>
           <Link color="primary" href="#" onClick={preventDefault}>
-            Supplier Name - Date
+            All invoices
           </Link>
         </div>
-        <div>
-          <Link color="primary" href="#" onClick={preventDefault}>
-            Supplier Name - Date
-          </Link>
-        </div>
-      </Typography>
-      <div>
-        <Link color="primary" href="#" onClick={preventDefault}>
-          All invoices
-        </Link>
-      </div>
-    </React.Fragment>
-  );
+      </React.Fragment>
+    );
+  }
 }

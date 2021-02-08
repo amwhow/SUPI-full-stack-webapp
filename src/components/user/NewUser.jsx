@@ -80,7 +80,6 @@ function NewUser({ history }) {
         );
         const { user_name, jwt } = await response.json();
         // user_name
-        localStorage.setItem("token", jwt);
         history.push("/");
         alert("You have signed up!");
       }
