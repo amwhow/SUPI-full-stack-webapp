@@ -9,10 +9,6 @@ import Box from "@material-ui/core/Box";
 import Overview from "./supplier_info/Overview";
 import Evaluation from "./supplier_info/Evaluation";
 import PurchaseOrders from "./supplier_info/PurchaseOrders";
-import Calendar from "./Calendar";
-import InvoicesDue from "./InvoicesDue";
-import POApprovals from "./POApprovals";
-import SupplierNotes from "./SupplierNotes";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 
@@ -78,34 +74,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DashboardTabs({ supplier, fixedHeightPaper }) {
+export default function DashboardTabs({ supplier, poData, reviewData, invoiceData, fixedHeightPaper }) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  const [poData, setPoData] = useState([])
-  const [reviewData, setReviewData] = useState([]);
-  const [invoiceData, setInvoiceData] = useState([]);
-  const id = supplier.id;
-
-  // get all PO data and their reviews for the selected supplier
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers/${id}/purchase_orders`, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
-    })
-      .then((res) => res.json())
-      .then((response) => {
-        const { pos, reviews, invoices } = response;
-        setPoData(pos);
-        setReviewData(reviews)
-        setInvoiceData(invoices)
-        // handleReview("costRating")
-      });
-  }, [id]);
 
   return (
     <div className={classes.root}>
@@ -129,32 +103,8 @@ export default function DashboardTabs({ supplier, fixedHeightPaper }) {
       {/* Overview Tab */}
       <TabPanel value={value} index={0}>
         <Grid container spacing={1}>
-          <Grid item xs={12} md={8} lg={8}>
-            <Overview supplier={supplier} />
-          </Grid>
-          {/* Calendar */}
-          <Grid item xs={12} md={4} lg={4}>
-            <Paper className="notFixedHeight" elevation={0}>
-              <Calendar />
-            </Paper>
-          </Grid>
-          {/* Invoice due */}
-          <Grid item xs={12} md={4} lg={4}>
-            <Paper className={fixedHeightPaper} variant="outlined">
-              <InvoicesDue invoiceData={invoiceData}/>
-            </Paper>
-          </Grid>
-          {/* PO Approval */}
-          <Grid item xs={12} md={4} lg={4}>
-            <Paper className={fixedHeightPaper} variant="outlined">
-              <POApprovals poData={poData} />
-            </Paper>
-          </Grid>
-          {/* Supplier Notes */}
-          <Grid item xs={12} md={4} lg={4}>
-            <Paper className={fixedHeightPaper} variant="outlined">
-              <SupplierNotes />
-            </Paper>
+          <Grid item xs={12} md={12} lg={12}>
+            <Overview supplier={supplier} fixedHeightPaper={fixedHeightPaper} poData={poData} invoiceData={invoiceData} reviewData={reviewData}/>
           </Grid>
         </Grid>
       </TabPanel>
@@ -165,7 +115,7 @@ export default function DashboardTabs({ supplier, fixedHeightPaper }) {
         </Grid>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <PurchaseOrders />
+        <PurchaseOrders poData={poData}/>
       </TabPanel>
       <TabPanel value={value} index={3}>
         Invoices

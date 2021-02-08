@@ -14,20 +14,27 @@ const useStyles = makeStyles({
   },
 });
 
-export default function POApprovals() {
+export default function POApprovals({poData}) {
   const classes = useStyles();
   return (
     <React.Fragment>
       <Title>PO Approvals</Title>
       <Typography component="p" variant="h3">
-        1
+        {poData.length}
       </Typography>
       <Typography color="textSecondary" className={classes.POApprovalContext}>
-        <div>
-          <Link color="primary" href="#" onClick={preventDefault}>
-            Supplier Name - Date
-          </Link>
-        </div>
+        {poData.map((po) => {
+          console.log("po: " + po.po_document)
+          if (po.approvalStatus === false) {
+            return (
+            <div>
+              <a href={po.po_document} onClick={preventDefault}>
+                Amount: ${po.totalPrice} - Ordered on: {po.orderDate}
+              </a>
+            </div>
+            )
+          }
+        })}
       </Typography>
       <div>
         <Link color="primary" href="#" onClick={preventDefault}>

@@ -32,13 +32,14 @@ const DashboardHome = () => {
       {/* Invoice due */}
       <Grid item xs={12} md={4} lg={4}>
         <Paper className={fixedHeightPaper} variant="outlined">
-          <InvoicesDue />
+          {/* pass in current_user.pos.invoices data */}
+          {/* <InvoicesDue /> */}
         </Paper>
       </Grid>
       {/* PO Approval */}
       <Grid item xs={12} md={4} lg={4}>
         <Paper className={fixedHeightPaper} variant="outlined">
-          <POApprovals />
+          {/* <POApprovals /> */}
         </Paper>
       </Grid>
       {/* Quick Contacts */}

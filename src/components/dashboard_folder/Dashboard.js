@@ -38,8 +38,6 @@ function Copyright() {
   );
 }
 
-// where dashboardstyles originally lives
-
 const useStyles = DashboardStyles;
 
 export default function Dashboard(props) {
@@ -61,7 +59,6 @@ export default function Dashboard(props) {
   };
 
   const [suppliers, setSuppliers] = useState([]);
-  // const id = props.location.pathname.slice(-1)
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers`, {
@@ -75,6 +72,7 @@ export default function Dashboard(props) {
       });
   }, []);
 
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -82,6 +80,7 @@ export default function Dashboard(props) {
         position="absolute"
         className={clsx(classes.appBar, open && classes.appBarShift)}
       >
+        {/* top navbar */}
         <Toolbar className={classes.toolbar}>
           <IconButton
             edge="start"
@@ -102,7 +101,6 @@ export default function Dashboard(props) {
             noWrap
             className={classes.title}
           >
-            {/* company name here */}
             {`Welcome back, ${user_name}!`}
           </Typography>
           <IconButton color="inherit">
@@ -118,6 +116,8 @@ export default function Dashboard(props) {
           </IconButton>
         </Toolbar>
       </AppBar>
+      
+      {/* sidebar */}
       <Drawer
         variant="permanent"
         classes={{

@@ -5,7 +5,6 @@ import Paper from "@material-ui/core/Paper";
 import DashboardStyles from "./DashboardStyles";
 import Button from "@material-ui/core/Button";
 import DashboardTabs from "./DashboardTabs";
-import Overview from "./supplier_info/Overview"
 import { useParams, useHistory } from "react-router-dom";
 
 const useStyles = DashboardStyles;
@@ -14,12 +13,32 @@ const DashboardSupplier = (props) => {
   // const history = useHistory();
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  const fixedHeightChartPaper = clsx(classes.paper);
   const [supplier, setSupplier] = useState("failed supplier")
+  const [poData, setPoData] = useState([])
+  const [reviewData, setReviewData] = useState([]);
+  const [invoiceData, setInvoiceData] = useState([]);
   
   useEffect(()=> {
     setSupplier(props.location.state.supplier)
-  }, [props.location])
+  }, [])
+  const id = props.location.state.supplier.id;
+  // get all PO data and their reviews for the selected supplier
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers/${id}/purchase_orders`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+      .then((res) => res.json())
+      .then((response) => {
+        const { pos, reviews, invoices } = response;
+        setPoData(pos);
+        setReviewData(reviews)
+        setInvoiceData(invoices)
+        console.log("invoices document: " + invoices[0].invoice_document)
+        // handleReview("costRating")
+      });
+  }, [id]);
   
   return (
     <Grid container spacing={3}>
@@ -47,7 +66,7 @@ const DashboardSupplier = (props) => {
       </Grid>
 
       <Grid item xs={12} md={12} lg={12}>
-        <DashboardTabs supplier={supplier} fixedHeightPaper={fixedHeightPaper}/>
+        <DashboardTabs supplier={supplier} fixedHeightPaper={fixedHeightPaper} poData={poData} reviewData={reviewData} invoiceData={invoiceData} />
       </Grid>
     </Grid>
   );
