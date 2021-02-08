@@ -13,7 +13,7 @@ export default function Evaluation({supplier, reviewData}) {
   const useStyles = DashboardStyles;
   const classes = useStyles();
   const fixedHeightChartPaper = clsx(classes.paper, classes.chartHeight);
-  const [reviewType, setReviewType] = useState("")
+  const [reviewType, setReviewType] = useState("");
   const [reviewRating, setReviewRating] = useState([]);
   // const [poData, setPoData] = useState([])
   // const id = supplier.id;
@@ -85,9 +85,6 @@ export default function Evaluation({supplier, reviewData}) {
         <StarIcon />
         <StarBorderIcon />
         
-        <Button variant="contained" value="Edit Review" color="primary">
-          Edit
-        </Button>
 
         <h4>Quality Rating</h4>
         <StarIcon />
@@ -95,9 +92,6 @@ export default function Evaluation({supplier, reviewData}) {
         <StarIcon />
         <StarBorderIcon />
         <StarBorderIcon />
-        <Button variant="contained" value="Edit Review" color="primary">
-          Edit
-        </Button>
 
         <h4>Reliability Rating</h4>
         <StarIcon />
@@ -105,9 +99,6 @@ export default function Evaluation({supplier, reviewData}) {
         <StarIcon />
         <StarIcon />
         <StarHalfIcon />
-        <Button variant="contained" value="Edit Review" color="primary">
-          Edit
-        </Button>
       </Grid>
 
       <Grid item xs={12} md={8} lg={8}>
