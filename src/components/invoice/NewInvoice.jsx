@@ -47,14 +47,14 @@ function NewInvoice({ history, match }) {
     formData.append("invoice_document", invoiceDocument)
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/invoices`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/dashboard/invoices`, {
         method: "POST",
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
         body: formData,
       });
-      history.push("/invoices")
+      history.push("/dashboard/invoices")
     } catch (err) {
       console.log(err.message);
     }
