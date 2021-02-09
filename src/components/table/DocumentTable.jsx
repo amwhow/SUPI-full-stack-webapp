@@ -71,7 +71,7 @@ export default function DocumentTable() {
               <StyledTableCell align="right">Document Type</StyledTableCell>
               <StyledTableCell align="right">Expiry Date</StyledTableCell>
               <StyledTableCell align="right">Document File</StyledTableCell>
-              <StyledTableCell align="right">Manage PO</StyledTableCell>
+              <StyledTableCell align="right">Manage Document</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
