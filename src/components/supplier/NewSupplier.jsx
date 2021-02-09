@@ -50,18 +50,7 @@ function NewSupplier({ history }) {
 
   async function onFormSubmit(event) {
     event.preventDefault();
-    const body = {
-      supplier: {
-        name: name,
-        service: service,
-        website: website,
-        contact_name: contactName,
-        contact_email: contactEmail,
-        contact_number: contactNumber,
-        description: description,
-        note: note,
-      },
-    };
+    
     const formData = new FormData();
     formData.append("name", name)
     formData.append("service", service)
@@ -84,7 +73,7 @@ function NewSupplier({ history }) {
           body: formData,
         }
       );
-      history.push("/dashboard/suppliers");
+      history.push("/dashboard");
       alert("Supplier created");
     } catch (err) {
       console.log(err.message);

@@ -26,6 +26,7 @@ import ProtectedRoute from "../ProtectedRoute";
 import SupplierNotes from "./SupplierNotes";
 import POTable from "../table/POTable";
 import NewPO from "../PO/NewPO";
+import EditPO from "../PO/EditPO";
 import NewInvoice from "../invoice/NewInvoice";
 import InvoiceTable from "../table/InvoiceTable";
 import DocumentTable from "../table/DocumentTable";
@@ -187,6 +188,11 @@ export default function Dashboard(props) {
               exact
               path="/dashboard/purchase_orders/new"
               component={NewPO}
+            />
+            <ProtectedRoute
+              exact
+              path="/dashboard/purchase_orders/:id/edit"
+              component={EditPO}
             />
             <ProtectedRoute
               exact
