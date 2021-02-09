@@ -100,7 +100,6 @@ export default function Dashboard(props) {
         setPurchaseOrders(purchase_orders);
         setReviews(reviews);
         setInvoices(invoices);
-        // console.log("in Dashboard, invoices: " + invoices[0].receivedDate)
       });
   }, []);
 
