@@ -31,8 +31,8 @@ function NewDocument({ history }) {
       .then((body) => {
         const {suppliers} = body
         setSupplierId({
-        data: suppliers,
-        selected: ''
+          data: suppliers,
+          selected: ''
       })
     })
   }
@@ -64,7 +64,6 @@ function NewDocument({ history }) {
 
   async function onFormSubmit(event) {
     event.preventDefault();
-    const body = { document: {expiryDate: expiryDate, documentType: documentType, supplier_id: supplierId.selected} }
 
     const formData = new FormData();
     formData.append("expiryDate", expiryDate)
@@ -116,7 +115,7 @@ function NewDocument({ history }) {
               </select>
             </div>
           <div className="form-content">
-            <label htmlFor="supplier_id">Supplier</label>
+            <label htmlFor="supplierId">Supplier</label>
             <select
               name="supplierId"
               id="supplierId"
