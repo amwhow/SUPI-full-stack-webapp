@@ -74,7 +74,7 @@ function EditReview(props) {
   return (
     <FormContainer>
       <Grid item xs={12} sm={8}>
-        <h1 className="new-doc-header">New Review</h1>
+        <h1 className="new-doc-header">Edit Review</h1>
         <Form className="new-invoice-form" onSubmit={onFormSubmit}>
           <div className="form-content">
             <label htmlFor="qualityRating">Quality rating</label>

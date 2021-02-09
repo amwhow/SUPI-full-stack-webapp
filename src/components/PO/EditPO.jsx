@@ -126,27 +126,6 @@ function EditPO(props) {
     }
   }
 
-  async function onDeleteLinkClick(e) {
-    try {
-      e.preventDefault();
-      if (window.confirm("Would you like to delete?")) {
-        await fetch(
-          `${process.env.REACT_APP_BACKEND_URL}/purchase_orders/${id}`,
-          {
-            method: "DELETE",
-            headers: {
-              'Authorization': `Bearer ${localStorage.getItem('token')}`
-            },
-          }
-        );
-        alert("Purchase order deleted");
-        props.history.push(`/dashboard/purchase_orders`);
-      }
-    } catch (err) {
-      console.log(err.message);
-    }
-  }
-
   return (
     <FormContainer>
       <Grid item xs={12} sm={8}>

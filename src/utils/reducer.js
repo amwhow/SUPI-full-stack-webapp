@@ -117,12 +117,12 @@ export default function reducer(state, action) {
         delivered: action.data
       }
     }
-    case 'setSupplierId': {
-      return {
-        ...state,
-        supplierId: action.data
-      }
-    }
+    // case 'setSupplierId': {
+    //   return {
+    //     ...state,
+    //     supplierId: action.data
+    //   }
+    // }
     case 'setPODocument': {
       return {
         ...state,
