@@ -32,13 +32,13 @@ const useStyles = makeStyles({
   },
 });
 
-export default function POTable() {
+export default function POTable({poData}) {
   const classes = useStyles();
 
   const [purchaseOrders, setPurchaseOrders] = useState([]);
 
   function fetchPurchaseOrders() {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/dashboard/purchase_orders`, {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/purchase_orders`, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
@@ -50,8 +50,6 @@ export default function POTable() {
   useEffect(() => {
     fetchPurchaseOrders();
   },[])
-
-  console.log(purchaseOrders)
 
   const invoiceLinks = purchaseOrders.map((PO, index) => {
     return `/dashboard/purchase_orders/${PO.id}/invoices/new`
@@ -81,6 +79,7 @@ export default function POTable() {
               <StyledTableCell align="right">PO Document</StyledTableCell>
               <StyledTableCell align="right">Invoice</StyledTableCell>
               <StyledTableCell align="right">Review</StyledTableCell>
+              <StyledTableCell align="right">Manage PO</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -94,13 +93,16 @@ export default function POTable() {
                 <StyledTableCell align="right">${PO.totalPrice}</StyledTableCell>
                 <StyledTableCell align="right">{PO.deliveryStatus ? "Delivered" : "Awaiting delivery"}</StyledTableCell>
                 <StyledTableCell align="right">
-                  <a href={PO.po_document.url}>PO Document file</a>
+                  <a href={PO.po_document.url} target="_blank">PO Document file</a>
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <a href={invoiceLinks[index]}>Add invoice</a>
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <a href={reviewLinks[index]}>Add review</a>
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  <a href={`/dashboard/purchase_orders/${PO.id}/edit`}>Edit</a>
                 </StyledTableCell>
               </StyledTableRow>
             ))}

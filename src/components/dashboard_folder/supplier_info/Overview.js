@@ -6,24 +6,8 @@ import POApprovals from "../POApprovals";
 import SupplierNotes from "../SupplierNotes";
 import Rating from "./Rating"
 
-export default function Overview({ supplier, fixedHeightPaper, poData, invoiceData, costRating, qualityRating, reliabilityRating}) {
+export default function Overview({ supplier, fixedHeightPaper, poData, invoiceData, costRating, qualityRating, reliabilityRating, poDataWithFile, invoiceWithFile}) {
 
-  // let costRating = 0
-  // let qualityRating = 0
-  // let reliabilityRating = 0
-  
-  // reviewData.map((review) => {
-  //   costRating += review.costRating
-  //   reliabilityRating += review.reliabilityRating
-  //   qualityRating += review.qualityRating
-  // })
-  // costRating =  parseFloat((Math.round(costRating/(reviewData.length) * 2) / 2).toFixed(1))
-
-  // reliabilityRating =  parseFloat((Math.round(reliabilityRating/(reviewData.length) * 2) / 2).toFixed(1))
-
-  // qualityRating =  parseFloat((Math.round(qualityRating/(reviewData.length) * 2) / 2).toFixed(1))
-
-  // console.log("CR: " +costRating)
   return (
     <Grid container spacing={3} direction="row" justify="flex-start">
       <Grid item xs={12} md={6} lg={6}>
@@ -53,13 +37,13 @@ export default function Overview({ supplier, fixedHeightPaper, poData, invoiceDa
       {/* Invoice due */}
       <Grid item xs={12} md={4} lg={4}>
         <Paper className={fixedHeightPaper} variant="outlined">
-          <InvoicesDue invoiceData={invoiceData} />
+          <InvoicesDue invoiceData={invoiceWithFile} />
         </Paper>
       </Grid>
       {/* PO Approval */}
       <Grid item xs={12} md={4} lg={4}>
         <Paper className={fixedHeightPaper} variant="outlined">
-          <POApprovals poData={poData} />
+          <POApprovals poData={poDataWithFile} />
         </Paper>
       </Grid>
       {/* Supplier Notes */}

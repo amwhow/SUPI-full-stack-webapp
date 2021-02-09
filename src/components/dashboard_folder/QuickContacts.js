@@ -28,16 +28,14 @@ export default function QuickContacts(contacts) {
           className={classes.quickContactsContext}
         >
           {contacts.contacts.reverse().map((contact) => {
-            if (contact.contactName && counter <= 3) {
+            if (contact.contactName && counter < 5) {
               counter += 1;
               return (
                 <>
                   <Box display="flex" justifyContent="space-between">
-                    <p>
-                      {" "}
-                      {contact.contactName} from {contact.supplierName}
-                    </p>
-                    <p>Email: {contact.contactEmail}</p>
+                    <span>
+                      {contact.supplierName}({contact.contactName}) - {contact.contactEmail}
+                    </span>
                   </Box>
                   <hr/>
                 </>

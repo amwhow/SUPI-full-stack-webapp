@@ -11,6 +11,9 @@ import Evaluation from "./supplier_info/Evaluation";
 import PurchaseOrders from "./supplier_info/PurchaseOrders";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
+import POTable from "../table/POTable"
+import InvoiceTable from "../table/InvoiceTable"
+import DocumentTable from "../table/DocumentTable"
 
 const AntTab = withStyles((theme) => ({
   root: {
@@ -74,8 +77,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-export default function DashboardTabs({ supplier, poData, reviewData, invoiceData, fixedHeightPaper }) {
+export default function DashboardTabs({ supplier, poData, reviewData, invoiceData, fixedHeightPaper, poDataWithFile, invoiceWithFile }) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
@@ -86,18 +88,16 @@ export default function DashboardTabs({ supplier, poData, reviewData, invoiceDat
   let qualityRating = 0
   let reliabilityRating = 0
 
-  reviewData.map((review) => {
+  if (reviewData) {
+    reviewData.map((review) => {
     costRating += review.costRating
     reliabilityRating += review.reliabilityRating
     qualityRating += review.qualityRating
   })
   costRating =  parseFloat((Math.round(costRating/(reviewData.length) * 2) / 2).toFixed(1))
-
   reliabilityRating =  parseFloat((Math.round(reliabilityRating/(reviewData.length) * 2) / 2).toFixed(1))
-
   qualityRating =  parseFloat((Math.round(qualityRating/(reviewData.length) * 2) / 2).toFixed(1))
-
-  console.log("CR: " +costRating)
+  }
 
   return (
     <div className={classes.root}>
@@ -122,7 +122,7 @@ export default function DashboardTabs({ supplier, poData, reviewData, invoiceDat
       <TabPanel value={value} index={0}>
         <Grid container spacing={1}>
           <Grid item xs={12} md={12} lg={12}>
-            <Overview supplier={supplier} fixedHeightPaper={fixedHeightPaper} poData={poData} invoiceData={invoiceData} costRating={costRating} qualityRating={qualityRating} reliabilityRating={reliabilityRating} />
+            <Overview supplier={supplier} fixedHeightPaper={fixedHeightPaper} poData={poData} invoiceData={invoiceData} costRating={costRating} qualityRating={qualityRating} reliabilityRating={reliabilityRating} poDataWithFile={poDataWithFile} invoiceWithFile={invoiceWithFile}/>
           </Grid>
         </Grid>
       </TabPanel>
@@ -134,15 +134,15 @@ export default function DashboardTabs({ supplier, poData, reviewData, invoiceDat
       </TabPanel>
       {/* Purchase Order Tab */}
       <TabPanel value={value} index={2}>
-        {poData} && <PurchaseOrders poData={poData}/>
+        <POTable poData={poData}/>
       </TabPanel>
       {/* Invoices Tab */}
       <TabPanel value={value} index={3}>
-        Invoices
+        <InvoiceTable invoiceData={invoiceData}/>
       </TabPanel>
       {/* Documents Tab */}
       <TabPanel value={value} index={4}>
-        Documents
+        <DocumentTable poData={poData}/>
       </TabPanel>
     </div>
   );

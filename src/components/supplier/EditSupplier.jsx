@@ -16,10 +16,10 @@ function EditSupplier(props) {
     contactNumber: "",
     description: "",
     note: "",
+    logo: ""
   };
 
   const { id } = useParams();
-  // recommend we add a function to set today's date as the min value for date inputs
 
   const [store, dispatch] = useReducer(reducer, initialSupplierState);
   const {
@@ -31,6 +31,7 @@ function EditSupplier(props) {
     contactNumber,
     description,
     note,
+    logo
   } = store;
 
   const handleChange = (e) => {
@@ -39,6 +40,13 @@ function EditSupplier(props) {
       data: e.target.value,
     });
   };
+
+  const handleFile = (e) => {
+    dispatch({
+      type: `set${e.target.name}`,
+      data: e.target.files[0]
+    })
+  }
 
   const supplierKeys = [
     "name",
@@ -49,6 +57,7 @@ function EditSupplier(props) {
     "contact_number",
     "description",
     "note",
+    "logo"
   ];
 
   useEffect(() => {
@@ -70,28 +79,25 @@ function EditSupplier(props) {
 
   async function onFormSubmit(event) {
     event.preventDefault();
-    const body = {
-      supplier: {
-        name: name,
-        service: service,
-        website: website,
-        contact_name: contactName,
-        contact_email: contactEmail,
-        contact_number: contactNumber,
-        description: description,
-        note: note,
-      },
-    };
+    const formData = new FormData();
+    formData.append("name", name)
+    formData.append("service", service)
+    formData.append("website", website)
+    formData.append("contact_name", contactName)
+    formData.append("contact_email", contactEmail)
+    formData.append("contact_number", contactNumber)
+    formData.append("description", description)
+    formData.append("note", note)
+    formData.append("logo", logo)
     try {
       const response = await fetch(
         `${process.env.REACT_APP_BACKEND_URL}/suppliers/${id}`,
         {
           method: "PUT",
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-          body: JSON.stringify(body),
+          body: formData,
         }
       );
       alert("Supplier updated");
@@ -105,7 +111,7 @@ function EditSupplier(props) {
     <FormContainer>
       <Grid item xs={12} sm={8}>
         <h1 className="new-doc-header">Edit Supplier</h1>
-        <Form className="new-invoice-form" onSubmit={onFormSubmit}>
+        <Form className="new-invoice-form" onSubmit={onFormSubmit} encType="multipart/form-data">
           <div className="form-content">
             <label htmlFor="name">Supplier name</label>
             <input
@@ -187,6 +193,16 @@ function EditSupplier(props) {
             />
           </div>
           <div className="form-content">
+            <label htmlFor="logo">Logo</label>
+            <input
+              type="file"
+              name="logo"
+              id="logo"
+              accept=".jpg,.jpeg,.png"
+              onChange={handleFile} 
+            />
+          </div>
+          <div className="form-content">
             <Button
               type="submit"
               variant="contained"
@@ -197,8 +213,19 @@ function EditSupplier(props) {
               Save
             </Button>
           </div>
+          <div className="form-content">
+            <Button
+              variant="contained"
+              value="go back"
+              id="submit"
+              onClick={() => {
+                props.history.goBack();
+              }}
+            >
+              Back
+            </Button>
+          </div>
         </Form>
-        <a href={`/dashboard/suppliers/${id}`}>Back</a>
       </Grid>
     </FormContainer>
   );

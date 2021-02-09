@@ -38,13 +38,15 @@ export default function DocumentTable() {
   const [documents, setDocuments] = useState([]);
 
   function fetchDocuments() {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/dashboard/documents`, {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/documents`, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
     })
       .then((res) => res.json())
-      .then((body) => setDocuments(body))
+      .then((body) => {
+      setDocuments(body)
+    })
   }
 
   useEffect(() => {
@@ -69,6 +71,7 @@ export default function DocumentTable() {
               <StyledTableCell align="right">Document Type</StyledTableCell>
               <StyledTableCell align="right">Expiry Date</StyledTableCell>
               <StyledTableCell align="right">Document File</StyledTableCell>
+              <StyledTableCell align="right">Manage PO</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -81,6 +84,9 @@ export default function DocumentTable() {
                 <StyledTableCell align="right">{document.expiryDate}</StyledTableCell>
                 <StyledTableCell align="right">
                   <a href={document.supplier_document.url}>Document file</a>
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  <a href={`/dashboard/documents/${document.id}/edit`}>Edit</a>
                 </StyledTableCell>
               </StyledTableRow>
             ))}

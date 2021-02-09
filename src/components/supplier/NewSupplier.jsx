@@ -5,6 +5,7 @@ import { Form } from "../styles/Form";
 import FormContainer from "../styles/FormContainer";
 import Button from "@material-ui/core/Button";
 
+
 function NewSupplier({ history }) {
   const initialSupplierState = {
     name: "",
@@ -49,18 +50,7 @@ function NewSupplier({ history }) {
 
   async function onFormSubmit(event) {
     event.preventDefault();
-    const body = {
-      supplier: {
-        name: name,
-        service: service,
-        website: website,
-        contact_name: contactName,
-        contact_email: contactEmail,
-        contact_number: contactNumber,
-        description: description,
-        note: note,
-      },
-    };
+    
     const formData = new FormData();
     formData.append("name", name)
     formData.append("service", service)
@@ -83,7 +73,7 @@ function NewSupplier({ history }) {
           body: formData,
         }
       );
-      history.push("/dashboard/suppliers");
+      history.push("/dashboard");
       alert("Supplier created");
     } catch (err) {
       console.log(err.message);
@@ -195,6 +185,14 @@ function NewSupplier({ history }) {
             >
               Create
             </Button>
+            <Button 
+              variant="contained"
+              value="go back"
+              id="submit"
+              onClick={()=>{history.goBack()}}>
+              Back
+            </Button>
+
           </div>
         </Form>
       </Grid>

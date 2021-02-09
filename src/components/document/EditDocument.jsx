@@ -5,14 +5,16 @@ import { Form } from "../styles/Form";
 import FormContainer from "../styles/FormContainer";
 import Button from "@material-ui/core/Button";
 import { ContactsTwoTone } from "@material-ui/icons";
+import { useParams } from "react-router-dom";
 
-function NewDocument({ history }) {
+function EditDocument(props) {
   const initialDocumentState = {
     expiryDate: "",
     documentType: "",
     supplierDocument: ""
   }
 
+  const { id } = useParams();
   const [store, dispatch] = useReducer(reducer, initialDocumentState)
   const {expiryDate, documentType, supplierDocument} = store
 
@@ -31,10 +33,10 @@ function NewDocument({ history }) {
       .then((body) => {
         const {suppliers} = body
         setSupplierId({
-        data: suppliers,
-        selected: ''
-      })
-    })
+          data: suppliers,
+          selected: ''
+        })
+      });
   }
 
   useEffect(() => {
@@ -62,9 +64,31 @@ function NewDocument({ history }) {
     })
   }
 
+  const documentKeys = [
+    "expiryDate",
+    "documentType",
+    "supplierDocument"
+  ]
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/documents/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((document) => {
+        documentKeys.map((element) => {
+          dispatch({
+            type: `set${element}`,
+            data: document[element],
+          });
+        });
+      });
+  }, [id]);
+
   async function onFormSubmit(event) {
     event.preventDefault();
-    const body = { document: {expiryDate: expiryDate, documentType: documentType, supplier_id: supplierId.selected} }
 
     const formData = new FormData();
     formData.append("expiryDate", expiryDate)
@@ -73,14 +97,15 @@ function NewDocument({ history }) {
     formData.append("supplier_document", supplierDocument)
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/documents`, {
-        method: "POST",
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/documents/${id}`, {
+        method: "PUT",
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
         body: formData,
       });
-      history.push("/dashboard/documents");
+      alert("Document updated");
+      props.history.push("/dashboard/documents");
     } catch (err) {
       console.log(err.message);
     }
@@ -89,7 +114,7 @@ function NewDocument({ history }) {
   return (
     <FormContainer>
       <Grid item xs={12} sm={8}>
-        <h1 className="new-doc-header">New Document</h1>
+        <h1 className="new-doc-header">Edit Document</h1>
         <Form className="new-invoice-form" onSubmit={onFormSubmit} encType="multipart/form-data">
           <div className="form-content">
             <label htmlFor="expiryDate">Expiry date</label>
@@ -146,18 +171,18 @@ function NewDocument({ history }) {
             <Button
               type="submit"
               variant="contained"
-              value="Create Document"
+              value="Edit Document"
               id="submit"
               color="primary"
             >
-              Create
+              Save
             </Button>
           </div>
           <div className="form-content">
             <Button
               variant="contained"
               id="submit"
-              onClick={()=>{history.goBack()}}
+              onClick={()=>{props.history.goBack()}}
             >
               Back
             </Button>
@@ -168,4 +193,4 @@ function NewDocument({ history }) {
   )
 }
 
-export default NewDocument;
+export default EditDocument;

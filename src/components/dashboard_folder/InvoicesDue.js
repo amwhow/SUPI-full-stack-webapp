@@ -18,19 +18,20 @@ export default function InvoicesDue({invoiceData}) {
   const classes = useStyles();
   if (invoiceData) {
     let counter = 0
+    const dueInvoiceData = invoiceData.filter((invoice) => invoice.paid === false)
     return (
       <React.Fragment>
         <Title>Invoices Due</Title>
         <Typography component="p" variant="h3">
-          {invoiceData.length}
+          {dueInvoiceData.length}
         </Typography>
         <Typography color="textSecondary" className={classes.depositContext}>
-          {invoiceData.reverse().map((invoice) => {
+          {dueInvoiceData.reverse().map((invoice) => {
             if (invoice.paid === false && counter <= 3) {
               counter += 1
                 return (
                 <div>
-                  <Link color="primary" href={invoice.invoice_document} onClick={preventDefault}>
+                  <Link color="primary" href={invoice.invoice_document.url} target="_blank">
                     ${invoice.totalPrice} - Due on: {invoice.dueDate}
                   </Link>
                 </div>
@@ -39,11 +40,7 @@ export default function InvoicesDue({invoiceData}) {
             }
           )}
         </Typography>
-        <div>
-          <Link color="primary" href="#" onClick={preventDefault}>
-            All invoices
-          </Link>
-        </div>
+      
       </React.Fragment>
     );
   } else {
@@ -56,11 +53,7 @@ export default function InvoicesDue({invoiceData}) {
         <Typography color="textSecondary" className={classes.depositContext}>
           
         </Typography>
-        <div>
-          <Link color="primary" href="#" onClick={preventDefault}>
-            All invoices
-          </Link>
-        </div>
+        
       </React.Fragment>
     );
   }
