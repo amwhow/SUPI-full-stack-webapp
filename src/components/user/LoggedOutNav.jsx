@@ -1,16 +1,8 @@
 import React from "react";
-import { Route, Switch, Link, useHistory } from "react-router-dom";
-import Dashboard from "../dashboard_folder/Dashboard";
-import NewUser from "./NewUser";
-import Login from "./Login";
-import ProtectedRoute from "../ProtectedRoute";
-import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,9 +28,9 @@ export default function LoggedOutNav() {
           <Button 
             color="inherit"
           >
-            <Link to="/contact">Contact</Link>
+            <a href="/contact" style={{textDecoration: "none"}}>Contact</a>
           </Button>
-          <Button color="inherit">About</Button>
+          <Button color="inherit"><a href="/about" style={{textDecoration: "none"}}>About</a></Button>
         </Toolbar>
       </AppBar>
     </div>

@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import React, {useState, useEffect} from "react";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 import DashboardStyles from "./DashboardStyles";
 import Button from "@material-ui/core/Button";
 import DashboardTabs from "./DashboardTabs";
@@ -10,7 +9,6 @@ import { useParams, useHistory } from "react-router-dom";
 const useStyles = DashboardStyles;
 
 const DashboardSupplier = (props) => {
-  // const history = useHistory();
   const classes = useStyles();
   const { id } = useParams();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);

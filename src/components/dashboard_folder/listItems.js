@@ -83,9 +83,10 @@ export function MainListItems({history, suppliers}) {
                   <ListItem
                     button
                     className={classes.nested}
-                    onClick={() => 
-                      getSupplierShow(history, element.id, element)
-                    }
+                    onClick={() => {
+                      history.push(`/dashboard/supplier/${id}`)
+                      // getSupplierShow(history, element.id, element)
+                    }}
                   >
                     <ListItemIcon>
                       <PersonIcon />
