@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import React, {useState, useEffect} from 'react';
 import Chart from './Chart';
-import Calendar from './Calendar';
 import InvoicesDue from './InvoicesDue';
 import POApprovals from './POApprovals';
 import QuickContacts from './QuickContacts';

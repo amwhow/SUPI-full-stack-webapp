@@ -31,20 +31,6 @@ export function MainListItems({history, suppliers}) {
   const classes = useStyles();
   const [open, setOpen] = useState(true);
   const [supplier, setSupplier] = useState(null);
-  
-  async function getSupplierShow(history, id, supplier) {
-    const data = await fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers/${id}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    })
-    const res = await data.json()
-    setSupplier(res);
-    await history.push({
-      pathname: `/dashboard/supplier/${id}`,
-      state: { supplier: supplier }
-    })
-  };
 
   const handleClick = () => {
     setOpen(!open);

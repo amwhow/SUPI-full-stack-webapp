@@ -26,13 +26,6 @@ export default function Overview({ supplier, fixedHeightPaper, poData, invoiceDa
         <h4>Reliability Rating</h4>
           <Rating rating={reliabilityRating} />
       </Grid>
-
-      {/* calendar */}
-      {/* <Grid item xs={12} md={4} lg={4}>
-        <Paper className="notFixedHeight" elevation={0}>
-          <Calendar />
-        </Paper>
-      </Grid> */}
       
       {/* Invoice due */}
       <Grid item xs={12} md={4} lg={4}>
