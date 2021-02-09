@@ -33,15 +33,14 @@ export default function LoggedOutNav() {
           <Typography variant="h6" className={classes.title}>
             SUPI
           </Typography>
-          <Button color="inherit">Contact us</Button>
+          <Button 
+            color="inherit"
+          >
+            <Link to="/contact">Contact</Link>
+          </Button>
           <Button color="inherit">About</Button>
         </Toolbar>
       </AppBar>
     </div>
-      // <Switch>
-      //   <ProtectedRoute exact path="/dashboard" component={Dashboard} />
-      //   <Route exact path="/signup" component={NewUser} />
-      //   <Route exact path="/login" component={Login} />
-      // </Switch>
   );
 }

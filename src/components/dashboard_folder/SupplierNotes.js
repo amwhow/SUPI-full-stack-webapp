@@ -30,7 +30,7 @@ export default function SupplierNotes({supplier}) {
         </div>
       </Typography>
       <div>
-        <Link color="primary" href={`/suppliers/edit/${id}`} >
+        <Link color="primary" href={`/dashboard/suppliers/edit/${id}`} >
           Edit Note
         </Link>
       </div>

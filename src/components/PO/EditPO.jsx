@@ -205,6 +205,7 @@ function EditPO(props) {
               type="file"
               name="PODocument"
               id="PODocument"
+              required
               accept=".pdf,.doc,.md"
               onChange={handleFile} 
             />

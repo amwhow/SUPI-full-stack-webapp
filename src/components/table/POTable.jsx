@@ -64,7 +64,7 @@ export default function POTable({poData}) {
       <h1 className="table-heading">Purchase Orders</h1>
       <div className="table-button">
         <button>
-          <a href="/dashboard/purchase_orders/new">+ New PO</a>
+          <a href="/dashboard/purchase_orders/new" style="text-decoration: none">+ New PO</a>
         </button>
       </div>
       <TableContainer component={Paper}>

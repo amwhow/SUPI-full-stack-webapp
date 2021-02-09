@@ -4,7 +4,6 @@ import Grid from "@material-ui/core/Grid";
 import { Form } from "../styles/Form";
 import FormContainer from "../styles/FormContainer";
 import Button from "@material-ui/core/Button";
-import { ContactsTwoTone } from "@material-ui/icons";
 
 function NewDocument({ history }) {
   const initialDocumentState = {
@@ -137,6 +136,7 @@ function NewDocument({ history }) {
               type="file"
               name="supplierDocument"
               id="supplierDocument"
+              required
               accept=".pdf,.doc,.md"
               onChange={handleFile} 
             />

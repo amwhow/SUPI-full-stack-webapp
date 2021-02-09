@@ -101,7 +101,7 @@ function EditSupplier(props) {
         }
       );
       alert("Supplier updated");
-      props.history.push(`/dashboard/suppliers/${id}`);
+      props.history.push(`/dashboard/supplier/${id}`);
     } catch (err) {
       console.log(err.message);
     }

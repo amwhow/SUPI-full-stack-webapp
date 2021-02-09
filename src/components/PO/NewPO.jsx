@@ -175,6 +175,7 @@ function NewPO({ history }) {
               type="file"
               name="PODocument"
               id="PODocument"
+              required
               accept=".pdf,.doc,.md"
               onChange={handleFile} 
             />
@@ -188,6 +189,13 @@ function NewPO({ history }) {
               color="primary"
             >
               Create
+            </Button>
+            <Button 
+              variant="contained"
+              value="go back"
+              id="submit"
+              onClick={()=>{history.goBack()}}>
+              Back
             </Button>
           </div>
         </Form>
