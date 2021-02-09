@@ -172,6 +172,7 @@ function NewSupplier({ history }) {
               name="logo"
               id="logo"
               accept=".jpg,.jpeg,.png"
+              required
               onChange={handleFile} 
             />
           </div>
@@ -192,7 +193,6 @@ function NewSupplier({ history }) {
               onClick={()=>{history.goBack()}}>
               Back
             </Button>
-
           </div>
         </Form>
       </Grid>

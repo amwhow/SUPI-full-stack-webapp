@@ -140,6 +140,7 @@ function EditInvoice(props) {
               type="file"
               name="invoiceDocument"
               id="invoiceDocument"
+              required
               accept=".pdf,.doc,.md" 
               onChange={handleFile}
             />

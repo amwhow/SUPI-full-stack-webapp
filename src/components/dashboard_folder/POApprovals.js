@@ -23,7 +23,7 @@ const POApprovals = ({ poData }) => {
       <React.Fragment>
         <Title>PO Approvals</Title>
         <Typography component="p" variant="h3">
-          {poData.length}
+          {filteredPoData.length}
         </Typography>
         <Typography color="textSecondary" className={classes.POApprovalContext}>
           {filteredPoData.reverse().map((po) => {

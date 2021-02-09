@@ -114,6 +114,7 @@ function NewInvoice({ history, match }) {
               type="file"
               name="invoiceDocument"
               id="invoiceDocument"
+              required
               accept=".pdf,.doc,.md" 
               onChange={handleFile}
             />
@@ -127,6 +128,13 @@ function NewInvoice({ history, match }) {
               color="primary"
             >
               Create
+            </Button>
+            <Button 
+              variant="contained"
+              value="go back"
+              id="submit"
+              onClick={()=>{history.goBack()}}>
+              Back
             </Button>
           </div>
         </Form>

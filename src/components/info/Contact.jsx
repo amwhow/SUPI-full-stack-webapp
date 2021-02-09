@@ -2,6 +2,7 @@ import React from "react";
 import { Form } from "../styles/Form";
 import FormContainer from "../styles/FormContainer";
 import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
 
 export default class ContactForm extends React.Component {
   constructor(props) {
@@ -42,7 +43,9 @@ export default class ContactForm extends React.Component {
                 <textarea name="message" />
               </div>
               <div className="form-content">
-                {status === "SUCCESS" ? <p>Thanks!</p> : <button>Submit</button>}
+                {status === "SUCCESS" ? <p>Thanks!</p> : <Button variant="contained" color="primary">
+                  Submit
+                </Button>}
                 {status === "ERROR" && <p>Ooops! There was an error.</p>}
               </div>
             </Form>

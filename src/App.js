@@ -5,9 +5,8 @@ import Dashboard from "./components/dashboard_folder/Dashboard";
 import NewUser from "./components/user/NewUser";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./components/Home"
-import EditSupplier from './components/supplier/EditSupplier'
-
-import NewReview from './components/review/NewReview'
+import ContactForm from "./components/info/Contact";
+import About from "./components/info/About";
 
 
 function App() {
@@ -18,14 +17,8 @@ function App() {
         <Route exact path="/signup" component={NewUser} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/" component={Home} />
-        {/* <ProtectedRoute exact path="/dashboard/suppliers/new" component={NewSupplier} /> */}
-        {/* <ProtectedRoute
-          exact
-          path="/dashboard/suppliers/edit/:id"
-          component={EditSupplier}
-        /> */}
-        
-        <ProtectedRoute exact path="/dashboard/purchase_orders/:id/reviews/new" component={NewReview} />
+        <Route exact path="/contact" component={ContactForm} />
+        <Route exact path="/about" component={About} />
       </Switch>
     </div>
   );

@@ -163,6 +163,7 @@ function EditDocument(props) {
               type="file"
               name="supplierDocument"
               id="supplierDocument"
+              required
               accept=".pdf,.doc,.md"
               onChange={handleFile} 
             />

@@ -237,12 +237,12 @@ export default function Dashboard(props) {
               path="/dashboard/reviews/:id/edit"
               component={EditReview}
             />
-            <ProtectedRoute
+            <Route
               exact
               path="/dashboard/contact"
               component={ContactForm}
             />
-            <ProtectedRoute exact path="/dashboard/about" component={About} />
+            <Route exact path="/dashboard/about" component={About} />
           </Switch>
 
           {/* end of main section */}
