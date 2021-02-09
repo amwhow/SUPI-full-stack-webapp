@@ -70,7 +70,7 @@ export function MainListItems({history, suppliers}) {
                     button
                     className={classes.nested}
                     onClick={() => {
-                      history.push(`/dashboard/supplier/${element.id}`)
+                      history.push(`/dashboard/supplier/${id}`)
                       // getSupplierShow(history, element.id, element)
                     }}
                   >
