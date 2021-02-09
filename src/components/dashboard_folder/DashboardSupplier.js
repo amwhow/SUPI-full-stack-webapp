@@ -33,7 +33,7 @@ const DashboardSupplier = (props) => {
   
   // get all PO data and their reviews for the selected supplier
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers/${id}/purchase_orders`, {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers/${id}/pos`, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
