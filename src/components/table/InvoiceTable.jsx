@@ -82,7 +82,7 @@ export default function InvoiceTable() {
                 <StyledTableCell align="right">{invoice.paid ? "Payment made" : "Awaiting payment"}</StyledTableCell>
                 <StyledTableCell align="right">#{invoice.purchase_order_id}</StyledTableCell>
                 <StyledTableCell align="right">
-                  <a href={invoice.invoice_document.url}>Invoice file</a>
+                  <a href={invoice.invoice_document.url} target="_blank">Invoice file</a>
                 </StyledTableCell>
               </StyledTableRow>
             ))}

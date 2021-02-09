@@ -26,12 +26,13 @@ function NewPO({ history }) {
       },
     })
       .then((res) => res.json())
-      .then((body) =>
+      .then((body) => {
+        const {suppliers} = body
         setSupplierId({
-          data: body,
+          data: suppliers,
           selected: "",
         })
-      );
+      });
   }
 
   useEffect(() => {

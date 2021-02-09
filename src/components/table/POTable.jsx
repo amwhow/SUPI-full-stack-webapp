@@ -94,7 +94,7 @@ export default function POTable({poData}) {
                 <StyledTableCell align="right">${PO.totalPrice}</StyledTableCell>
                 <StyledTableCell align="right">{PO.deliveryStatus ? "Delivered" : "Awaiting delivery"}</StyledTableCell>
                 <StyledTableCell align="right">
-                  <a href={PO.po_document.url}>PO Document file</a>
+                  <a href={PO.po_document.url} target="_blank">PO Document file</a>
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <a href={invoiceLinks[index]}>Add invoice</a>

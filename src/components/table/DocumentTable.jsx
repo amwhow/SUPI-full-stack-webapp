@@ -44,7 +44,9 @@ export default function DocumentTable() {
       }
     })
       .then((res) => res.json())
-      .then((body) => setDocuments(body))
+      .then((body) => {
+      setDocuments(body)
+    })
   }
 
   useEffect(() => {

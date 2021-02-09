@@ -16,8 +16,10 @@ const DashboardSupplier = (props) => {
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const [supplier, setSupplier] = useState("failed supplier")
   const [poData, setPoData] = useState([])
+  const [poDataWithFile, setPoDataWithFile] = useState([])
   const [reviewData, setReviewData] = useState([]);
   const [invoiceData, setInvoiceData] = useState([]);
+  const [invoiceWithFile, setInvoiceWithFile] = useState([]);
   
   useEffect(()=> {
     const data = fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers/${id}`, {
@@ -46,6 +48,28 @@ const DashboardSupplier = (props) => {
         // handleReview("costRating")
       });
   }, [id]);
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/invoices`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+      .then((res) => res.json())
+      .then((body) => {
+        setInvoiceWithFile(body)
+      })
+  },[])
+
+  useEffect(() => {
+     fetch(`${process.env.REACT_APP_BACKEND_URL}/purchase_orders`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+      .then((res) => res.json())
+      .then((body) => setPoDataWithFile(body))
+  },[])
   
   return (
     <Grid container spacing={3}>
@@ -73,7 +97,7 @@ const DashboardSupplier = (props) => {
       </Grid>
 
       <Grid item xs={12} md={12} lg={12}>
-        <DashboardTabs supplier={supplier} fixedHeightPaper={fixedHeightPaper} poData={poData} reviewData={reviewData} invoiceData={invoiceData} />
+        <DashboardTabs supplier={supplier} fixedHeightPaper={fixedHeightPaper} poData={poData} reviewData={reviewData} invoiceData={invoiceData} invoiceWithFile={invoiceWithFile} poDataWithFile={poDataWithFile}/>
       </Grid>
     </Grid>
   );

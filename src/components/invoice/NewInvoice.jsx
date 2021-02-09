@@ -37,7 +37,6 @@ function NewInvoice({ history, match }) {
   async function onFormSubmit(event) {
     event.preventDefault();
     const body = { invoice: {receivedDate: receivedDate, dueDate: dueDate, totalPrice: totalPrice, paid: paid, purchase_order_id: match.params.id} }
-
     const formData = new FormData();
     formData.append("receivedDate", receivedDate)
     formData.append("dueDate", dueDate)
@@ -47,7 +46,7 @@ function NewInvoice({ history, match }) {
     formData.append("invoice_document", invoiceDocument)
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/dashboard/invoices`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/invoices`, {
         method: "POST",
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`

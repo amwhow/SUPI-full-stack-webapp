@@ -34,23 +34,27 @@ export default function Evaluation({
 
   const handleReview = (type) => {
     let reviewArray = [];
-    reviewData.map((review) => {
+    if (reviewData) {
+      reviewData.map((review) => {
       reviewArray.push({
         name: review.created_at.substring(0, 10),
         rating: review[type],
       });
     });
+  };
     return reviewArray;
   };
   const handleComment = () => {
     let commentArray = [];
-    reviewData.map((review) => {
+    if (reviewData) {
+      reviewData.map((review) => {
       commentArray.push({
         date: review.created_at.substring(0, 10),
         comment: review["comment"],
       });
     });
     return commentArray;
+  }
   };
 
   return (

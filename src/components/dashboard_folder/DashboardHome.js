@@ -17,6 +17,10 @@ const DashboardHome = () => {
   const [purchaseOrders, setPurchaseOrders] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [invoices, setInvoices] = useState([]);
+  const [invoiceData, setInvoiceData] = useState([]);
+  const [invoiceWithFile, setInvoiceWithFile] = useState([]);
+  const [poDataWithFile, setPoDataWithFile] = useState([])
+
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers`, {
@@ -32,9 +36,30 @@ const DashboardHome = () => {
         setPurchaseOrders(purchase_orders);
         setReviews(reviews);
         setInvoices(invoices);
-        // console.log("in Dashboard, invoices: " + invoices[0].receivedDate)
       });
   }, []);
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/invoices`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+      .then((res) => res.json())
+      .then((body) => {
+        setInvoiceWithFile(body)
+      })
+  },[])
+
+  useEffect(() => {
+     fetch(`${process.env.REACT_APP_BACKEND_URL}/purchase_orders`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+      .then((res) => res.json())
+      .then((body) => setPoDataWithFile(body))
+  },[])
 
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
@@ -44,20 +69,20 @@ const DashboardHome = () => {
       {/* Chart */}
       <Grid item xs={12} md={12} lg={12}>
         <Paper className={fixedHeightPaper} variant="outlined">
-          <Chart />
+          <Chart invoiceData={invoiceWithFile} />
         </Paper>
       </Grid>
      
       {/* Invoice due */}
       <Grid item xs={12} md={4} lg={4}>
         <Paper className={fixedHeightPaper} variant="outlined">
-          <InvoicesDue invoiceData={invoices}/>
+          <InvoicesDue invoiceData={invoiceWithFile}/>
         </Paper>
       </Grid>
       {/* PO Approval */}
       <Grid item xs={12} md={4} lg={4}>
         <Paper className={fixedHeightPaper} variant="outlined">
-          <POApprovals poData={purchaseOrders}/>
+          <POApprovals poData={poDataWithFile}/>
         </Paper>
       </Grid>
       {/* Quick Contacts */}
