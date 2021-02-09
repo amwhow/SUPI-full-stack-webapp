@@ -28,9 +28,13 @@ import POTable from "../table/POTable";
 import NewPO from "../PO/NewPO";
 import EditPO from "../PO/EditPO";
 import NewInvoice from "../invoice/NewInvoice";
+import EditInvoice from "../invoice/EditInvoice";
+import NewReview from "../review/NewReview";
+import EditReview from "../review/EditReview";
 import InvoiceTable from "../table/InvoiceTable";
 import DocumentTable from "../table/DocumentTable";
 import NewDocument from "../document/NewDocument";
+import EditDocument from "../document/EditDocument";
 import ContactForm from "../info/Contact";
 import About from "../info/About";
 import NewSupplier from "../../components/supplier/NewSupplier";
@@ -201,6 +205,11 @@ export default function Dashboard(props) {
             />
             <ProtectedRoute
               exact
+              path="/dashboard/invoices/:id/edit"
+              component={EditInvoice}
+            />
+            <ProtectedRoute
+              exact
               path="/dashboard/invoices"
               component={InvoiceTable}
             />
@@ -213,6 +222,21 @@ export default function Dashboard(props) {
               exact
               path="/dashboard/documents/new"
               component={NewDocument}
+            />
+            <ProtectedRoute
+              exact
+              path="/dashboard/documents/:id/edit"
+              component={EditDocument}
+            />
+            <ProtectedRoute
+              exact
+              path="/dashboard/purchase_orders/:id/reviews/new"
+              component={NewReview}
+            />
+            <ProtectedRoute
+              exact
+              path="/dashboard/reviews/:id/edit"
+              component={EditReview}
             />
             <ProtectedRoute
               exact

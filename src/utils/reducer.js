@@ -117,7 +117,7 @@ export default function reducer(state, action) {
         delivered: action.data
       }
     }
-    case 'setsupplierId': {
+    case 'setSupplierId': {
       return {
         ...state,
         supplierId: action.data

@@ -68,6 +68,7 @@ export default function InvoiceTable() {
               <StyledTableCell align="right">Payment Status</StyledTableCell>
               <StyledTableCell align="right">PO Number</StyledTableCell>
               <StyledTableCell align="right">Invoice Document</StyledTableCell>
+              <StyledTableCell align="right">Manage Invoice</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -83,6 +84,9 @@ export default function InvoiceTable() {
                 <StyledTableCell align="right">#{invoice.purchase_order_id}</StyledTableCell>
                 <StyledTableCell align="right">
                   <a href={invoice.invoice_document.url}>Invoice file</a>
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  <a href={`/dashboard/invoices/${invoice.id}/edit`}>Edit invoice</a>
                 </StyledTableCell>
               </StyledTableRow>
             ))}

@@ -77,8 +77,7 @@ function EditPO(props) {
     "approvalStatus",
     "totalPrice",
     "delivered",
-    "supplier_id",
-    "po_document"
+    "PODocument"
   ];
 
   useEffect(() => {
@@ -96,7 +95,7 @@ function EditPO(props) {
           });
         });
       });
-  }, [id]);
+  }, []);
 
   async function onFormSubmit(event) {
     event.preventDefault();
@@ -251,16 +250,6 @@ function EditPO(props) {
               }}
             >
               Back
-            </Button>
-          </div>
-          <div className="form-content">
-            <Button
-              variant="contained"
-              value="Delete"
-              id="submit"
-              onClick={onDeleteLinkClick}
-            >
-              Delete
             </Button>
           </div>
         </Form>
