@@ -84,7 +84,7 @@ function NewSupplier({ history }) {
           body: formData,
         }
       );
-      history.push("/dashboard/suppliers");
+      history.push("/dashboard");
       alert("Supplier created");
     } catch (err) {
       console.log(err.message);

@@ -31,7 +31,7 @@ const POApprovals = ({poData}) => {
               counter += 1;
           return (
             <div>
-              <a href={po.po_document} onClick={preventDefault}>
+              <a href={po.po_document.url} target="_blank">
                 ${po.totalPrice} - Ordered on: {po.orderDate}
               </a>
             </div>
@@ -40,11 +40,7 @@ const POApprovals = ({poData}) => {
           })
           }
         </Typography>
-        {/* <div>
-          <Link color="primary" href="#" onClick={preventDefault}>
-            All Purchase Orders
-          </Link>
-        </div> */}
+
       </React.Fragment>
       )
   } else {
@@ -56,11 +52,7 @@ const POApprovals = ({poData}) => {
         </Typography>
         <Typography color="textSecondary" className={classes.POApprovalContext}>
         </Typography>
-        {/* <div>
-          <Link color="primary" href="#" onClick={preventDefault}>
-            All Purchase Orders
-          </Link>
-        </div> */}
+     
       </React.Fragment>
     )
   }
