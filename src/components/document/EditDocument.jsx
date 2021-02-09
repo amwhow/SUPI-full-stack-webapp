@@ -85,7 +85,7 @@ function EditDocument(props) {
           });
         });
       });
-  }, [id]);
+  }, []);
 
   async function onFormSubmit(event) {
     event.preventDefault();

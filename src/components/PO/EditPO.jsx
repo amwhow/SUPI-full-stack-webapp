@@ -72,7 +72,7 @@ function EditPO(props) {
     });
   };
 
-  const puchaseOrderKeys = [
+  const purchaseOrderKeys = [
     "orderDate",
     "approvalStatus",
     "totalPrice",
@@ -87,8 +87,9 @@ function EditPO(props) {
       },
     })
       .then((res) => res.json())
-      .then((po) => {
-        puchaseOrderKeys.map((element) => {
+      .then((response) => {
+        const {po} = response
+        purchaseOrderKeys.map((element) => {
           dispatch({
             type: `set${element}`,
             data: po[element],
@@ -120,27 +121,6 @@ function EditPO(props) {
       );
       alert("Purchase order updated");
       props.history.push("/dashboard/purchase_orders");
-    } catch (err) {
-      console.log(err.message);
-    }
-  }
-
-  async function onDeleteLinkClick(e) {
-    try {
-      e.preventDefault();
-      if (window.confirm("Would you like to delete?")) {
-        await fetch(
-          `${process.env.REACT_APP_BACKEND_URL}/purchase_orders/${id}`,
-          {
-            method: "DELETE",
-            headers: {
-              'Authorization': `Bearer ${localStorage.getItem('token')}`
-            },
-          }
-        );
-        alert("Purchase order deleted");
-        props.history.push(`/dashboard/purchase_orders`);
-      }
     } catch (err) {
       console.log(err.message);
     }

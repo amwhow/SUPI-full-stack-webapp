@@ -6,7 +6,7 @@ import Button from "@material-ui/core/Button";
 import LoggedOutNav from "./LoggedOutNav";
 import FormContainer from "../styles/FormContainer";
 
-function NewUser({ history }) {
+function EditUser(props) {
 
   const initialState = {
     email: "",
@@ -148,7 +148,7 @@ function NewUser({ history }) {
                   value="submit"
                   id="submit"
                 >
-                  Sign Up
+                  Update Account
                 </Button>
                 <Button
                   variant="contained"
@@ -166,4 +166,4 @@ function NewUser({ history }) {
     </div>
   );
 }
-export default NewUser;
+export default EditUser;
