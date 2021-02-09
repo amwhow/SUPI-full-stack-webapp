@@ -27,7 +27,7 @@ export default function InvoicesDue({invoiceData}) {
         </Typography>
         <Typography color="textSecondary" className={classes.depositContext}>
           {dueInvoiceData.reverse().map((invoice) => {
-            if (invoice.paid === false && counter <= 3) {
+            if (invoice.paid === false && counter <= 5 && invoice.invoice_document ) {
               counter += 1
                 return (
                 <div>
@@ -37,6 +37,17 @@ export default function InvoicesDue({invoiceData}) {
                 </div>
                 )
               }
+            else if (invoice.paid === false && counter <= 5) {
+              counter += 1
+                return (
+                <div>
+                  <p>
+                    ${invoice.totalPrice} - Due on: {invoice.dueDate}
+                  </p>
+                </div>
+                )
+            }
+
             }
           )}
         </Typography>

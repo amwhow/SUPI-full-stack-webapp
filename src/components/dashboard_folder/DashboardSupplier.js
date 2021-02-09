@@ -44,8 +44,6 @@ const DashboardSupplier = (props) => {
         setPoData(pos);
         setReviewData(reviews)
         setInvoiceData(invoices)
-        console.log("reviews: " + reviews)
-        // handleReview("costRating")
       });
   }, [id]);
 
@@ -97,7 +95,7 @@ const DashboardSupplier = (props) => {
       </Grid>
 
       <Grid item xs={12} md={12} lg={12}>
-        <DashboardTabs supplier={supplier} fixedHeightPaper={fixedHeightPaper} poData={poData} reviewData={reviewData} invoiceData={invoiceData} invoiceWithFile={invoiceWithFile} poDataWithFile={poDataWithFile}/>
+        <DashboardTabs supplier={supplier} fixedHeightPaper={fixedHeightPaper} poData={poData} reviewData={reviewData} invoiceData={invoiceData} />
       </Grid>
     </Grid>
   );

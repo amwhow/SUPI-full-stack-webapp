@@ -18,7 +18,6 @@ const useStyles = makeStyles({
 export default function SupplierNotes({supplier}) {
   const history = useHistory()
   const classes = useStyles();
-  console.log(supplier.id)
   const id = supplier.id
   return (
     <React.Fragment>

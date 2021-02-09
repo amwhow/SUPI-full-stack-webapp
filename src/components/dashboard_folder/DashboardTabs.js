@@ -77,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DashboardTabs({ supplier, poData, reviewData, invoiceData, fixedHeightPaper, poDataWithFile, invoiceWithFile }) {
+export default function DashboardTabs({ supplier, poData, reviewData, invoiceData, fixedHeightPaper }) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
@@ -122,7 +122,7 @@ export default function DashboardTabs({ supplier, poData, reviewData, invoiceDat
       <TabPanel value={value} index={0}>
         <Grid container spacing={1}>
           <Grid item xs={12} md={12} lg={12}>
-            <Overview supplier={supplier} fixedHeightPaper={fixedHeightPaper} poData={poData} invoiceData={invoiceData} costRating={costRating} qualityRating={qualityRating} reliabilityRating={reliabilityRating} poDataWithFile={poDataWithFile} invoiceWithFile={invoiceWithFile}/>
+            <Overview supplier={supplier} fixedHeightPaper={fixedHeightPaper} poData={poData} invoiceData={invoiceData} costRating={costRating} qualityRating={qualityRating} reliabilityRating={reliabilityRating} />
           </Grid>
         </Grid>
       </TabPanel>

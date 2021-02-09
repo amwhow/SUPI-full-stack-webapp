@@ -6,7 +6,7 @@ import POApprovals from "../POApprovals";
 import SupplierNotes from "../SupplierNotes";
 import Rating from "./Rating"
 
-export default function Overview({ supplier, fixedHeightPaper, poData, invoiceData, costRating, qualityRating, reliabilityRating, poDataWithFile, invoiceWithFile}) {
+export default function Overview({ supplier, fixedHeightPaper, poData, invoiceData, costRating, qualityRating, reliabilityRating}) {
 
   return (
     <Grid container spacing={3} direction="row" justify="flex-start">
@@ -37,13 +37,13 @@ export default function Overview({ supplier, fixedHeightPaper, poData, invoiceDa
       {/* Invoice due */}
       <Grid item xs={12} md={4} lg={4}>
         <Paper className={fixedHeightPaper} variant="outlined">
-          <InvoicesDue invoiceData={invoiceWithFile} />
+          <InvoicesDue invoiceData={invoiceData} />
         </Paper>
       </Grid>
       {/* PO Approval */}
       <Grid item xs={12} md={4} lg={4}>
         <Paper className={fixedHeightPaper} variant="outlined">
-          <POApprovals poData={poDataWithFile} />
+          <POApprovals poData={poData} />
         </Paper>
       </Grid>
       {/* Supplier Notes */}
