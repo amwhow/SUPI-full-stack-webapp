@@ -51,8 +51,6 @@ export default function POTable({poData}) {
     fetchPurchaseOrders();
   },[])
 
-  console.log(purchaseOrders)
-
   const invoiceLinks = purchaseOrders.map((PO, index) => {
     return `/dashboard/purchase_orders/${PO.id}/invoices/new`
   })
@@ -81,6 +79,7 @@ export default function POTable({poData}) {
               <StyledTableCell align="right">PO Document</StyledTableCell>
               <StyledTableCell align="right">Invoice</StyledTableCell>
               <StyledTableCell align="right">Review</StyledTableCell>
+              <StyledTableCell align="right">Manage PO</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -101,6 +100,9 @@ export default function POTable({poData}) {
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   <a href={reviewLinks[index]}>Add review</a>
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  <a href={`/dashboard/purchase_orders/${PO.id}/edit`}>Edit</a>
                 </StyledTableCell>
               </StyledTableRow>
             ))}

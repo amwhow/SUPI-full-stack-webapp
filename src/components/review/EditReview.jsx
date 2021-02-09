@@ -4,16 +4,17 @@ import { Form } from "../styles/Form";
 import Grid from "@material-ui/core/Grid";
 import FormContainer from "../styles/FormContainer";
 import Button from "@material-ui/core/Button";
+import { useParams } from "react-router-dom";
 
-function NewReview({ history, match }) {
+function EditReview(props) {
   const initialReviewState = {
     qualityRating: "",
     reliabilityRating: "",
     costRating: "",
-    comment: "",
-    purchaseOrderId: match.params.id
+    comment: ""
   }
 
+  const { id } = useParams();
   const [store, dispatch] = useReducer(reducer, initialReviewState)
   const {qualityRating, reliabilityRating, costRating, comment} = store
 
@@ -24,14 +25,38 @@ function NewReview({ history, match }) {
     });
   };
 
+  const reviewKeys = [
+    "qualityRating",
+    "reliabilityRating",
+    "costRating",
+    "comment"
+  ]
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/reviews/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((review) => {
+        reviewKeys.map((element) => {
+          dispatch({
+            type: `set${element}`,
+            data: review[element],
+          });
+        });
+      });
+  }, []);
+
   async function onFormSubmit(event) {
     event.preventDefault();
-    const body = { review: {qualityRating: qualityRating, reliabilityRating: reliabilityRating, costRating: costRating, comment: comment, purchase_order_id: match.params.id} }
+    const body = { review: {qualityRating: qualityRating, reliabilityRating: reliabilityRating, costRating: costRating, comment: comment} }
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/reviews`,
+        `${process.env.REACT_APP_BACKEND_URL}/reviews/${id}`,
         {
-          method: "POST",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -39,8 +64,8 @@ function NewReview({ history, match }) {
           body: JSON.stringify(body),
         }
       );
-      alert("Review created")
-      history.push("/dashboard/purchase_orders");
+      alert("Review updated")
+      props.history.push("/dashboard/purchase_orders");
     } catch (err) {
       console.log(err.message);
     }
@@ -113,12 +138,21 @@ function NewReview({ history, match }) {
             <Button
               type="submit"
               variant="contained"
-              value="Submit Review"
+              value="Edit Review"
               id="submit"
               color="primary"
             >
-              Create
+              Save
             </Button>
+            <div className="form-content">
+            <Button
+              variant="contained"
+              id="submit"
+              onClick={()=>{props.history.goBack()}}
+            >
+              Back
+            </Button>
+          </div>
           </div>
         </Form>
       </Grid>
@@ -126,4 +160,4 @@ function NewReview({ history, match }) {
   );
 }
 
-export default NewReview;
+export default EditReview;

@@ -4,8 +4,9 @@ import Grid from "@material-ui/core/Grid";
 import { Form } from "../styles/Form";
 import FormContainer from "../styles/FormContainer";
 import Button from "@material-ui/core/Button";
+import { useParams } from "react-router-dom";
 
-function NewPO({ history }) {
+function EditPO(props) {
   const initialPOState = {
     orderDate: "",
     approvalStatus: "",
@@ -13,7 +14,9 @@ function NewPO({ history }) {
     delivered: "",
     PODocument: null
   }
-  
+
+  const { id } = useParams();
+  console.log(id)
   const [supplierId, setSupplierId] = useState({
     data: [],
     selected: "",
@@ -69,6 +72,31 @@ function NewPO({ history }) {
     });
   };
 
+  const puchaseOrderKeys = [
+    "orderDate",
+    "approvalStatus",
+    "totalPrice",
+    "delivered",
+    "PODocument"
+  ];
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/purchase_orders/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((po) => {
+        puchaseOrderKeys.map((element) => {
+          dispatch({
+            type: `set${element}`,
+            data: po[element],
+          });
+        });
+      });
+  }, []);
+
   async function onFormSubmit(event) {
     event.preventDefault();
 
@@ -81,16 +109,38 @@ function NewPO({ history }) {
     formData.append("po_document", PODocument)
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/purchase_orders`,
+        `${process.env.REACT_APP_BACKEND_URL}/purchase_orders/${id}`,
         {
-          method: "POST",
+          method: "PUT",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
           body: formData,
         }
       );
-      history.push("/dashboard/purchase_orders");
+      alert("Purchase order updated");
+      props.history.push("/dashboard/purchase_orders");
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
+
+  async function onDeleteLinkClick(e) {
+    try {
+      e.preventDefault();
+      if (window.confirm("Would you like to delete?")) {
+        await fetch(
+          `${process.env.REACT_APP_BACKEND_URL}/purchase_orders/${id}`,
+          {
+            method: "DELETE",
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+          }
+        );
+        alert("Purchase order deleted");
+        props.history.push(`/dashboard/purchase_orders`);
+      }
     } catch (err) {
       console.log(err.message);
     }
@@ -99,7 +149,7 @@ function NewPO({ history }) {
   return (
     <FormContainer>
       <Grid item xs={12} sm={8}>
-        <h1 className="new-doc-header">New PO</h1>
+        <h1 className="new-doc-header">Edit PO</h1>
         <Form className="new-invoice-form" onSubmit={onFormSubmit} encType="multipart/form-data">
           <div className="form-content">
             <label htmlFor="orderDate">Order date</label>
@@ -183,11 +233,23 @@ function NewPO({ history }) {
             <Button
               type="submit"
               variant="contained"
-              value="Create PO"
+              value="Edit PO"
               id="submit"
               color="primary"
             >
-              Create
+              Save
+            </Button>
+          </div>
+          <div className="form-content">
+            <Button
+              variant="contained"
+              value="go back"
+              id="submit"
+              onClick={() => {
+                props.history.goBack();
+              }}
+            >
+              Back
             </Button>
           </div>
         </Form>
@@ -196,4 +258,4 @@ function NewPO({ history }) {
   );
 }
 
-export default NewPO;
+export default EditPO;
