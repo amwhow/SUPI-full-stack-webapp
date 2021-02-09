@@ -76,7 +76,6 @@ export function MainListItems({history, suppliers}) {
         {/* sub-menu for my suppliers here, create an iteration for user.suppliers and generate each Collapse element */}
 
         {suppliers && suppliers.map((element) => {
-          console.log(suppliers)
           return (
             <>
               <Collapse in={open} timeout="auto" unmountOnExit>

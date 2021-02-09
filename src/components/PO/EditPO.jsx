@@ -72,7 +72,7 @@ function EditPO(props) {
     });
   };
 
-  const puchaseOrderKeys = [
+  const purchaseOrderKeys = [
     "orderDate",
     "approvalStatus",
     "totalPrice",
@@ -87,8 +87,9 @@ function EditPO(props) {
       },
     })
       .then((res) => res.json())
-      .then((po) => {
-        puchaseOrderKeys.map((element) => {
+      .then((response) => {
+        const {po} = response
+        purchaseOrderKeys.map((element) => {
           dispatch({
             type: `set${element}`,
             data: po[element],
