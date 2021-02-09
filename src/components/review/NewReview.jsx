@@ -101,7 +101,7 @@ function NewReview({ history, match }) {
           </div>
           <div className="form-content">
             <label htmlFor="comment">Comment</label>
-            <input
+            <textarea
               type="text"
               name="comment"
               id="comment"

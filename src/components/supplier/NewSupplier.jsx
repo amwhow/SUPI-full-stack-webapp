@@ -147,7 +147,7 @@ function NewSupplier({ history }) {
           </div>
           <div className="form-content">
             <label htmlFor="description">Description</label>
-            <input
+            <textarea
               type="text"
               name="description"
               id="description"
@@ -157,7 +157,7 @@ function NewSupplier({ history }) {
           </div>
           <div className="form-content">
             <label htmlFor="note">Note</label>
-            <input
+            <textarea
               type="text"
               name="note"
               id="note"
