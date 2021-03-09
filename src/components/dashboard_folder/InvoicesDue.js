@@ -25,7 +25,7 @@ export default function InvoicesDue({ invoiceData }) {
           {dueInvoiceData.length}
         </Typography>
         <Typography color="textSecondary" className={classes.depositContext}>
-          {dueInvoiceData.reverse().each((invoice) => {
+          {dueInvoiceData.reverse().map((invoice) => {
             if (
               invoice.paid === false &&
               counter <= 5 &&

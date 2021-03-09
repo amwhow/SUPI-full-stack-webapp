@@ -29,7 +29,7 @@ export default function Chart({ invoiceData }) {
       let dateB = new Date(b.receivedDate);
       return dateA - dateB;
     });
-    sortDataByDate.each((invoice) => {
+    sortDataByDate.map((invoice) => {
       data.push(createData(invoice.receivedDate, invoice.totalPrice));
     });
     return (

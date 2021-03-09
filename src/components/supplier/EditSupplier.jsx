@@ -68,7 +68,7 @@ function EditSupplier(props) {
     })
       .then((res) => res.json())
       .then((supplier) => {
-        supplierKeys.each((element) => {
+        supplierKeys.map((element) => {
           dispatch({
             type: `set${element}`,
             data: supplier[element],

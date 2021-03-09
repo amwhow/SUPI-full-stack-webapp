@@ -21,7 +21,7 @@ const POApprovals = ({ poData }) => {
           {filteredPoData.length}
         </Typography>
         <Typography color="textSecondary" className={classes.POApprovalContext}>
-          {filteredPoData.reverse().each((po) => {
+          {filteredPoData.reverse().map((po) => {
             // show the first five POs
             if (counter <= 5 && po.po_document) {
               counter += 1;

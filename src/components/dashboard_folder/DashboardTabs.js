@@ -93,7 +93,7 @@ export default function DashboardTabs({
   let reliabilityRating = 0;
   //  average the total rating and then round to the closest 0.5
   if (reviewData) {
-    reviewData.each((review) => {
+    reviewData.map((review) => {
       costRating += review.costRating;
       reliabilityRating += review.reliabilityRating;
       qualityRating += review.qualityRating;

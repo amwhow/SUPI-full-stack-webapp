@@ -50,7 +50,7 @@ function EditInvoice(props) {
     })
       .then((res) => res.json())
       .then((invoice) => {
-        invoiceKeys.each((element) => {
+        invoiceKeys.map((element) => {
           dispatch({
             type: `set${element}`,
             data: invoice[element],

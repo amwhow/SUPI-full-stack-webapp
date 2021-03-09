@@ -90,7 +90,7 @@ function EditPO(props) {
       .then((response) => {
         const { po } = response;
         // use useReducer method to update PO data
-        purchaseOrderKeys.each((element) => {
+        purchaseOrderKeys.map((element) => {
           dispatch({
             type: `set${element}`,
             data: po[element],

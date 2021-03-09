@@ -31,7 +31,7 @@ export default function Evaluation({
   const handleReview = (type) => {
     let reviewArray = [];
     if (reviewData) {
-      reviewData.each((review) => {
+      reviewData.map((review) => {
         reviewArray.push({
           name: review.created_at.substring(0, 10),
           rating: review[type],
@@ -43,7 +43,7 @@ export default function Evaluation({
   const handleComment = () => {
     let commentArray = [];
     if (reviewData) {
-      reviewData.each((review) => {
+      reviewData.map((review) => {
         commentArray.push({
           date: review.created_at.substring(0, 10),
           comment: review["comment"],

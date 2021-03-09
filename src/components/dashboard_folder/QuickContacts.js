@@ -27,7 +27,7 @@ export default function QuickContacts(contacts) {
           color="textSecondary"
           className={classes.quickContactsContext}
         >
-          {contacts.contacts.reverse().each((contact) => {
+          {contacts.contacts.reverse().map((contact) => {
             if (contact.contactName && counter < 5) {
               counter += 1;
               return (

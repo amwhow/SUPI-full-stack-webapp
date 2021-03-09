@@ -73,7 +73,7 @@ function EditDocument(props) {
     })
       .then((res) => res.json())
       .then((document) => {
-        documentKeys.each((element) => {
+        documentKeys.map((element) => {
           dispatch({
             type: `set${element}`,
             data: document[element],

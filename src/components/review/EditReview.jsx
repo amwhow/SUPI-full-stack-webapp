@@ -40,7 +40,7 @@ function EditReview(props) {
     })
       .then((res) => res.json())
       .then((review) => {
-        reviewKeys.each((element) => {
+        reviewKeys.map((element) => {
           dispatch({
             type: `set${element}`,
             data: review[element],
