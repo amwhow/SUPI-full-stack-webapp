@@ -26,10 +26,24 @@ export default function LoggedOutNav() {
           <Typography variant="h6" className={classes.title}>
             SUPI
           </Typography>
-          <a href="/contact" style={{ textDecoration: "none", color: "white", paddingRight: "20px" }}>
+          <a
+            href="/contact"
+            style={{
+              textDecoration: "none",
+              color: "white",
+              paddingRight: "20px",
+            }}
+          >
             Contact
           </a>
-          <a href="/about" style={{ textDecoration: "none", color: "white", paddingRight: "20px" }}>
+          <a
+            href="/about"
+            style={{
+              textDecoration: "none",
+              color: "white",
+              paddingRight: "20px",
+            }}
+          >
             About
           </a>
         </Toolbar>

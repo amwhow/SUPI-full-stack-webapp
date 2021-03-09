@@ -17,7 +17,7 @@ function createData(date, amount) {
 
 export default function Chart({ invoiceData }) {
   const theme = useTheme();
-  // error handling and choose from paid invoice
+  // error handling and filter the paid invoice
   if (
     invoiceData &&
     invoiceData.filter((invoice) => invoice.paid === true).length > 0
@@ -25,12 +25,11 @@ export default function Chart({ invoiceData }) {
     let data = [];
     // sort data from earlier to the latest
     const sortDataByDate = invoiceData.sort((a, b) => {
-        let dateA = new Date(a.receivedDate) 
-        let dateB = new Date(b.receivedDate)
-        return dateA - dateB
-      }
-    );
-    sortDataByDate.map((invoice) => {
+      let dateA = new Date(a.receivedDate);
+      let dateB = new Date(b.receivedDate);
+      return dateA - dateB;
+    });
+    sortDataByDate.each((invoice) => {
       data.push(createData(invoice.receivedDate, invoice.totalPrice));
     });
     return (

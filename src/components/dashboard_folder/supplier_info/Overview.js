@@ -4,10 +4,17 @@ import Paper from "@material-ui/core/Paper";
 import InvoicesDue from "../InvoicesDue";
 import POApprovals from "../POApprovals";
 import SupplierNotes from "../SupplierNotes";
-import Rating from "./Rating"
+import Rating from "./Rating";
 
-export default function Overview({ supplier, fixedHeightPaper, poData, invoiceData, costRating, qualityRating, reliabilityRating}) {
-
+export default function Overview({
+  supplier,
+  fixedHeightPaper,
+  poData,
+  invoiceData,
+  costRating,
+  qualityRating,
+  reliabilityRating,
+}) {
   return (
     <Grid container spacing={3} direction="row" justify="flex-start">
       <Grid item xs={12} md={6} lg={6}>
@@ -20,13 +27,13 @@ export default function Overview({ supplier, fixedHeightPaper, poData, invoiceDa
 
       <Grid item xs={12} md={6} lg={6}>
         <h4>Cost Rating</h4>
-          <Rating rating={costRating} />
+        <Rating rating={costRating} />
         <h4>Quality Rating</h4>
-         <Rating rating={qualityRating} />
+        <Rating rating={qualityRating} />
         <h4>Reliability Rating</h4>
-          <Rating rating={reliabilityRating} />
+        <Rating rating={reliabilityRating} />
       </Grid>
-      
+
       {/* Invoice due */}
       <Grid item xs={12} md={4} lg={4}>
         <Paper className={fixedHeightPaper} variant="outlined">

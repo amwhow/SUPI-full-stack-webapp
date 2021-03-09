@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const FormContainer = styled.div`
   display: flex;
@@ -6,6 +6,5 @@ const FormContainer = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
-`
-export default FormContainer 
-
+`;
+export default FormContainer;

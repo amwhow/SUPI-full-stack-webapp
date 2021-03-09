@@ -7,7 +7,6 @@ import LoggedOutNav from "./LoggedOutNav";
 import FormContainer from "../styles/FormContainer";
 
 function EditUser(props) {
-
   const initialState = {
     email: "",
     password: "",
@@ -37,28 +36,27 @@ function EditUser(props) {
   const handleFile = (e) => {
     dispatch({
       type: `set${e.target.name}`,
-      data: e.target.files[0]
-    })
-  }
+      data: e.target.files[0],
+    });
+  };
 
   async function onFormSubmit(event) {
     event.preventDefault();
 
     const formData = new FormData();
-    formData.append("email", email)
-    formData.append("password", password)
-    formData.append("user_name", user_name)
-    formData.append("company_name", company_name)
-    formData.append("password_confirmation", password_confirmation)
-    formData.append("logo", logo)
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("user_name", user_name);
+    formData.append("company_name", company_name);
+    formData.append("password_confirmation", password_confirmation);
+    formData.append("logo", logo);
 
     try {
       const response = await fetch(
         `${process.env.REACT_APP_BACKEND_URL}/sign_up`,
         {
           method: "POST",
-          headers: {
-          },
+          headers: {},
           body: formData,
         }
       );
@@ -91,7 +89,11 @@ function EditUser(props) {
         <Grid item xs={12} sm={8}>
           <div className="form-container">
             <h1>Sign Up</h1>
-            <Form className="signup-form" encType="multipart/form-data" onSubmit={onFormSubmit}>
+            <Form
+              className="signup-form"
+              encType="multipart/form-data"
+              onSubmit={onFormSubmit}
+            >
               <div className="form-content">
                 <label htmlFor="user_name">Username</label>
                 <input
@@ -139,7 +141,7 @@ function EditUser(props) {
                   name="logo"
                   id="logo"
                   accept=".jpg,.jpeg,.png"
-                  onChange={handleFile} 
+                  onChange={handleFile}
                 />
                 <Button
                   variant="contained"

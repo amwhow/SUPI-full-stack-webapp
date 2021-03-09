@@ -80,7 +80,7 @@ function NewPO({ history }) {
     formData.append("supplier_id", supplierId.selected)
     formData.append("po_document", PODocument)
     try {
-      const response = await fetch(
+      fetch(
         `${process.env.REACT_APP_BACKEND_URL}/purchase_orders`,
         {
           method: "POST",

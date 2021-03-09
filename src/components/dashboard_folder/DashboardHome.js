@@ -1,12 +1,12 @@
 import clsx from "clsx";
-import React, {useState, useEffect} from 'react';
-import Chart from './Chart';
-import InvoicesDue from './InvoicesDue';
-import POApprovals from './POApprovals';
-import QuickContacts from './QuickContacts';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import DashboardStyles from './DashboardStyles';
+import React, { useState, useEffect } from "react";
+import Chart from "./Chart";
+import InvoicesDue from "./InvoicesDue";
+import POApprovals from "./POApprovals";
+import QuickContacts from "./QuickContacts";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import DashboardStyles from "./DashboardStyles";
 
 const useStyles = DashboardStyles;
 
@@ -18,8 +18,7 @@ const DashboardHome = () => {
   const [invoices, setInvoices] = useState([]);
   const [invoiceData, setInvoiceData] = useState([]);
   const [invoiceWithFile, setInvoiceWithFile] = useState([]);
-  const [poDataWithFile, setPoDataWithFile] = useState([])
-
+  const [poDataWithFile, setPoDataWithFile] = useState([]);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers`, {
@@ -29,7 +28,13 @@ const DashboardHome = () => {
     })
       .then((res) => res.json())
       .then((response) => {
-        const {suppliers, contacts, purchase_orders, reviews, invoices } = response
+        const {
+          suppliers,
+          contacts,
+          purchase_orders,
+          reviews,
+          invoices,
+        } = response;
         setSuppliers(suppliers);
         setContacts(contacts);
         setPurchaseOrders(purchase_orders);
@@ -37,28 +42,28 @@ const DashboardHome = () => {
         setInvoices(invoices);
       });
   }, []);
-
+  // get invoices data to use for the invoices due card
   useEffect(() => {
     fetch(`${process.env.REACT_APP_BACKEND_URL}/invoices`, {
       headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
     })
       .then((res) => res.json())
       .then((body) => {
-        setInvoiceWithFile(body)
-      })
-  },[])
-
+        setInvoiceWithFile(body);
+      });
+  }, []);
+  // get PO data to use for the PO overview card
   useEffect(() => {
-     fetch(`${process.env.REACT_APP_BACKEND_URL}/purchase_orders`, {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/purchase_orders`, {
       headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
     })
       .then((res) => res.json())
-      .then((body) => setPoDataWithFile(body))
-  },[])
+      .then((body) => setPoDataWithFile(body));
+  }, []);
 
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
@@ -71,27 +76,26 @@ const DashboardHome = () => {
           <Chart invoiceData={invoiceWithFile} />
         </Paper>
       </Grid>
-     
       {/* Invoice due */}
       <Grid item xs={12} md={4} lg={4}>
         <Paper className={fixedHeightPaper} variant="outlined">
-          <InvoicesDue invoiceData={invoiceWithFile}/>
+          <InvoicesDue invoiceData={invoiceWithFile} />
         </Paper>
       </Grid>
       {/* PO Approval */}
       <Grid item xs={12} md={4} lg={4}>
         <Paper className={fixedHeightPaper} variant="outlined">
-          <POApprovals poData={poDataWithFile}/>
+          <POApprovals poData={poDataWithFile} />
         </Paper>
       </Grid>
       {/* Quick Contacts */}
       <Grid item xs={12} md={4} lg={4}>
         <Paper className={fixedHeightPaper} variant="outlined">
-          <QuickContacts contacts={contacts}/>
+          <QuickContacts contacts={contacts} />
         </Paper>
       </Grid>
     </Grid>
   );
 };
 
-export default DashboardHome
+export default DashboardHome;

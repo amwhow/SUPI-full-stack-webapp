@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
-// import { CardLink } from "../styles/suppliers";
 
 export function Supplier(props) {
   const [supplier, setSupplier] = useState(null);
   const id = props.match.params.id;
 
   useEffect(() => {
-    // localhost:3000/suppliers/1
     fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers/${id}`, {
       headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
     })
       .then((res) => res.json())
       .then((supplier) => {

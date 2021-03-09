@@ -11,12 +11,12 @@ function EditReview(props) {
     qualityRating: "",
     reliabilityRating: "",
     costRating: "",
-    comment: ""
-  }
+    comment: "",
+  };
 
   const { id } = useParams();
-  const [store, dispatch] = useReducer(reducer, initialReviewState)
-  const {qualityRating, reliabilityRating, costRating, comment} = store
+  const [store, dispatch] = useReducer(reducer, initialReviewState);
+  const { qualityRating, reliabilityRating, costRating, comment } = store;
 
   const handleChange = (e) => {
     dispatch({
@@ -29,8 +29,8 @@ function EditReview(props) {
     "qualityRating",
     "reliabilityRating",
     "costRating",
-    "comment"
-  ]
+    "comment",
+  ];
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_BACKEND_URL}/reviews/${id}`, {
@@ -40,7 +40,7 @@ function EditReview(props) {
     })
       .then((res) => res.json())
       .then((review) => {
-        reviewKeys.map((element) => {
+        reviewKeys.each((element) => {
           dispatch({
             type: `set${element}`,
             data: review[element],
@@ -51,20 +51,24 @@ function EditReview(props) {
 
   async function onFormSubmit(event) {
     event.preventDefault();
-    const body = { review: {qualityRating: qualityRating, reliabilityRating: reliabilityRating, costRating: costRating, comment: comment} }
+    const body = {
+      review: {
+        qualityRating: qualityRating,
+        reliabilityRating: reliabilityRating,
+        costRating: costRating,
+        comment: comment,
+      },
+    };
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/reviews/${id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: JSON.stringify(body),
-        }
-      );
-      alert("Review updated")
+      fetch(`${process.env.REACT_APP_BACKEND_URL}/reviews/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(body),
+      });
+      alert("Review updated");
       props.history.push("/dashboard/purchase_orders");
     } catch (err) {
       console.log(err.message);
@@ -78,50 +82,53 @@ function EditReview(props) {
         <Form className="new-invoice-form" onSubmit={onFormSubmit}>
           <div className="form-content">
             <label htmlFor="qualityRating">Quality rating</label>
-            <select 
+            <select
               name="qualityRating"
               id="qualityRating"
               value={qualityRating}
-              onChange={handleChange}>
-                <option value=''>Select rating</option>
-                <option value={0}>0 Stars</option>
-                <option value={1}>1 Star</option>
-                <option value={2}>2 Stars</option>
-                <option value={3}>3 Stars</option>
-                <option value={4}>4 Stars</option>
-                <option value={5}>5 Stars</option>
-              </select>
-            </div>
-            <div className="form-content">
-              <label htmlFor="reliabilityRating">Reliability rating</label>
-              <select 
-                name="reliabilityRating"
-                id="reliabilityRating"
-                value={reliabilityRating}
-                onChange={handleChange}>
-                  <option value=''>Select rating</option>
-                <option value={0}>0 Stars</option>
-                <option value={1}>1 Star</option>
-                <option value={2}>2 Stars</option>
-                <option value={3}>3 Stars</option>
-                <option value={4}>4 Stars</option>
-                <option value={5}>5 Stars</option>
+              onChange={handleChange}
+            >
+              <option value="">Select rating</option>
+              <option value={0}>0 Stars</option>
+              <option value={1}>1 Star</option>
+              <option value={2}>2 Stars</option>
+              <option value={3}>3 Stars</option>
+              <option value={4}>4 Stars</option>
+              <option value={5}>5 Stars</option>
+            </select>
+          </div>
+          <div className="form-content">
+            <label htmlFor="reliabilityRating">Reliability rating</label>
+            <select
+              name="reliabilityRating"
+              id="reliabilityRating"
+              value={reliabilityRating}
+              onChange={handleChange}
+            >
+              <option value="">Select rating</option>
+              <option value={0}>0 Stars</option>
+              <option value={1}>1 Star</option>
+              <option value={2}>2 Stars</option>
+              <option value={3}>3 Stars</option>
+              <option value={4}>4 Stars</option>
+              <option value={5}>5 Stars</option>
             </select>
           </div>
           <div className="form-content">
             <label htmlFor="costRating">Cost rating</label>
-            <select 
-              name="costRating" 
+            <select
+              name="costRating"
               id="costRating"
               value={costRating}
-              onChange={handleChange}>
-                <option value=''>Select rating</option>
-                <option value={0}>0 Stars</option>
-                <option value={1}>1 Star</option>
-                <option value={2}>2 Stars</option>
-                <option value={3}>3 Stars</option>
-                <option value={4}>4 Stars</option>
-                <option value={5}>5 Stars</option>
+              onChange={handleChange}
+            >
+              <option value="">Select rating</option>
+              <option value={0}>0 Stars</option>
+              <option value={1}>1 Star</option>
+              <option value={2}>2 Stars</option>
+              <option value={3}>3 Stars</option>
+              <option value={4}>4 Stars</option>
+              <option value={5}>5 Stars</option>
             </select>
           </div>
           <div className="form-content">
@@ -145,14 +152,16 @@ function EditReview(props) {
               Save
             </Button>
             <div className="form-content">
-            <Button
-              variant="contained"
-              id="submit"
-              onClick={()=>{props.history.goBack()}}
-            >
-              Back
-            </Button>
-          </div>
+              <Button
+                variant="contained"
+                id="submit"
+                onClick={() => {
+                  props.history.goBack();
+                }}
+              >
+                Back
+              </Button>
+            </div>
           </div>
         </Form>
       </Grid>

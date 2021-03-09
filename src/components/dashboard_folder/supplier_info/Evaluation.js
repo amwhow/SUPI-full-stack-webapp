@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Grid from "@material-ui/core/Grid";
-import StarIcon from "@material-ui/icons/Star";
-import StarBorderIcon from "@material-ui/icons/StarBorder";
 import Paper from "@material-ui/core/Paper";
-import StarHalfIcon from "@material-ui/icons/StarHalf";
 import Button from "@material-ui/core/Button";
 import EvaluationChart from "./EvaluationChart";
 import clsx from "clsx";
@@ -24,37 +21,36 @@ export default function Evaluation({
   const [reviewRating, setReviewRating] = useState([]);
   const [reviewComment, setReviewComment] = useState([]);
 
-  // // get all PO data and their reviews for the selected supplier, can go to DashboardTabs
+  // get all PO data and their reviews for the selected supplier, can go to DashboardTabs
   useEffect(() => {
     setReviewType("Cost Rating");
     setReviewRating(handleReview("costRating"));
     setReviewComment(handleComment());
-    // console.log("reviewRating: " + reviewRating)
   }, []);
 
   const handleReview = (type) => {
     let reviewArray = [];
     if (reviewData) {
-      reviewData.map((review) => {
-      reviewArray.push({
-        name: review.created_at.substring(0, 10),
-        rating: review[type],
+      reviewData.each((review) => {
+        reviewArray.push({
+          name: review.created_at.substring(0, 10),
+          rating: review[type],
+        });
       });
-    });
-  };
+    }
     return reviewArray;
   };
   const handleComment = () => {
     let commentArray = [];
     if (reviewData) {
-      reviewData.map((review) => {
-      commentArray.push({
-        date: review.created_at.substring(0, 10),
-        comment: review["comment"],
+      reviewData.each((review) => {
+        commentArray.push({
+          date: review.created_at.substring(0, 10),
+          comment: review["comment"],
+        });
       });
-    });
-    return commentArray;
-  }
+      return commentArray;
+    }
   };
 
   return (
@@ -109,12 +105,6 @@ export default function Evaluation({
         <h4>Reliability Rating</h4>
         <Rating rating={reliabilityRating} />
       </Grid>
-
-      {/* <Grid item xs={12} md={8} lg={8}>
-        <h1>Latest Review</h1>
-        <h5>Date: {reviewComment[0]}</h5>
-        <p> {Object.keys(reviewComment)}</p>
-      </Grid> */}
     </Grid>
   );
 }

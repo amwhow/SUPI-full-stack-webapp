@@ -1,13 +1,12 @@
 import React, { useReducer } from "react";
 import reducer from "../../utils/reducer";
 import Grid from "@material-ui/core/Grid";
-import { Form, Container } from "../styles/Form";
+import { Form } from "../styles/Form";
 import Button from "@material-ui/core/Button";
 import LoggedOutNav from "./LoggedOutNav";
 import FormContainer from "../styles/FormContainer";
 
 function NewUser({ history }) {
-
   const initialState = {
     email: "",
     password: "",
@@ -37,28 +36,27 @@ function NewUser({ history }) {
   const handleFile = (e) => {
     dispatch({
       type: `set${e.target.name}`,
-      data: e.target.files[0]
-    })
-  }
+      data: e.target.files[0],
+    });
+  };
 
   async function onFormSubmit(event) {
     event.preventDefault();
 
     const formData = new FormData();
-    formData.append("email", email)
-    formData.append("password", password)
-    formData.append("user_name", user_name)
-    formData.append("company_name", company_name)
-    formData.append("password_confirmation", password_confirmation)
-    formData.append("logo", logo)
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("user_name", user_name);
+    formData.append("company_name", company_name);
+    formData.append("password_confirmation", password_confirmation);
+    formData.append("logo", logo);
 
     try {
       const response = await fetch(
         `${process.env.REACT_APP_BACKEND_URL}/sign_up`,
         {
           method: "POST",
-          headers: {
-          },
+          headers: {},
           body: formData,
         }
       );
@@ -76,7 +74,6 @@ function NewUser({ history }) {
           }
         );
         const { user_name, jwt } = await response.json();
-        // user_name
         history.push("/");
         alert("You have signed up!");
       }
@@ -87,11 +84,16 @@ function NewUser({ history }) {
   return (
     <div>
       <LoggedOutNav />
+      {/* new user form */}
       <FormContainer>
         <Grid item xs={12} sm={8}>
           <div className="form-container">
             <h1>Sign Up</h1>
-            <Form className="signup-form" encType="multipart/form-data" onSubmit={onFormSubmit}>
+            <Form
+              className="signup-form"
+              encType="multipart/form-data"
+              onSubmit={onFormSubmit}
+            >
               <div className="form-content">
                 <label htmlFor="user_name">Username</label>
                 <input
@@ -139,7 +141,7 @@ function NewUser({ history }) {
                   name="logo"
                   id="logo"
                   accept=".jpg,.jpeg,.png"
-                  onChange={handleFile} 
+                  onChange={handleFile}
                 />
                 <Button
                   variant="contained"

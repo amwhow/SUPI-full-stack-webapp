@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react"
-import { withStyles, makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import React, { useState, useEffect } from "react";
+import { withStyles, makeStyles } from "@material-ui/core/styles";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -20,7 +20,7 @@ const StyledTableCell = withStyles((theme) => ({
 
 const StyledTableRow = withStyles((theme) => ({
   root: {
-    '&:nth-of-type(odd)': {
+    "&:nth-of-type(odd)": {
       backgroundColor: theme.palette.action.hover,
     },
   },
@@ -40,20 +40,20 @@ export default function DocumentTable() {
   function fetchDocuments() {
     fetch(`${process.env.REACT_APP_BACKEND_URL}/documents`, {
       headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
     })
       .then((res) => res.json())
       .then((body) => {
-      setDocuments(body)
-    })
+        setDocuments(body);
+      });
   }
 
   useEffect(() => {
     fetchDocuments();
-  },[])
+  }, []);
 
-  console.log(documents)
+  console.log(documents);
 
   return (
     <div>
@@ -75,13 +75,18 @@ export default function DocumentTable() {
             </TableRow>
           </TableHead>
           <TableBody>
+            {/* layout each column */}
             {documents.map((document) => (
               <StyledTableRow key={document.id}>
                 <StyledTableCell component="th" scope="row">
                   # {document.id}
                 </StyledTableCell>
-                <StyledTableCell align="right">{document.documentType}</StyledTableCell>
-                <StyledTableCell align="right">{document.expiryDate}</StyledTableCell>
+                <StyledTableCell align="right">
+                  {document.documentType}
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  {document.expiryDate}
+                </StyledTableCell>
                 <StyledTableCell align="right">
                   <a href={document.supplier_document.url}>Document file</a>
                 </StyledTableCell>

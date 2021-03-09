@@ -1,4 +1,4 @@
-import React, {useReducer, useState, useEffect} from "react"
+import React, { useReducer, useState, useEffect } from "react";
 import reducer from "../../utils/reducer";
 import Grid from "@material-ui/core/Grid";
 import { Form } from "../styles/Form";
@@ -12,16 +12,16 @@ function EditPO(props) {
     approvalStatus: "",
     totalPrice: "",
     delivered: "",
-    PODocument: null
-  }
+    PODocument: null,
+  };
 
   const { id } = useParams();
-  console.log(id)
+  console.log(id);
   const [supplierId, setSupplierId] = useState({
     data: [],
     selected: "",
   });
-
+  // get all suppliers data
   function fetchSuppliers() {
     fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers`, {
       headers: {
@@ -30,11 +30,11 @@ function EditPO(props) {
     })
       .then((res) => res.json())
       .then((body) => {
-        const {suppliers} = body
+        const { suppliers } = body;
         setSupplierId({
           data: suppliers,
           selected: "",
-        })
+        });
       });
   }
 
@@ -61,9 +61,9 @@ function EditPO(props) {
   const handleFile = (e) => {
     dispatch({
       type: `set${e.target.name}`,
-      data: e.target.files[0]
-    })
-  }
+      data: e.target.files[0],
+    });
+  };
 
   const handleSelect = (e) => {
     setSupplierId({
@@ -77,7 +77,7 @@ function EditPO(props) {
     "approvalStatus",
     "totalPrice",
     "delivered",
-    "PODocument"
+    "PODocument",
   ];
 
   useEffect(() => {
@@ -88,8 +88,9 @@ function EditPO(props) {
     })
       .then((res) => res.json())
       .then((response) => {
-        const {po} = response
-        purchaseOrderKeys.map((element) => {
+        const { po } = response;
+        // use useReducer method to update PO data
+        purchaseOrderKeys.each((element) => {
           dispatch({
             type: `set${element}`,
             data: po[element],
@@ -100,16 +101,16 @@ function EditPO(props) {
 
   async function onFormSubmit(event) {
     event.preventDefault();
-
+    // update existing PO data 
     const formData = new FormData();
-    formData.append("orderDate", orderDate)
-    formData.append("approvalStatus", approvalStatus)
-    formData.append("totalPrice", totalPrice)
-    formData.append("delivered", delivered)
-    formData.append("supplier_id", supplierId.selected)
-    formData.append("po_document", PODocument)
+    formData.append("orderDate", orderDate);
+    formData.append("approvalStatus", approvalStatus);
+    formData.append("totalPrice", totalPrice);
+    formData.append("delivered", delivered);
+    formData.append("supplier_id", supplierId.selected);
+    formData.append("po_document", PODocument);
     try {
-      const response = await fetch(
+      await fetch(
         `${process.env.REACT_APP_BACKEND_URL}/purchase_orders/${id}`,
         {
           method: "PUT",
@@ -130,7 +131,11 @@ function EditPO(props) {
     <FormContainer>
       <Grid item xs={12} sm={8}>
         <h1 className="new-doc-header">Edit PO</h1>
-        <Form className="new-invoice-form" onSubmit={onFormSubmit} encType="multipart/form-data">
+        <Form
+          className="new-invoice-form"
+          onSubmit={onFormSubmit}
+          encType="multipart/form-data"
+        >
           <div className="form-content">
             <label htmlFor="orderDate">Order date</label>
             <input
@@ -207,7 +212,7 @@ function EditPO(props) {
               id="PODocument"
               required
               accept=".pdf,.doc,.md"
-              onChange={handleFile} 
+              onChange={handleFile}
             />
           </div>
           <div className="form-content">

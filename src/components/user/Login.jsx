@@ -1,15 +1,10 @@
 import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import { Form, Container } from "../styles/Form";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
-import LoggedOutNav from "./LoggedOutNav";
-
 
 function Login({ history }) {
-  // const classes = useStyles();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errMessage, setErrMessage] = useState("");
@@ -31,7 +26,7 @@ function Login({ history }) {
         }
       );
       if (response.status >= 400) {
-        const { error } = await response.json()
+        const { error } = await response.json();
         throw new Error(error);
       } else {
         const { user_name, jwt } = await response.json();
@@ -46,7 +41,7 @@ function Login({ history }) {
   }
 
   return (
-    <Grid item xs={12} sm={4} style={{fontSize:"1.5em"}}>
+    <Grid item xs={12} sm={4} style={{ fontSize: "1.5em" }}>
       {errMessage && <span>{errMessage}</span>}
       <Container className="form-container">
         <h2>Log In</h2>

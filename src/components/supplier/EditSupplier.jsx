@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import { Form } from "../styles/Form";
 import FormContainer from "../styles/FormContainer";
 import Button from "@material-ui/core/Button";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 function EditSupplier(props) {
   const initialSupplierState = {
@@ -16,7 +16,7 @@ function EditSupplier(props) {
     contactNumber: "",
     description: "",
     note: "",
-    logo: ""
+    logo: "",
   };
 
   const { id } = useParams();
@@ -31,7 +31,7 @@ function EditSupplier(props) {
     contactNumber,
     description,
     note,
-    logo
+    logo,
   } = store;
 
   const handleChange = (e) => {
@@ -44,9 +44,9 @@ function EditSupplier(props) {
   const handleFile = (e) => {
     dispatch({
       type: `set${e.target.name}`,
-      data: e.target.files[0]
-    })
-  }
+      data: e.target.files[0],
+    });
+  };
 
   const supplierKeys = [
     "name",
@@ -57,7 +57,7 @@ function EditSupplier(props) {
     "contact_number",
     "description",
     "note",
-    "logo"
+    "logo",
   ];
 
   useEffect(() => {
@@ -68,7 +68,7 @@ function EditSupplier(props) {
     })
       .then((res) => res.json())
       .then((supplier) => {
-        supplierKeys.map((element) => {
+        supplierKeys.each((element) => {
           dispatch({
             type: `set${element}`,
             data: supplier[element],
@@ -80,26 +80,23 @@ function EditSupplier(props) {
   async function onFormSubmit(event) {
     event.preventDefault();
     const formData = new FormData();
-    formData.append("name", name)
-    formData.append("service", service)
-    formData.append("website", website)
-    formData.append("contact_name", contactName)
-    formData.append("contact_email", contactEmail)
-    formData.append("contact_number", contactNumber)
-    formData.append("description", description)
-    formData.append("note", note)
-    formData.append("logo", logo)
+    formData.append("name", name);
+    formData.append("service", service);
+    formData.append("website", website);
+    formData.append("contact_name", contactName);
+    formData.append("contact_email", contactEmail);
+    formData.append("contact_number", contactNumber);
+    formData.append("description", description);
+    formData.append("note", note);
+    formData.append("logo", logo);
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/suppliers/${id}`,
-        {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: formData,
-        }
-      );
+      fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers/${id}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: formData,
+      });
       alert("Supplier updated");
       props.history.push(`/dashboard/supplier/${id}`);
     } catch (err) {
@@ -111,7 +108,11 @@ function EditSupplier(props) {
     <FormContainer>
       <Grid item xs={12} sm={8}>
         <h1 className="new-doc-header">Edit Supplier</h1>
-        <Form className="new-invoice-form" onSubmit={onFormSubmit} encType="multipart/form-data">
+        <Form
+          className="new-invoice-form"
+          onSubmit={onFormSubmit}
+          encType="multipart/form-data"
+        >
           <div className="form-content">
             <label htmlFor="name">Supplier name</label>
             <input
@@ -199,7 +200,7 @@ function EditSupplier(props) {
               name="logo"
               id="logo"
               accept=".jpg,.jpeg,.png"
-              onChange={handleFile} 
+              onChange={handleFile}
             />
           </div>
           <div className="form-content">

@@ -12,12 +12,12 @@ function EditInvoice(props) {
     dueDate: "",
     totalPrice: "",
     paid: "",
-    invoiceDocument: ""
-  }
+    invoiceDocument: "",
+  };
 
   const { id } = useParams();
-  const [store, dispatch] = useReducer(reducer, initialInvoiceState)
-  const {receivedDate, dueDate, totalPrice, paid, invoiceDocument} = store
+  const [store, dispatch] = useReducer(reducer, initialInvoiceState);
+  const { receivedDate, dueDate, totalPrice, paid, invoiceDocument } = store;
 
   const handleChange = (e) => {
     dispatch({
@@ -29,9 +29,9 @@ function EditInvoice(props) {
   const handleFile = (e) => {
     dispatch({
       type: `set${e.target.name}`,
-      data: e.target.files[0]
-    })
-  }
+      data: e.target.files[0],
+    });
+  };
 
   const invoiceKeys = [
     "receivedDate",
@@ -39,8 +39,8 @@ function EditInvoice(props) {
     "totalPrice",
     "paid",
     // "purchaseOrderId",
-    "invoiceDocument"
-  ]
+    "invoiceDocument",
+  ];
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_BACKEND_URL}/invoices/${id}`, {
@@ -50,7 +50,7 @@ function EditInvoice(props) {
     })
       .then((res) => res.json())
       .then((invoice) => {
-        invoiceKeys.map((element) => {
+        invoiceKeys.each((element) => {
           dispatch({
             type: `set${element}`,
             data: invoice[element],
@@ -63,23 +63,23 @@ function EditInvoice(props) {
     event.preventDefault();
 
     const formData = new FormData();
-    formData.append("receivedDate", receivedDate)
-    formData.append("dueDate", dueDate)
-    formData.append("totalPrice", totalPrice)
-    formData.append("paid", paid)
+    formData.append("receivedDate", receivedDate);
+    formData.append("dueDate", dueDate);
+    formData.append("totalPrice", totalPrice);
+    formData.append("paid", paid);
     // formData.append("purchase_order_id", match.params.id)
-    formData.append("invoice_document", invoiceDocument)
+    formData.append("invoice_document", invoiceDocument);
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/invoices/${id}`, {
+      fetch(`${process.env.REACT_APP_BACKEND_URL}/invoices/${id}`, {
         method: "PUT",
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: formData,
       });
-      alert("Invoice updated")
-      props.history.push("/dashboard/invoices")
+      alert("Invoice updated");
+      props.history.push("/dashboard/invoices");
     } catch (err) {
       console.log(err.message);
     }
@@ -89,7 +89,11 @@ function EditInvoice(props) {
     <FormContainer>
       <Grid item xs={12} sm={8}>
         <h1 className="new-doc-header">Edit Invoice</h1>
-        <Form className="new-invoice-form" onSubmit={onFormSubmit} encType="multipart/form-data">
+        <Form
+          className="new-invoice-form"
+          onSubmit={onFormSubmit}
+          encType="multipart/form-data"
+        >
           <div className="form-content">
             <label htmlFor="receivedDate">Date received</label>
             <input
@@ -124,14 +128,10 @@ function EditInvoice(props) {
           </div>
           <div className="form-content">
             <label htmlFor="paid">Payment made</label>
-            <select 
-              name="paid" 
-              id="paid"
-              value={paid}
-              onChange={handleChange}>
-                <option value=''>Select payment status</option>
-                <option value={false}>Awaiting payment</option>
-                <option value={true}>Payment made</option>
+            <select name="paid" id="paid" value={paid} onChange={handleChange}>
+              <option value="">Select payment status</option>
+              <option value={false}>Awaiting payment</option>
+              <option value={true}>Payment made</option>
             </select>
           </div>
           <div className="form-content">
@@ -141,7 +141,7 @@ function EditInvoice(props) {
               name="invoiceDocument"
               id="invoiceDocument"
               required
-              accept=".pdf,.doc,.md" 
+              accept=".pdf,.doc,.md"
               onChange={handleFile}
             />
           </div>
@@ -160,7 +160,9 @@ function EditInvoice(props) {
             <Button
               variant="contained"
               id="submit"
-              onClick={()=>{props.history.goBack()}}
+              onClick={() => {
+                props.history.goBack();
+              }}
             >
               Back
             </Button>
@@ -168,7 +170,7 @@ function EditInvoice(props) {
         </Form>
       </Grid>
     </FormContainer>
-  )
+  );
 }
 
 export default EditInvoice;

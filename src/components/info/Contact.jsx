@@ -9,7 +9,7 @@ export default class ContactForm extends React.Component {
     super(props);
     this.submitForm = this.submitForm.bind(this);
     this.state = {
-      status: ""
+      status: "",
     };
   }
 
@@ -21,10 +21,15 @@ export default class ContactForm extends React.Component {
           <div className="title-info">
             <h1 className="contact-header">Contact</h1>
             <p className="contact-info">
-              SUPI is a supplier management platform. It's designed to allow small to medium sized businesses to manage their suppliers by tracking purchase orders, invoices, supplier documents like licences, as well as rating their suppliers in terms of cost, quality, and reliability.
+              SUPI is a supplier management platform. It's designed to allow
+              small to medium sized businesses to manage their suppliers by
+              tracking purchase orders, invoices, supplier documents like
+              licences, as well as rating their suppliers in terms of cost,
+              quality, and reliability.
             </p>
             <p className="contact-info">
-              If you have any questions about the platform, feel free to contact us with the form on this page.
+              If you have any questions about the platform, feel free to contact
+              us with the form on this page.
             </p>
           </div>
           <div className="contact-form-container">
@@ -43,15 +48,19 @@ export default class ContactForm extends React.Component {
                 <textarea name="message" />
               </div>
               <div className="form-content">
-                {status === "SUCCESS" ? <p>Thanks!</p> : <Button variant="contained" color="primary">
-                  Submit
-                </Button>}
+                {status === "SUCCESS" ? (
+                  <p>Thanks!</p>
+                ) : (
+                  <Button variant="contained" color="primary">
+                    Submit
+                  </Button>
+                )}
                 {status === "ERROR" && <p>Ooops! There was an error.</p>}
               </div>
             </Form>
           </div>
         </Grid>
-      </FormContainer> 
+      </FormContainer>
     );
   }
 

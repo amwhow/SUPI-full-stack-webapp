@@ -1,223 +1,217 @@
 export default function reducer(state, action) {
-  switch(action.type) {
+  switch (action.type) {
     // USER CASES
-    case 'setuser_name': {
+    case "setuser_name": {
       return {
         ...state,
-        user_name: action.data
-      }
+        user_name: action.data,
+      };
     }
-    case 'setemail': {
+    case "setemail": {
       return {
         ...state,
-        email: action.data
-      }
+        email: action.data,
+      };
     }
-    case 'setpassword': {
+    case "setpassword": {
       return {
         ...state,
-        password: action.data
-      }
+        password: action.data,
+      };
     }
-    case 'setpassword_confirmation': {
+    case "setpassword_confirmation": {
       return {
         ...state,
-        password_confirmation: action.data
-      }
+        password_confirmation: action.data,
+      };
     }
-    case 'setcompany_name': {
+    case "setcompany_name": {
       return {
         ...state,
-        company_name: action.data
-      }
+        company_name: action.data,
+      };
     }
-    case 'setlogo': {
+    case "setlogo": {
       return {
         ...state,
-        logo: action.data
-      }
+        logo: action.data,
+      };
     }
     // SUPPLIER CASES
-    case 'setname': {
+    case "setname": {
       return {
         ...state,
-        name: action.data
-      }
+        name: action.data,
+      };
     }
-    case 'setservice': {
+    case "setservice": {
       return {
         ...state,
-        service: action.data
-      }
+        service: action.data,
+      };
     }
-    case 'setwebsite': {
+    case "setwebsite": {
       return {
         ...state,
-        website: action.data
-      }
+        website: action.data,
+      };
     }
-    case 'setcontact_name': {
+    case "setcontact_name": {
       return {
         ...state,
-        contactName: action.data
-      }
+        contactName: action.data,
+      };
     }
-    case 'setcontact_email': {
+    case "setcontact_email": {
       return {
         ...state,
-        contactEmail: action.data
-      }
+        contactEmail: action.data,
+      };
     }
-    case 'setcontact_number': {
+    case "setcontact_number": {
       return {
         ...state,
-        contactNumber: action.data
-      }
+        contactNumber: action.data,
+      };
     }
-    case 'setdescription': {
+    case "setdescription": {
       return {
         ...state,
-        description: action.data
-      }
+        description: action.data,
+      };
     }
-    case 'setnote': {
+    case "setnote": {
       return {
         ...state,
-        note: action.data
-      }
+        note: action.data,
+      };
     }
-    case 'setlogo': {
+    case "setlogo": {
       return {
         ...state,
-        logo: action.data
-      }
+        logo: action.data,
+      };
     }
     // PO CASES
-    case 'setorderDate': {
+    case "setorderDate": {
       return {
         ...state,
-        orderDate: action.data
-      }
+        orderDate: action.data,
+      };
     }
-    case 'setapprovalStatus': {
+    case "setapprovalStatus": {
       return {
         ...state,
-        approvalStatus: action.data
-      }
+        approvalStatus: action.data,
+      };
     }
-    case 'settotalPrice': {
+    case "settotalPrice": {
       return {
         ...state,
-        totalPrice: action.data
-      }
+        totalPrice: action.data,
+      };
     }
-    case 'setdelivered': {
+    case "setdelivered": {
       return {
         ...state,
-        delivered: action.data
-      }
+        delivered: action.data,
+      };
     }
-    // case 'setSupplierId': {
-    //   return {
-    //     ...state,
-    //     supplierId: action.data
-    //   }
-    // }
-    case 'setPODocument': {
+    case "setPODocument": {
       return {
         ...state,
-        PODocument: action.data
-      }
+        PODocument: action.data,
+      };
     }
-    // Need to add file state here
     // INVOICE CASES
-    case 'setreceivedDate': {
+    case "setreceivedDate": {
       return {
         ...state,
-        receivedDate: action.data
-      }
+        receivedDate: action.data,
+      };
     }
-    case 'setdueDate': {
+    case "setdueDate": {
       return {
         ...state,
-        dueDate: action.data
-      }
+        dueDate: action.data,
+      };
     }
-    case 'settotalPrice': {
+    case "settotalPrice": {
       return {
         ...state,
-        totalPrice: action.data
-      }
+        totalPrice: action.data,
+      };
     }
-    case 'setpaid': {
+    case "setpaid": {
       return {
         ...state,
-        paid: action.data
-      }
+        paid: action.data,
+      };
     }
-    case 'setpurchaseOrderId': {
+    case "setpurchaseOrderId": {
       return {
         ...state,
-        purchaseOrderId: action.data
-      }
+        purchaseOrderId: action.data,
+      };
     }
-    case 'setinvoiceDocument': {
+    case "setinvoiceDocument": {
       return {
         ...state,
-        invoiceDocument: action.data
-      }
+        invoiceDocument: action.data,
+      };
     }
     // Need to add file state here
     // REVIEW CASES
-    case 'setpurchaseOrderId': {
+    case "setpurchaseOrderId": {
       return {
         ...state,
-        purchaseOrderId: action.data
-      }
+        purchaseOrderId: action.data,
+      };
     }
-    case 'setqualityRating': {
+    case "setqualityRating": {
       return {
         ...state,
-        qualityRating: action.data
-      }
+        qualityRating: action.data,
+      };
     }
-    case 'setreliabilityRating': {
+    case "setreliabilityRating": {
       return {
         ...state,
-        reliabilityRating: action.data
-      }
+        reliabilityRating: action.data,
+      };
     }
-    case 'setcostRating': {
+    case "setcostRating": {
       return {
         ...state,
-        costRating: action.data
-      }
+        costRating: action.data,
+      };
     }
-    case 'setcomment': {
+    case "setcomment": {
       return {
         ...state,
-        comment: action.data
-      }
+        comment: action.data,
+      };
     }
     // DOCUMENT CASES
-    case 'setexpiryDate': {
-      return {
-      ...state,
-      expiryDate: action.data
-      }
-    }
-    case 'setdocumentType': {
+    case "setexpiryDate": {
       return {
         ...state,
-        documentType: action.data
-      }
+        expiryDate: action.data,
+      };
     }
-    case 'setsupplierDocument': {
+    case "setdocumentType": {
       return {
         ...state,
-        supplierDocument: action.data
-      }
+        documentType: action.data,
+      };
     }
-    default: return state
+    case "setsupplierDocument": {
+      return {
+        ...state,
+        supplierDocument: action.data,
+      };
+    }
+    default:
+      return state;
   }
 }

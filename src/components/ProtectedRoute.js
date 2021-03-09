@@ -2,19 +2,21 @@ import React, { useState, useEffect } from "react";
 import { Route, Redirect } from "react-router-dom";
 
 export default function ProtectedRoute(props) {
-  // exact, path, component, ...
-  const { exact, path, component } = props 
+  const { exact, path, component } = props;
   const [auth, setAuth] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function checkAuthStatus() {
       try {
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/status`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
+        const response = await fetch(
+          `${process.env.REACT_APP_BACKEND_URL}/status`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
         if (response.status >= 400) {
           throw new Error("not authorized");
         } else {
@@ -25,7 +27,7 @@ export default function ProtectedRoute(props) {
         }
       } catch (err) {
         console.error(err.message);
-        alert("Can't connect to backend server")
+        alert("Can't connect to backend server");
         setLoading(false);
       }
     }

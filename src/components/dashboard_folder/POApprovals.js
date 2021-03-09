@@ -1,12 +1,7 @@
 import React from "react";
-import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Title from "./Title";
-
-function preventDefault(event) {
-  event.preventDefault();
-}
 
 const useStyles = makeStyles({
   POApprovalContext: {
@@ -26,33 +21,33 @@ const POApprovals = ({ poData }) => {
           {filteredPoData.length}
         </Typography>
         <Typography color="textSecondary" className={classes.POApprovalContext}>
-          {filteredPoData.reverse().map((po) => {
+          {filteredPoData.reverse().each((po) => {
+            // show the first five POs
             if (counter <= 5 && po.po_document) {
               counter += 1;
               return (
                 <div>
-                  <a href={po.po_document.url} target="_blank">
+                  <a href={po.po_document.url} target="_blank" rel="noreferrer">
                     ${po.totalPrice} - Ordered on: {po.orderDate}
                   </a>
                 </div>
               );
             } else if (counter <= 5) {
-              {
-                counter += 1;
-                return (
-                  <div>
-                    <p>
-                      ${po.totalPrice} - Ordered on: {po.orderDate}
-                    </p>
-                  </div>
-                );
-              }
+              counter += 1;
+              return (
+                <div>
+                  <p>
+                    ${po.totalPrice} - Ordered on: {po.orderDate}
+                  </p>
+                </div>
+              );
             }
           })}
         </Typography>
       </React.Fragment>
     );
   } else {
+    // show 0 PO if there is no PO data
     return (
       <React.Fragment>
         <Title>PO Approvals</Title>

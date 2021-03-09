@@ -1,6 +1,6 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import POTable from "../../table/POTable"
+import POTable from "../../table/POTable";
 
 export default function PurchaseOrders() {
   return (
@@ -8,7 +8,6 @@ export default function PurchaseOrders() {
       <Grid item xs={12} md={6} lg={6}>
         <POTable />
       </Grid>
-
     </Grid>
   );
 }

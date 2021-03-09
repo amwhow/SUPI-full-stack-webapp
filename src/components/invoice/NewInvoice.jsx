@@ -12,13 +12,13 @@ function NewInvoice({ history, match }) {
     totalPrice: "",
     paid: "",
     purchaseOrderId: match.params.id,
-    invoiceDocument: ""
-  }
+    invoiceDocument: "",
+  };
 
   // recommend we add a function to set today's date as the min value for date inputs
 
-  const [store, dispatch] = useReducer(reducer, initialInvoiceState)
-  const {receivedDate, dueDate, totalPrice, paid, invoiceDocument} = store
+  const [store, dispatch] = useReducer(reducer, initialInvoiceState);
+  const { receivedDate, dueDate, totalPrice, paid, invoiceDocument } = store;
 
   const handleChange = (e) => {
     dispatch({
@@ -30,30 +30,38 @@ function NewInvoice({ history, match }) {
   const handleFile = (e) => {
     dispatch({
       type: `set${e.target.name}`,
-      data: e.target.files[0]
-    })
-  }
+      data: e.target.files[0],
+    });
+  };
 
   async function onFormSubmit(event) {
     event.preventDefault();
-    const body = { invoice: {receivedDate: receivedDate, dueDate: dueDate, totalPrice: totalPrice, paid: paid, purchase_order_id: match.params.id} }
+    const body = {
+      invoice: {
+        receivedDate: receivedDate,
+        dueDate: dueDate,
+        totalPrice: totalPrice,
+        paid: paid,
+        purchase_order_id: match.params.id,
+      },
+    };
     const formData = new FormData();
-    formData.append("receivedDate", receivedDate)
-    formData.append("dueDate", dueDate)
-    formData.append("totalPrice", totalPrice)
-    formData.append("paid", paid)
-    formData.append("purchase_order_id", match.params.id)
-    formData.append("invoice_document", invoiceDocument)
+    formData.append("receivedDate", receivedDate);
+    formData.append("dueDate", dueDate);
+    formData.append("totalPrice", totalPrice);
+    formData.append("paid", paid);
+    formData.append("purchase_order_id", match.params.id);
+    formData.append("invoice_document", invoiceDocument);
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/invoices`, {
+      fetch(`${process.env.REACT_APP_BACKEND_URL}/invoices`, {
         method: "POST",
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: formData,
       });
-      history.push("/dashboard/invoices")
+      history.push("/dashboard/invoices");
     } catch (err) {
       console.log(err.message);
     }
@@ -63,7 +71,11 @@ function NewInvoice({ history, match }) {
     <FormContainer>
       <Grid item xs={12} sm={8}>
         <h1 className="new-doc-header">New Invoice</h1>
-        <Form className="new-invoice-form" onSubmit={onFormSubmit} encType="multipart/form-data">
+        <Form
+          className="new-invoice-form"
+          onSubmit={onFormSubmit}
+          encType="multipart/form-data"
+        >
           <div className="form-content">
             <label htmlFor="receivedDate">Date received</label>
             <input
@@ -98,14 +110,10 @@ function NewInvoice({ history, match }) {
           </div>
           <div className="form-content">
             <label htmlFor="paid">Payment made</label>
-            <select 
-              name="paid" 
-              id="paid"
-              value={paid}
-              onChange={handleChange}>
-                <option value=''>Select payment status</option>
-                <option value={false}>Awaiting payment</option>
-                <option value={true}>Payment made</option>
+            <select name="paid" id="paid" value={paid} onChange={handleChange}>
+              <option value="">Select payment status</option>
+              <option value={false}>Awaiting payment</option>
+              <option value={true}>Payment made</option>
             </select>
           </div>
           <div className="form-content">
@@ -115,7 +123,7 @@ function NewInvoice({ history, match }) {
               name="invoiceDocument"
               id="invoiceDocument"
               required
-              accept=".pdf,.doc,.md" 
+              accept=".pdf,.doc,.md"
               onChange={handleFile}
             />
           </div>
@@ -129,18 +137,21 @@ function NewInvoice({ history, match }) {
             >
               Create
             </Button>
-            <Button 
+            <Button
               variant="contained"
               value="go back"
               id="submit"
-              onClick={()=>{history.goBack()}}>
+              onClick={() => {
+                history.goBack();
+              }}
+            >
               Back
             </Button>
           </div>
         </Form>
       </Grid>
     </FormContainer>
-  )
+  );
 }
 
 export default NewInvoice;

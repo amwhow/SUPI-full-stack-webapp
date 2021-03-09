@@ -11,11 +11,11 @@ function NewReview({ history, match }) {
     reliabilityRating: "",
     costRating: "",
     comment: "",
-    purchaseOrderId: match.params.id
-  }
+    purchaseOrderId: match.params.id,
+  };
 
-  const [store, dispatch] = useReducer(reducer, initialReviewState)
-  const {qualityRating, reliabilityRating, costRating, comment} = store
+  const [store, dispatch] = useReducer(reducer, initialReviewState);
+  const { qualityRating, reliabilityRating, costRating, comment } = store;
 
   const handleChange = (e) => {
     dispatch({
@@ -26,20 +26,25 @@ function NewReview({ history, match }) {
 
   async function onFormSubmit(event) {
     event.preventDefault();
-    const body = { review: {qualityRating: qualityRating, reliabilityRating: reliabilityRating, costRating: costRating, comment: comment, purchase_order_id: match.params.id} }
+    const body = {
+      review: {
+        qualityRating: qualityRating,
+        reliabilityRating: reliabilityRating,
+        costRating: costRating,
+        comment: comment,
+        purchase_order_id: match.params.id,
+      },
+    };
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/reviews`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: JSON.stringify(body),
-        }
-      );
-      alert("Review created")
+      fetch(`${process.env.REACT_APP_BACKEND_URL}/reviews`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(body),
+      });
+      alert("Review created");
       history.push("/dashboard/purchase_orders");
     } catch (err) {
       console.log(err.message);
@@ -53,50 +58,53 @@ function NewReview({ history, match }) {
         <Form className="new-invoice-form" onSubmit={onFormSubmit}>
           <div className="form-content">
             <label htmlFor="qualityRating">Quality rating</label>
-            <select 
+            <select
               name="qualityRating"
               id="qualityRating"
               value={qualityRating}
-              onChange={handleChange}>
-                <option value=''>Select rating</option>
-                <option value={0}>0 Stars</option>
-                <option value={1}>1 Star</option>
-                <option value={2}>2 Stars</option>
-                <option value={3}>3 Stars</option>
-                <option value={4}>4 Stars</option>
-                <option value={5}>5 Stars</option>
-              </select>
-            </div>
-            <div className="form-content">
-              <label htmlFor="reliabilityRating">Reliability rating</label>
-              <select 
-                name="reliabilityRating"
-                id="reliabilityRating"
-                value={reliabilityRating}
-                onChange={handleChange}>
-                  <option value=''>Select rating</option>
-                <option value={0}>0 Stars</option>
-                <option value={1}>1 Star</option>
-                <option value={2}>2 Stars</option>
-                <option value={3}>3 Stars</option>
-                <option value={4}>4 Stars</option>
-                <option value={5}>5 Stars</option>
+              onChange={handleChange}
+            >
+              <option value="">Select rating</option>
+              <option value={0}>0 Stars</option>
+              <option value={1}>1 Star</option>
+              <option value={2}>2 Stars</option>
+              <option value={3}>3 Stars</option>
+              <option value={4}>4 Stars</option>
+              <option value={5}>5 Stars</option>
+            </select>
+          </div>
+          <div className="form-content">
+            <label htmlFor="reliabilityRating">Reliability rating</label>
+            <select
+              name="reliabilityRating"
+              id="reliabilityRating"
+              value={reliabilityRating}
+              onChange={handleChange}
+            >
+              <option value="">Select rating</option>
+              <option value={0}>0 Stars</option>
+              <option value={1}>1 Star</option>
+              <option value={2}>2 Stars</option>
+              <option value={3}>3 Stars</option>
+              <option value={4}>4 Stars</option>
+              <option value={5}>5 Stars</option>
             </select>
           </div>
           <div className="form-content">
             <label htmlFor="costRating">Cost rating</label>
-            <select 
-              name="costRating" 
+            <select
+              name="costRating"
               id="costRating"
               value={costRating}
-              onChange={handleChange}>
-                <option value=''>Select rating</option>
-                <option value={0}>0 Stars</option>
-                <option value={1}>1 Star</option>
-                <option value={2}>2 Stars</option>
-                <option value={3}>3 Stars</option>
-                <option value={4}>4 Stars</option>
-                <option value={5}>5 Stars</option>
+              onChange={handleChange}
+            >
+              <option value="">Select rating</option>
+              <option value={0}>0 Stars</option>
+              <option value={1}>1 Star</option>
+              <option value={2}>2 Stars</option>
+              <option value={3}>3 Stars</option>
+              <option value={4}>4 Stars</option>
+              <option value={5}>5 Stars</option>
             </select>
           </div>
           <div className="form-content">
@@ -119,11 +127,14 @@ function NewReview({ history, match }) {
             >
               Create
             </Button>
-            <Button 
+            <Button
               variant="contained"
               value="go back"
               id="submit"
-              onClick={()=>{history.goBack()}}>
+              onClick={() => {
+                history.goBack();
+              }}
+            >
               Back
             </Button>
           </div>

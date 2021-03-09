@@ -16,14 +16,12 @@ import Link from "@material-ui/core/Link";
 import MenuIcon from "@material-ui/icons/Menu";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import { MainListItems, SecondaryListItems } from "./listItems";
 import DashboardHome from "./DashboardHome";
 import DashboardSupplier from "./DashboardSupplier";
 import DashboardStyles from "./DashboardStyles";
 import { Switch, Route } from "react-router-dom";
 import ProtectedRoute from "../ProtectedRoute";
-import SupplierNotes from "./SupplierNotes";
 import POTable from "../table/POTable";
 import NewPO from "../PO/NewPO";
 import EditPO from "../PO/EditPO";
@@ -80,7 +78,7 @@ export default function Dashboard(props) {
   const [invoices, setInvoices] = useState([]);
 
   useEffect(() => {
-    // clashing with Michael's backend path, change for now
+    // get data for all suppliers
     fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -237,11 +235,7 @@ export default function Dashboard(props) {
               path="/dashboard/reviews/:id/edit"
               component={EditReview}
             />
-            <Route
-              exact
-              path="/dashboard/contact"
-              component={ContactForm}
-            />
+            <Route exact path="/dashboard/contact" component={ContactForm} />
             <Route exact path="/dashboard/about" component={About} />
           </Switch>
 

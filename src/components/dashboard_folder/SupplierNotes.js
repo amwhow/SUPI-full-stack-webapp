@@ -1,13 +1,8 @@
-import React from 'react';
-import Link from '@material-ui/core/Link';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Title from './Title';
-import { useHistory } from "react-router-dom";
-
-function preventDefault(event) {
-  event.preventDefault();
-}
+import React from "react";
+import Link from "@material-ui/core/Link";
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Title from "./Title";
 
 const useStyles = makeStyles({
   POApprovalContext: {
@@ -15,22 +10,19 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SupplierNotes({supplier}) {
-  const history = useHistory()
+export default function SupplierNotes({ supplier }) {
   const classes = useStyles();
-  const id = supplier.id
+  const id = supplier.id;
   return (
     <React.Fragment>
       <Title>Supplier Notes</Title>
       <Typography color="textSecondary" className={classes.POApprovalContext}>
         <div>
-          <p>
-            Note: {supplier.note}
-          </p>
+          <p>Note: {supplier.note}</p>
         </div>
       </Typography>
       <div>
-        <Link color="primary" href={`/dashboard/suppliers/edit/${id}`} >
+        <Link color="primary" href={`/dashboard/suppliers/edit/${id}`}>
           Edit Note
         </Link>
       </div>

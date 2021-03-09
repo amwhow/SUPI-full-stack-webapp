@@ -4,10 +4,9 @@ import Login from "./components/user/Login";
 import Dashboard from "./components/dashboard_folder/Dashboard";
 import NewUser from "./components/user/NewUser";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Home from "./components/Home"
+import Home from "./components/Home";
 import ContactForm from "./components/info/Contact";
 import About from "./components/info/About";
-
 
 function App() {
   return (
