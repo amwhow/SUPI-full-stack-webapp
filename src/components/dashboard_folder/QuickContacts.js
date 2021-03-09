@@ -17,7 +17,6 @@ const useStyles = makeStyles({
 
 export default function QuickContacts(contacts) {
   const classes = useStyles();
-  console.log(contacts.contacts);
   if (contacts.contacts.length > 0) {
     let counter = 0;
     return (
