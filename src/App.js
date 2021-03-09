@@ -1,5 +1,5 @@
-import { React, useState, useEffect, useContext } from "react";
-import { Route, Switch, Link, useHistory } from "react-router-dom";
+import { React } from "react";
+import { Route, Switch } from "react-router-dom";
 import Login from "./components/user/Login";
 import Dashboard from "./components/dashboard_folder/Dashboard";
 import NewUser from "./components/user/NewUser";

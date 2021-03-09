@@ -46,7 +46,7 @@ function Login({ history }) {
   }
 
   return (
-    <Grid item xs={12} sm={5}>
+    <Grid item xs={12} sm={4} style={{fontSize:"1.5em"}}>
       {errMessage && <span>{errMessage}</span>}
       <Container className="form-container">
         <h2>Log In</h2>
