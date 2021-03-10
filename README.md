@@ -30,13 +30,9 @@ Supplier Purchase Orders:
 * HTML  
 * CSS
 * JavaScript
-* Ruby on Rails
-* PostgreSQL
 * React
 * Material-UI
 * Netlify
-* Heroku
-* AWS S3
 
 ## Features
 1. Supplier tracking: business users can see all suppliers they are working with and supplier details such as what service they are offering, reviews on past works, and delivery period, etc.  
