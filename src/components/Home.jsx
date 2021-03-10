@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
 const Home = ({ history }) => {
   const classes = useStyles();
   const loggedInStatus = localStorage.getItem("token");
-  console.log(loggedInStatus)
   if (loggedInStatus) {
     history.push('/dashboard')
   } 
