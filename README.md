@@ -1,6 +1,10 @@
 # SUPI - A supplier management system
 Site Link: https://supi.netlify.app/. 
 
+* Visit the site via the above url. You can use this demo account to see how the functions work. (username: mark@email.com; password: password).  
+* When you sign up a new account, all fields must be filled in.  
+* Feel free to play around with the app and any feedback is welcome!  
+
 ## Table of contents
 * [General info](#general-info)
 * [Screenshots](#screenshots)
@@ -42,6 +46,7 @@ Supplier Purchase Orders:
 5. Some to-do features: Searching for suppliers on the market(requires an availavle API); Direct email function when clicking on the supplier contact email.
 
 ## Usage
-* Visit the site via the url on the top. can use this demo account to see how the functions work. (username: mark@email.com; password: password).  
-* When you sign up a new account, all fields must be filled in.  
-* Feel free to play around with the app and any feedback is welcome!  
+* Clone this repo to your desktop, cd to the root directory and then run `yarn install` to install all dependencies.  
+* Once the dependencies are installed, you can run `yarn start` to start the application. The app will be deploy at localhost:3001 as default. The backend urls are set in the .env.development and .env.production files respectively.  
+* Check the cors.rb file and make sure your front end url is listed after the `origins` statement.  
+
