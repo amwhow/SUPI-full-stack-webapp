@@ -71,16 +71,13 @@ function NewDocument({ history }) {
     formData.append("supplier_document", supplierDocument);
 
     try {
-      fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/documents`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: formData,
-        }
-      );
+      fetch(`${process.env.REACT_APP_BACKEND_URL}/documents`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: formData,
+      });
       history.push("/dashboard/documents");
     } catch (err) {
       console.log(err.message);
