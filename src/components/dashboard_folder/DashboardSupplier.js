@@ -14,10 +14,9 @@ const DashboardSupplier = (props) => {
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const [supplier, setSupplier] = useState("failed supplier");
   const [poData, setPoData] = useState([]);
-  const [poDataWithFile, setPoDataWithFile] = useState([]);
+  const [documentData, setDocumentData] = useState([]);
   const [reviewData, setReviewData] = useState([]);
   const [invoiceData, setInvoiceData] = useState([]);
-  const [invoiceWithFile, setInvoiceWithFile] = useState([]);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers/${id}`, {
@@ -31,7 +30,7 @@ const DashboardSupplier = (props) => {
       });
   }, [id]);
 
-  // get all PO data and their reviews for the selected supplier
+  // get all PO data for the selected supplier
   useEffect(() => {
     fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers/${id}/pos`, {
       headers: {
@@ -40,34 +39,42 @@ const DashboardSupplier = (props) => {
     })
       .then((res) => res.json())
       .then((response) => {
-        const { pos, reviews, invoices } = response;
-        setPoData(pos);
-        setReviewData(reviews);
-        setInvoiceData(invoices);
+        setPoData(response);
       });
   }, [id]);
 
+  // get all invoices data for the selected supplier
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/invoices`, {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers/${id}/invoices`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     })
       .then((res) => res.json())
-      .then((body) => {
-        setInvoiceWithFile(body);
-      });
-  }, []);
+      .then((response) => setInvoiceData(response));
+  }, [id]);
 
+  // get all documents for the selected supplier
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/purchase_orders`, {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers/${id}/documents`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     })
       .then((res) => res.json())
-      .then((body) => setPoDataWithFile(body));
-  }, []);
+      .then((response) => setDocumentData(response));
+  }, [id]);
+
+  // get all reviews for the selected supplier
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/suppliers/${id}/reviews`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((response) => setReviewData(response));
+  }, [id]);
 
   return (
     <Grid container spacing={3}>
@@ -102,6 +109,7 @@ const DashboardSupplier = (props) => {
           fixedHeightPaper={fixedHeightPaper}
           poData={poData}
           reviewData={reviewData}
+          documentData={documentData}
           invoiceData={invoiceData}
         />
       </Grid>
