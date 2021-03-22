@@ -50,11 +50,28 @@ function Copyright() {
     </Typography>
   );
 }
-
 const useStyles = DashboardStyles;
 
 export default function Dashboard(props) {
   const history = useHistory();
+
+  function checkTokenExpiry() {
+    const itemStr = localStorage.getItem("token");
+    // if the user token doesn't exist, return null
+    if (!itemStr) {
+      return null;
+    } else {
+      localStorage.removeItem("token");
+      alert("Session expired, please login again");
+      history.push("/");
+    }
+  }
+  // token expires after 1hr
+  useEffect(() => {
+    setTimeout(() => {
+      checkTokenExpiry();
+    }, 3600000);
+  }, [])
 
   const logout = () => {
     localStorage.removeItem("token");

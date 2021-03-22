@@ -32,7 +32,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function DocumentTable() {
+export default function DocumentTable({ documentData, supplierId }) {
   const classes = useStyles();
 
   const [documents, setDocuments] = useState([]);
@@ -50,10 +50,12 @@ export default function DocumentTable() {
   }
 
   useEffect(() => {
-    fetchDocuments();
-  }, []);
-
-  console.log(documents);
+    if (supplierId !== undefined) {
+      setDocuments(documentData);
+    } else {
+      fetchDocuments();
+    }
+  }, [supplierId, documentData]);
 
   return (
     <div>

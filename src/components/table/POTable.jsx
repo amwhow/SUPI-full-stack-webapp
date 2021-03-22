@@ -32,11 +32,11 @@ const useStyles = makeStyles({
   },
 });
 
-export default function POTable({ poData }) {
+export default function POTable({ poData, supplierId }) {
   const classes = useStyles();
 
   const [purchaseOrders, setPurchaseOrders] = useState([]);
-
+ 
   function fetchPurchaseOrders() {
     fetch(`${process.env.REACT_APP_BACKEND_URL}/purchase_orders`, {
       headers: {
@@ -48,8 +48,12 @@ export default function POTable({ poData }) {
   }
 
   useEffect(() => {
-    fetchPurchaseOrders();
-  }, []);
+    if (supplierId !== undefined) {
+      setPurchaseOrders(poData)
+    } else {
+      fetchPurchaseOrders();
+    }
+  }, [supplierId, poData]);
 
   const invoiceLinks = purchaseOrders.map((PO, index) => {
     return `/dashboard/purchase_orders/${PO.id}/invoices/new`;

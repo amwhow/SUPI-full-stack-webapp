@@ -27,11 +27,13 @@ function Login({ history }) {
       );
       if (response.status >= 400) {
         const { error } = await response.json();
-        throw new Error(error);
+        alert(new Error(error)) ;
+        return false;
       } else {
         const { user_name, jwt } = await response.json();
         localStorage.setItem("token", jwt);
         localStorage.setItem("user_name", user_name);
+        localStorage.setItem("expiry", 5000);
         history.push("/dashboard");
         alert("Logged in Successfully!");
       }

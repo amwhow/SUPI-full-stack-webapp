@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Title from "./Title";
@@ -27,9 +28,13 @@ const POApprovals = ({ poData }) => {
               counter += 1;
               return (
                 <div>
-                  <a href={po.po_document.url} target="_blank" rel="noreferrer">
+                  <Link
+                    color="primary"
+                    href={po.po_document.url}
+                    target="_blank"
+                  >
                     ${po.totalPrice} - Ordered on: {po.orderDate}
-                  </a>
+                  </Link>
                 </div>
               );
             } else if (counter <= 5) {
