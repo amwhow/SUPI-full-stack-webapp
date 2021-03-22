@@ -32,7 +32,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function InvoiceTable() {
+export default function InvoiceTable({ invoiceData, supplierId }) {
   const classes = useStyles();
 
   const [invoices, setInvoices] = useState([]);
@@ -48,8 +48,12 @@ export default function InvoiceTable() {
   }
 
   useEffect(() => {
-    fetchInvoices();
-  }, []);
+    if (supplierId !== undefined) {
+      setInvoices(invoiceData);
+    } else {
+      fetchInvoices();
+    }
+  }, [supplierId, invoiceData]);
 
   return (
     <div>
