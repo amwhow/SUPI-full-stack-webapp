@@ -12,6 +12,7 @@ import Grid from "@material-ui/core/Grid";
 import POTable from "../table/POTable";
 import InvoiceTable from "../table/InvoiceTable";
 import DocumentTable from "../table/DocumentTable";
+import { useParams } from "react-router-dom";
 
 const AntTab = withStyles((theme) => ({
   root: {
@@ -79,9 +80,11 @@ export default function DashboardTabs({
   supplier,
   poData,
   reviewData,
+  documentData,
   invoiceData,
   fixedHeightPaper,
 }) {
+  const { id } = useParams();
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
@@ -156,17 +159,18 @@ export default function DashboardTabs({
           />
         </Grid>
       </TabPanel>
+
       {/* Purchase Order Tab */}
       <TabPanel value={value} index={2}>
-        <POTable poData={poData} />
+        <POTable poData={poData} supplierId={id} />
       </TabPanel>
       {/* Invoices Tab */}
       <TabPanel value={value} index={3}>
-        <InvoiceTable invoiceData={invoiceData} />
+        <InvoiceTable invoiceData={invoiceData} supplierId={id} />
       </TabPanel>
       {/* Documents Tab */}
       <TabPanel value={value} index={4}>
-        <DocumentTable poData={poData} />
+        <DocumentTable documentData={documentData} supplierId={id} />
       </TabPanel>
     </div>
   );
