@@ -33,7 +33,6 @@ function Login({ history }) {
         const { user_name, jwt } = await response.json();
         localStorage.setItem("token", jwt);
         localStorage.setItem("user_name", user_name);
-        localStorage.setItem("expiry", 5000);
         history.push("/dashboard");
         alert("Logged in Successfully!");
       }

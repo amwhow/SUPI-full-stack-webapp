@@ -29,6 +29,8 @@ export default function ProtectedRoute(props) {
         console.error(err.message);
         alert("Can't connect to backend server");
         setLoading(false);
+        localStorage.removeItem("token");
+        <Redirect to="/" />
       }
     }
     checkAuthStatus();
